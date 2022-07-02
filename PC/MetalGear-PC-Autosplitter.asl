@@ -6,6 +6,7 @@ state("MetalGear") {
 	uint FloorVal: 0x60118;
 	uint SubFloorVal: 0x5F09C;
 	uint RankVal: 0x5C53C;
+    uint Saves: 0x5C6AC;
 	uint ContPerCheckpoint: 0x5ED90;
 	uint Continues: 0x5C6B0;
 	uint Alerts: 0x5C6A4;
@@ -22,6 +23,7 @@ state("MetalGear") {
 	uint GrenadeLauncherAmmo: 0x5C694;
 	uint SMGAmmo: 0x5C68C;
 	uint PistolAmmo: 0x5C688;
+    uint SnakeYCoord: 0x5F4D8;
 }
 
 gameTime {
