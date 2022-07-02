@@ -22,6 +22,7 @@ state("pcsx2") {
 	uint GrenadeLauncherAmmo: 0x123E184, 0xA6C;
 	uint SMGAmmo: 0x123E184, 0xA64;
 	uint PistolAmmo: 0x123E184, 0xA60;
+    uint Saves: 0x123E184, 0xA84;
 }
 
 gameTime {
