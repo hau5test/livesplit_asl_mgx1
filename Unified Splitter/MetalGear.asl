@@ -209,7 +209,7 @@ update {
 			"ClassValue",
 			"TotalPOWsaved",
 			"Health",
-			"Saves"
+			"Saves",
 			"Continues",
 			"ContPerCheckpoint",
 			"Alerts",
@@ -230,7 +230,7 @@ update {
 
 		// check the basics
 		//either PAL or another version
-//		if (current.region == "PAL") ver = "EU_";
+//		if (current.region == "PAL") ver = "EU_"; <- not working for some reason
 		if (current.regCode == "SLES") ver = "EU_";
 		//either NTSC-US or NTSC-JP
 		else if (current.regCode == "SLUS") ver = "US_";
@@ -251,7 +251,7 @@ update {
 }
 
 gameTime {
-	return current.BSGameTimeSeconds == 0?TimeSpan.FromMilliseconds(current.GameTime * 1000 / (current.regCode == "SLES"?16.667:15)):TimeSpan.FromMilliseconds((current.BSGameTimeMinutes * 60 + current.BSGameTimeSeconds) * 1000);
+	return current.BSState == 0?TimeSpan.FromMilliseconds(current.GameTime * 1000 / (current.regCode == "SLES"?16.667:15)):TimeSpan.FromMilliseconds((current.BSGameTimeMinutes * 60 + current.BSGameTimeSeconds) * 1000);
 }
 
 isLoading {
@@ -265,7 +265,7 @@ start {
 }
 
 split {
-    if (current.GameTime > 0 && current.BSGameTimeSeconds == 0) {
+    if (current.GameTime > 0 && current.BSState == 0) {
         //on entering the elevator on building 1
         if (current.FloorVal == 6) {
             if (old.FloorVal == 1) {
