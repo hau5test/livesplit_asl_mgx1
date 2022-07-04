@@ -251,7 +251,12 @@ update {
 }
 
 gameTime {
-	return current.BSState == 0?TimeSpan.FromMilliseconds(current.GameTime * 1000 / (current.regCode == "SLES"?16.667:15)):TimeSpan.FromMilliseconds((current.BSGameTimeMinutes * 60 + current.BSGameTimeSeconds) * 1000);
+	
+	if (game.ProcessName.Equals("pcsx2", StringComparison.InvariantCultureIgnoreCase)) {
+		return current.BSState == 0?TimeSpan.FromMilliseconds(current.GameTime * 1000 / (current.regCode == "SLES"?16.667:15)):TimeSpan.FromMilliseconds((current.BSGameTimeMinutes * 60 + current.BSGameTimeSeconds) * 1000);
+	} else {
+		return current.BSState == 0?TimeSpan.FromMilliseconds(current.GameTime * 1000 / 15):TimeSpan.FromMilliseconds((current.BSGameTimeMinutes * 60 + current.BSGameTimeSeconds) * 1000);
+	}
 }
 
 isLoading {
