@@ -15,7 +15,6 @@
 /*                                                       */
 /* Thanks to BMN, NickRPGreen for their input and advice */
 /*********************************************************/
-
 state("MetalGear") {
 	// timers
 	uint GameTime:				0x5C698;
@@ -76,7 +75,7 @@ state("pcsx2") {
 	uint J20A_SubFloorVal: 			0x11E540C, 0x684;
 	uint J20A_AlertCountdown: 		0x123E188, 0x80;
 	// snake relevant values
-	uint J20A_ClassValue: 				0x123E184, 0x894;
+	uint J20A_ClassValue: 			0x123E184, 0x894;
 	uint J20A_TotalPOWsaved: 		0x123E184, 0x934;
 	uint J20A_Health: 				0x123E184, 0x884;
 	// score screen
@@ -107,7 +106,7 @@ state("pcsx2") {
 	uint JSub_SubFloorVal: 			0x123EB00, 0x784;
 	uint JSub_AlertCountdown: 		0x123E188, 0x100;
 	// snake relevant values
-	uint JSub_ClassValue: 				0x123E184, 0x914;
+	uint JSub_ClassValue: 			0x123E184, 0x914;
 	uint JSub_TotalPOWsaved: 		0x123E184, 0x9B4;
 	uint JSub_Health: 				0x123E184, 0x904;
 	// score screen
@@ -138,7 +137,7 @@ state("pcsx2") {
 	uint US_SubFloorVal: 			0x123EB08, 0xC04;
 	uint US_AlertCountdown: 		0x123E188, 0xA18;
 	// snake relevant values
-	uint US_ClassValue: 				0x123E188, 0x22C;
+	uint US_ClassValue: 			0x123E188, 0x22C;
 	uint US_TotalPOWsaved: 			0x123E188, 0x2CC;
 	uint US_Health: 				0x123E188, 0x21C;
 	// score screen
@@ -169,7 +168,7 @@ state("pcsx2") {
 	uint EU_SubFloorVal: 			0x123EB14, 0xA84;
 	uint EU_AlertCountdown: 		0x123E194, 0x750;
 	// snake relevant values
-	uint EU_ClassValue: 				0x123E190, 0xF64;
+	uint EU_ClassValue: 			0x123E190, 0xF64;
 	uint EU_TotalPOWsaved: 			0x123E194, 0x4;
 	uint EU_Health: 				0x123E190, 0xF54;
 	// score screen
@@ -202,7 +201,7 @@ update {
 		var names = new List<string>() { 
 			"GameTime",
 			"BSGameTimeSeconds",
-			"BSGameTimeMinutes"
+			"BSGameTimeMinutes",
 			"BSState",
 			"FloorVal",
 			"SubFloorVal",
@@ -223,7 +222,7 @@ update {
 			"RocketLauncherAmmo",
 			"GrenadeLauncherAmmo",
 			"SMGAmmo",
-			"PistolAmmo",
+			"PistolAmmo"
 			};
 
 		// (placeholder) have some logic to work out the version and create the prefix
