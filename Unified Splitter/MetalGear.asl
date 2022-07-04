@@ -230,7 +230,7 @@ update {
 
 		// check the basics
 		//either PAL or another version
-//		if (current.region == "PAL") ver = "EU_"; <- not working for some reason
+		//if (current.region == "PAL") ver = "EU_"; <- not working for some reason
 		if (current.regCode == "SLES") ver = "EU_";
 		//either NTSC-US or NTSC-JP
 		else if (current.regCode == "SLUS") ver = "US_";
