@@ -244,6 +244,8 @@ startup {
 		{ "18",  "B3 - Escape" },
 		{ "61",  "Credits" }
 	};
+
+	vars.Rank = "";
 }
 
 update {
@@ -305,6 +307,32 @@ update {
 	}
 
 	// any more code for update goes here
+		//function to display the current rank
+	if(current.GameTime>1079999) {
+		vars.Rank = "Chicken";
+	} else if ((current.GameTime>863999)&&(current.GameTime<1080000)) {
+		vars.Rank = "Turtle";
+	} else if ((current.GameTime>647999)&&(current.GameTime<864000)) {
+		vars.Rank = "Hippopotamus";
+	} else if ((current.GameTime>431999)&&(current.GameTime<648000)) {
+		vars.Rank = "Elephant";
+	} else if ((current.GameTime>215999)&&(current.GameTime<1080000)) {
+		vars.Rank = "Deer";
+	} else if (current.Kills > 3) {
+		vars.Rank = "Deer";
+	} else if (current.Kills < 4) {
+		if ((current.GameTime>108000)&&(current.GameTime<432000)) {
+			vars.Rank = "Zebra";
+		} else if ((current.GameTime>81000)&&(current.GameTime<1080000)) {
+			vars.Rank = "Jackal";
+		} else if ((current.GameTime>45000)&&(current.GameTime<1080000)) {
+			vars.Rank = "Panther";
+		} else if ((current.Kills > 0) ||(current.Continues > 0) || (current.Alerts > 9) ||(current.Rations > 1)) {
+			vars.Rank = "Eagle";
+		} else {
+			vars.Rank = "Fox";
+		}
+	}
 }
 
 gameTime {
@@ -325,7 +353,7 @@ start {
     } else if ((old.BSState == 3) && (current.BSState == 9 )) return true;
 }
 
-split {
+split {	
     if (current.GameTime > 0 && current.BSState == 0) {
         //on entering the elevator on building 1
         if (current.FloorVal == 6) {
