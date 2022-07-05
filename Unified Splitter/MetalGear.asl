@@ -189,6 +189,63 @@ state("pcsx2") {
 	uint EU_PistolAmmo: 			0x123E194, 0xB0;
 }
 
+startup {
+	vars.D = new ExpandoObject();
+	var D = vars.D;
+	D.Vars = new ExpandoObject(); // Splitter-specific variables
+	D.Names = new ExpandoObject(); // Sets of friendly names
+
+	D.Names.Location = new Dictionary<string, string>() {
+		{ "0",  "Docks" },
+		{ "1",  "B1 - Ground Floor" },
+		{ "2",  "B1 - First Floor" },
+		{ "3",  "B1 - Second Floor" },
+		{ "4",  "B1 - Underground" },
+		{ "5",  "Desert 1" },
+		{ "6",  "B1 - Elevator" },
+		{ "7",  "B1 - Roof" },
+		{ "8",  "B2 - Ground Floor" },
+		{ "9",  "B2 - First Floor" },
+		{ "10",  "B2 - Underground" },
+		{ "11",  "Desert 2" },
+		{ "12",  "B2 - Elevator" },
+		{ "13",  "B2 - Hellroof" },
+		{ "14",  "B3 - Ground Floor" },
+		{ "15",  "B3 - Underground" },
+		{ "16",  "B2 - Elevator" },
+		{ "17",  "B3 - Escape" }
+	};
+
+	D.Names.SubLocation = new Dictionary<string, string>() {
+		{ "1",  "Docks" },
+		{ "2",  "B1 - Ground Floor" },
+		{ "3",  "B1 - First Floor" },
+		{ "4",  "B1 - Second Floor" },
+		{ "5",  "B1 - UG Cells" },
+		{ "49",  "B1 - UG Maze" },
+		{ "6",  "Desert 1" },
+		{ "51",  "Tank / Uniform Check" },
+		{ "7",  "B1 - Elevator" },
+		{ "8",  "B1 - Roof" },
+		{ "53",  "B1 - Hind D + Drop" },
+		{ "9",  "B2 - Ground Floor" },
+		{ "52",  "B2 - Bulldozer" },
+		{ "10",  "B2 - First Floor" },
+		{ "54",  "B2 - Underground" },
+		{ "12",  "Desert 2" },
+		{ "13",  "B2 - Elevator" },
+		{ "14",  "B2 - Hellroof" },
+		{ "15",  "B3 - Ground Floor" },
+		{ "55",  "Dirty Duck Area" },
+		{ "16",  "B3 - Underground" },
+		{ "17",  "B2 - Elevator" },
+		{ "57",  "TX-55" },
+		{ "56",  "Big Boss" },
+		{ "18",  "B3 - Escape" },
+		{ "61",  "Credits" }
+	};
+}
+
 update {
 	// get a casted (to dictionary) reference to current
 	// so we can manipulate it using dynamic keynames
@@ -251,7 +308,6 @@ update {
 }
 
 gameTime {
-	
 	if (game.ProcessName.Equals("pcsx2", StringComparison.InvariantCultureIgnoreCase)) {
 		return current.BSState == 0?TimeSpan.FromMilliseconds(current.GameTime * 1000 / (current.regCode == "SLES"?16.667:15)):TimeSpan.FromMilliseconds((current.BSGameTimeMinutes * 60 + current.BSGameTimeSeconds) * 1000);
 	} else {
