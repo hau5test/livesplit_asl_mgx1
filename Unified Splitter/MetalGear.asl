@@ -21,16 +21,25 @@ state("MetalGear") {
 	uint BSGameTimeSeconds: 	0x60160;
     uint BSGameTimeMinutes: 	0x6015C;
 	// variables for state and map location
+	uint MainMenuState:			0x123E18C, 0xA4;
     uint BSState: 				0x601BC;
 	uint FloorVal: 				0x60118;
+	uint ScreenVal:				0x60118;
 	uint SubFloorVal: 			0x5F09C;
 	uint AlertCountdown: 		0x60120;
+	uint Cutscene:				0x123E188, 0xB8C;
 	// snake relevant values
 	// uint SnakeYCoord:		0x5F4D8;
 	uint ClassValue: 			0x5C53C;
 	uint TotalPOWsaved: 		0x5C5DC;
     uint Saves: 				0x5C6AC;
 	uint Health: 				0x5C52C;
+	int SnakeXAxisNG:				0x1243364, 0x5FC;
+	int SnakeFeetYAxisNG:			0x1243364, 0x534;
+	int SnakeHeadYAxisNG:			0x1243364, 0x64C;
+	int SnakeXAxisNGP:				0x1243364, 0x6B4;
+	int SnakeFeetYAxisNGP:			0x1243364, 0x5EC;
+	int SnakeHeadYAxisNGP:			0x1243364, 0x704;
 	// score screen
 	uint Continues: 			0x5C6B0;
 	uint ContPerCheckpoint: 	0x5ED90;
@@ -46,6 +55,11 @@ state("MetalGear") {
 	uint GrenadeLauncherAmmo:	0x5C694;
 	uint SMGAmmo: 				0x5C68C;
 	uint PistolAmmo: 			0x5C688;
+	// menu pointer position    0x00000;
+	uint EquipmentPointX:		0x00000;
+	uint EquipmentPointY:		0x00000;
+	uint WeaponPointX:			0x00000;
+	uint WeaponPointY:			0x00000;
 }
 
 state("pcsx2") {
@@ -70,14 +84,23 @@ state("pcsx2") {
 	uint J20A_BSGameTimeSeconds:	0x123E188, 0xC0;
 	uint J20A_BSGameTimeMinutes:	0x123E188, 0xBC;
 	// variables for state and map location
-	uint J20A_BSState: 				0x123E188, 0x11C;
+	uint J20A_MainMenuState:		0x123E188, 0x70C;
+	uint J20A_BSState: 				0x123E188, 0xCC;
 	uint J20A_FloorVal: 			0x123E188, 0x78;
+	uint J20A_ScreenVal:			0x123E188, 0x2F4;
 	uint J20A_SubFloorVal: 			0x11E540C, 0x684;
 	uint J20A_AlertCountdown: 		0x123E188, 0x80;
+	uint J20A_Cutscene:				0x123E188, 0xB8C;
 	// snake relevant values
 	uint J20A_ClassValue: 			0x123E184, 0x894;
 	uint J20A_TotalPOWsaved: 		0x123E184, 0x934;
 	uint J20A_Health: 				0x123E184, 0x884;
+	int J20A_SnakeXAxisNG:				0x12427FC, 0xE48;
+	int J20A_SnakeFeetYAxisNG:			0x12427FC, 0xD80;
+	int J20A_SnakeHeadYAxisNG:			0x12427FC, 0xE48;
+	int J20A_SnakeXAxisNGP:				0x12427FC, 0xF28;
+	int J20A_SnakeFeetYAxisNGP:			0x12427FC, 0xE60;
+	int J20A_SnakeHeadYAxisNGP:			0x12427FC, 0xF78;
 	// score screen
     uint J20A_Saves: 				0x123E184, 0xA04;
 	uint J20A_Continues: 			0x123E184, 0xA08;
@@ -94,21 +117,35 @@ state("pcsx2") {
 	uint J20A_GrenadeLauncherAmmo: 	0x123E184, 0x9EC;
 	uint J20A_SMGAmmo: 				0x123E184, 0x9E4;
 	uint J20A_PistolAmmo: 			0x123E184, 0x9E0;
+	// menu pointer position    0x00000;
+	uint J20A_EquipmentPointX:		0x123E184, 0x868;
+	uint J20A_EquipmentPointY:		0x123E184, 0x874;
+	uint J20A_WeaponPointX:			0x123E184, 0x86C;
+	uint J20A_WeaponPointY:			0x123E184, 0x878;
 
     // JP Subsistence
 	// timers
 	uint JSub_GameTime: 			0x123E184, 0xA70;
-	uint JSub_BSGameTimeSeconds:	0x123EB00, 0x784;
-	uint JSub_BSGameTimeMinutes:	0x123E188, 0x370;
+	uint JSub_BSGameTimeSeconds:	0x123E188, 0x140;
+	uint JSub_BSGameTimeMinutes:	0x123E188, 0x13C;
 	// variables for state and map location
-	uint JSub_BSState: 				0x123E188, 0x19C;
+	uint JSub_MainMenuState:		0x123E188, 0x78C;
+	uint JSub_BSState: 				0x123E188, 0x14C;
 	uint JSub_FloorVal: 			0x123E188, 0x370;
+	uint JSub_ScreenVal:			0x123E188, 0xCBC;
 	uint JSub_SubFloorVal: 			0x123EB00, 0x784;
 	uint JSub_AlertCountdown: 		0x123E188, 0x100;
+	uint JSub_Cutscene:				0x123E188, 0xB8C;
 	// snake relevant values
 	uint JSub_ClassValue: 			0x123E184, 0x914;
 	uint JSub_TotalPOWsaved: 		0x123E184, 0x9B4;
 	uint JSub_Health: 				0x123E184, 0x904;
+	int JSub_SnakeXAxisNG:				0x12427FC, 0xE48;
+	int JSub_SnakeFeetYAxisNG:			0x12427FC, 0xD80;
+	int JSub_SnakeHeadYAxisNG:			0x12427FC, 0xE98;
+	int JSub_SnakeXAxisNGP:				0x12427FC, 0xF28;
+	int JSub_SnakeFeetYAxisNGP:			0x12427FC, 0xE60;
+	int JSub_SnakeHeadYAxisNGP:			0x12427FC, 0xF78;
 	// score screen
     uint JSub_Saves: 				0x123E184, 0xA84;
 	uint JSub_Continues: 			0x123E184, 0xA88;
@@ -125,6 +162,11 @@ state("pcsx2") {
 	uint JSub_GrenadeLauncherAmmo: 	0x123E184, 0xA6C;
 	uint JSub_SMGAmmo: 				0x123E184, 0xA64;
 	uint JSub_PistolAmmo: 			0x123E184, 0xA60;
+	// menu pointer position
+	uint JSub_EquipmentPointX:		0x123E184, 0x8E8;
+	uint JSub_EquipmentPointY:		0x123E184, 0x8F4;
+	uint JSub_WeaponPointX:			0x123E184, 0x8EC;
+	uint JSub_WeaponPointY:			0x123E184, 0x8F8;
 
 	// US
 	// timers
@@ -132,14 +174,23 @@ state("pcsx2") {
 	uint US_BSGameTimeSeconds:		0x123EB08, 0xC04;
 	uint US_BSGameTimeMinutes:		0x123E188, 0xA10;
 	// variables for state and map location
-	uint US_BSState: 				0x123E188, 0xAB4;
+	uint US_MainMenuState:			0x123E18C, 0xA4;
+	uint US_BSState: 				0x123E188, 0xA64;
 	uint US_FloorVal: 				0x123E188, 0xA10;
+	uint US_ScreenVal:				0x123E188, 0xCBC;
 	uint US_SubFloorVal: 			0x123EB08, 0xC04;
 	uint US_AlertCountdown: 		0x123E188, 0xA18;
+	uint US_Cutscene:				0x123E188, 0xB8C;
 	// snake relevant values
 	uint US_ClassValue: 			0x123E188, 0x22C;
 	uint US_TotalPOWsaved: 			0x123E188, 0x2CC;
 	uint US_Health: 				0x123E188, 0x21C;
+	int US_SnakeXAxisNG:				0x1243364, 0x5FC;
+	int US_SnakeFeetYAxisNG:			0x1243364, 0x534;
+	int US_SnakeHeadYAxisNG:			0x1243364, 0x64C;
+	int US_SnakeXAxisNGP:				0x1243364, 0x6B4;
+	int US_SnakeFeetYAxisNGP:			0x1243364, 0x5EC;
+	int US_SnakeHeadYAxisNGP:			0x1243364, 0x704;
 	// score screen
     uint US_Saves: 					0x123E188, 0x39C;
 	uint US_Continues: 				0x123E188, 0x3A0;
@@ -156,6 +207,11 @@ state("pcsx2") {
 	uint US_GrenadeLauncherAmmo: 	0x123E188, 0x384;
 	uint US_SMGAmmo: 				0x123E188, 0x37C;
 	uint US_PistolAmmo: 			0x123E188, 0x378;
+	// menu pointer position    0x00000;
+	uint US_EquipmentPointX:		0x123E188, 0x200;
+	uint US_EquipmentPointY:		0x123E188, 0x20C;
+	uint US_WeaponPointX:			0x123E188, 0x204;
+	uint US_WeaponPointY:			0x123E188, 0x210;
 
     // EU
 	// timers
@@ -163,14 +219,23 @@ state("pcsx2") {
 	uint EU_BSGameTimeSeconds:		0x123E194, 0x790;
 	uint EU_BSGameTimeMinutes:		0x123E194, 0x78C;
 	// variables for state and map location
+	uint EU_MainMenuState:			0x123E18C, 0xA4;
 	uint EU_BSState: 				0x123E194, 0x7EC;
 	uint EU_FloorVal: 				0x123E194, 0x9C0;
+	uint EU_ScreenVal:				0x123E188, 0xCBC;
 	uint EU_SubFloorVal: 			0x123EB14, 0xA84;
 	uint EU_AlertCountdown: 		0x123E194, 0x750;
+	uint EU_Cutscene:				0x123E188, 0xB8C;
 	// snake relevant values
 	uint EU_ClassValue: 			0x123E190, 0xF64;
 	uint EU_TotalPOWsaved: 			0x123E194, 0x4;
 	uint EU_Health: 				0x123E190, 0xF54;
+	int EU_SnakeXAxisNG:				0x1243364, 0x5FC;
+	int EU_SnakeFeetYAxisNG:			0x1243364, 0x534;
+	int EU_SnakeHeadYAxisNG:			0x1243364, 0x64C;
+	int EU_SnakeXAxisNGP:				0x1243364, 0x6B4;
+	int EU_SnakeFeetYAxisNGP:			0x1243364, 0x5EC;
+	int EU_SnakeHeadYAxisNGP:			0x1243364, 0x704;
 	// score screen
     uint EU_Saves: 					0x123E194, 0xD4;
 	uint EU_Continues: 				0x123E194, 0xD8;
@@ -187,6 +252,11 @@ state("pcsx2") {
 	uint EU_GrenadeLauncherAmmo: 	0x123E194, 0xBC;
 	uint EU_SMGAmmo: 				0x123E194, 0xB4;
 	uint EU_PistolAmmo: 			0x123E194, 0xB0;
+	// menu pointer position    0x00000;
+	uint EU_EquipmentPointX:		0x00000, 0x00;
+	uint EU_EquipmentPointY:		0x00000, 0x00;
+	uint EU_WeaponPointX:			0x00000, 0x00;
+	uint EU_WeaponPointY:			0x00000, 0x00;
 }
 
 startup {
@@ -246,6 +316,10 @@ startup {
 	};
 
 	vars.Rank = "";
+	vars.Class = "";
+	vars.SnakeYAxisHead = "";
+	vars.SnakeYAxisFeet = "";
+	vars.SnakeXAxis = "";
 }
 
 update {
@@ -261,13 +335,22 @@ update {
 			"GameTime",
 			"BSGameTimeSeconds",
 			"BSGameTimeMinutes",
+			"MainMenuState",
 			"BSState",
 			"FloorVal",
+			"ScreenVal",
 			"SubFloorVal",
 			"AlertCountdown",
+			"Cutscene",
 			"ClassValue",
 			"TotalPOWsaved",
 			"Health",
+			"SnakeXAxisNG",
+			"SnakeFeetYAxisNG",
+			"SnakeHeadYAxisNG",
+			"SnakeXAxisNGP",
+			"SnakeFeetYAxisNGP",
+			"SnakeHeadYAxisNGP",
 			"Saves",
 			"Continues",
 			"ContPerCheckpoint",
@@ -281,7 +364,11 @@ update {
 			"RocketLauncherAmmo",
 			"GrenadeLauncherAmmo",
 			"SMGAmmo",
-			"PistolAmmo"
+			"PistolAmmo",
+			"EquipmentPointX",
+			"EquipmentPointY",
+			"WeaponPointX",
+			"WeaponPointY"
 			};
 
 		// (placeholder) have some logic to work out the version and create the prefix
@@ -333,24 +420,47 @@ update {
 			vars.Rank = "Fox";
 		}
 	}
+
+	vars.Class = current.ClassValue + 1;
+	
+	vars.Location = "";
+
+	vars.SnakeYAxisHead = current.SnakeHeadYAxisNG + current.SnakeHeadYAxisNGP;
+	vars.SnakeYAxisFeet = current.SnakeFeetYAxisNG + current.SnakeFeetYAxisNGP;
+	vars.SnakeXAxis = current.SnakeXAxisNG + current.SnakeXAxisNGP;
 }
 
 gameTime {
 	if (game.ProcessName.Equals("pcsx2", StringComparison.InvariantCultureIgnoreCase)) {
-		return current.BSState == 0?TimeSpan.FromMilliseconds(current.GameTime * 1000 / (current.regCode == "SLES"?16.667:15)):TimeSpan.FromMilliseconds((current.BSGameTimeMinutes * 60 + current.BSGameTimeSeconds) * 1000);
+		if (current.BSState == 0) {	
+			return TimeSpan.FromMilliseconds(current.GameTime * 1000 / (current.regCode == "SLES"?16.667:15));
+ 		} else {
+			return TimeSpan.FromMilliseconds((current.BSGameTimeMinutes * 60 + current.BSGameTimeSeconds) * 1000);
+		}
 	} else {
-		return current.BSState == 0?TimeSpan.FromMilliseconds(current.GameTime * 1000 / 15):TimeSpan.FromMilliseconds((current.BSGameTimeMinutes * 60 + current.BSGameTimeSeconds) * 1000);
+		if (current.BSState == 0) {	
+			return TimeSpan.FromMilliseconds(current.GameTime * 1000 / 15);
+ 		} else {
+			return TimeSpan.FromMilliseconds((current.BSGameTimeMinutes * 60 + current.BSGameTimeSeconds) * 1000);
+		}
 	}
 }
 
 isLoading {
-	return true;
+	if(current.BSState == 0 || current.BSState == 4) return false;
+	else return true;
 }
 
 start {
-    if ((current.BSState == 0) && ((current.GameTime != 0) && (current.GameTime != old.GameTime))) {
+	// various start texts and values
+	// J-SUB: 	19351456 NG		19351408 NGP
+	// J20A: 	19351408 NG		19351408 NGP
+	// US: 		22288032 NG 	22287840 NGP
+	// PAL:		
+
+    if ((current.BSState == 0) && (((old.MainMenuState == 19351456) || (old.MainMenuState == 19351408)|| (old.MainMenuState == 22288032)|| (old.MainMenuState == 22287840)) && (current.MainMenuState != old.MainMenuState))) {
         return  true;
-    } else if ((old.BSState == 3) && (current.BSState == 9 )) return true;
+    } else if ((old.BSState == 8) && (current.BSState == 1)) return true;
 }
 
 split {	
@@ -444,46 +554,34 @@ split {
             if ((old.SubFloorVal == 57) && (current.SubFloorVal == 56)) return true;
         }
         // on entering the final map
-        if (current.FloorVal == 17) {
-            // if before map was B3 Underground
-            if (old.FloorVal == 15) return true;
-            // if before map was ladder selection and transitioning into credits
-            // this marks the final split of every run
-            else if ((old.SubFloorVal == 18) && (current.SubFloorVal == 61)) return true;
-        }
+        if ((current.FloorVal == 17) && (old.FloorVal == 15)) return true;
+        
     }
 
     // during Boss Survival
-    if (current.BSGameTimeMinutes + current.BSGameTimeSeconds > 0) {
-        // moving from Shotmaker Map to Machine Gun Kid Map
-        if ((current.FloorVal == 2) && (old.FloorVal == 4)) return true;
-        // moving from Machine Gun Kid Map to Hind-D Map
-        if ((current.FloorVal == 7) && (old.FloorVal == 2)) return true;
-        // moving from Hind-D Map to Tank Map
-        if ((current.FloorVal == 5) && (old.FloorVal == 7)) return true;
-        // moving from Tank Map to Firetrooper Map
-        if ((current.FloorVal == 10) && (old.FloorVal == 5)) return true;
-        // moving from Firetrooper Map to Dirty Duck Map
-        if ((current.FloorVal == 14) && (old.FloorVal == 10)) return true;
-        // moving from Dirty Duck Map to Building 3 Underground
-        if ((current.FloorVal == 15) && (old.FloorVal == 14)) return true;
-        // moving from Metal Gear TX-55 Map to Big Boss Fight Map
-        if (current.FloorVal == 15) {
-            if ((old.SubFloorVal != 56) && (current.SubFloorVal == 56)) return true;
-            if((current.BSState == 2) && (old.BSState != 1)) return true;
-        }
-    }
+    if ((old.BSState == 4) && (current.BSState == 6)) return true;
+
+	// NTSC-U main menu state to define end of run
+	if ((current.MainMenuState == 22288560) && (current.MainMenuState != old.MainMenuState)) return true;
+
+	// NTSC-J (both) main menu state to define end of run
+	if ((current.MainMenuState == 19351936) && (current.MainMenuState != old.MainMenuState)) return true;
 }
 
 reset {
-	if((current.GameTime == 0) && (old.GameTime == 0))
-	{
-        return true;
-    }
-    if((current.BSState == 3) &&(current.BSGameTimeSeconds == 0)) {
-        return true;
-    }
-    if((current.BSState == 3) && (old.BSState == 2) && (current.BSGameTimeSeconds != current.BSState)) {
+	// various start texts and values
+	// J-SUB: 	19351456 NG		19351408 NGP
+	// J20A: 	19351408
+	// US: 		22288032 NG 	22287840 NGP
+	// PAL:		
+	if(current.BSState == 0) {
+		if((current.MainMenuState == 19351456) && (old.MainMenuState != 19351456)) return true;
+		else if((current.MainMenuState == 19351408) && (old.MainMenuState != 19351408)) return true;
+		else if((current.MainMenuState == 22288032) && (old.MainMenuState != 22288032)) return true;
+		else if((current.MainMenuState == 22287840) && (old.MainMenuState != 22287840)) return true;
+	}
+
+    if ( old.BSState == 5 || (current.BSState != 0 && current.BSState == 0)) {
         return true;
     }
 }
