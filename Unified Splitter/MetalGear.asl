@@ -246,8 +246,8 @@ state("pcsx2") {
 	// US
 	// timers
 	uint US_GameTime: 				0x123E188, 0x388;
-	uint US_BSGameTimeSeconds:		0x123EB08, 0xC04;
-	uint US_BSGameTimeMinutes:		0x123E188, 0xA10;
+	uint US_BSGameTimeSeconds:		0x123E188, 0xA58;
+	uint US_BSGameTimeMinutes:		0x123E188, 0xA54;
 	// variables for state and map location
 	uint US_MainMenuState:			0x123E18C, 0xA4;
 	uint US_BSState: 				0x123E188, 0xA64;
@@ -730,25 +730,7 @@ split {
 }
 
 reset {
-	// various start texts and values
-	// J-SUB: 	19351456 NG		19351408 NGP
-	// J20A: 	19351408
-	// US: 		22288032 NG 	22287840 NGP
-	// PAL:		22294496 NG		22294520 NGP
-	// PC:		192593504 NG	192593528 NGP 192594032 BS 192593312 192778557
-
-	if(current.BSState == 0) {
-		if((current.MainMenuState == 19351456) && (old.MainMenuState != 19351456)) return true;
-		else if((current.MainMenuState == 19351408) && (old.MainMenuState != 19351408)) return true;
-		else if((current.MainMenuState == 22288032) && (old.MainMenuState != 22288032)) return true;
-		else if((current.MainMenuState == 22287840) && (old.MainMenuState != 22287840)) return true;
-		else if((current.MainMenuState == 22294496) && (old.MainMenuState != 22294496)) return true;
-		else if((current.MainMenuState == 22294520) && (old.MainMenuState != 22294520)) return true;
-		else if((current.MainMenuState == 192593504) && (old.MainMenuState != 192593504)) return true;
-		else if((current.MainMenuState == 192593528) && (old.MainMenuState != 192593528)) return true;
-		else if((current.MainMenuState == 192593312) && (old.MainMenuState != 192593312)) return true;
-		else if((current.MainMenuState == 192778557) && (old.MainMenuState != 192778557)) return true;
-	}
+	if((current.BSState == 0) && (current.GameTime == 0) && (current.GameTime != old.GameTime))  return true;
 
     if ( old.BSState == 5 || (current.BSState != 0 && current.BSState == 0)) {
 		return true;
