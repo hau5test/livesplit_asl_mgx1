@@ -17,73 +17,74 @@
 /*********************************************************/
 state("MetalGear") {
 	// timers
-	uint GameTime:				0x5C698;
-	uint BSGameTimeSeconds: 	0x60160;
-    uint BSGameTimeMinutes: 	0x6015C;
+	uint GameTime:				0x145AC, 0xEB8;
+	uint BSGameTimeSeconds: 	0x11854, 0x114;
+    uint BSGameTimeMinutes: 	0x11854, 0x110;
 	// variables for state and map location
-	uint MainMenuState:			0x113B8, 0x72C;
-    uint BSState: 				0x6016C;
-	uint FloorVal: 				0x60118;
-	uint ScreenVal:				0x5B584;
-	uint SubFloorVal: 			0x5F09C;
-	uint AlertCountdown: 		0x60120;
+	uint MainMenuState:			0x14C44, 0xCB0;
+    uint BSState: 				0x11854, 0x120;
+	uint FloorVal: 				0x11854, 0xCC;
+	uint ScreenVal:				0x1183C, 0x4;
+	uint SubFloorVal: 			0x1F108, 0xC8;
+	uint AlertCountdown: 		0x11854, 0xD4;
 	// snake relevant values
-	uint ClassValue: 			0x5C53C;
-	uint TotalPOWsaved: 		0x5C5DC;
-    uint Saves: 				0x5C6AC;
-	uint Health: 				0x5C52C;
-	int SnakeXAxisNG:			0x5F3D8, 0x0, 0x1C;
-	int SnakeFeetYAxisNG:		0x5F3D8, 0x0, 0x1CC;
-	int SnakeHeadYAxisNG:		0x5F3D8, 0x0, 0x1CC;
-	int SnakeXAxisNGP:			0x62540, 0x0, 0x178;
-	int SnakeFeetYAxisNGP:		0x62568, 0x0, 0x48;
-	int SnakeHeadYAxisNGP:		0x62544, 0x0, 0x1CC;
+	uint ClassValue: 			0x113B8, 0xFB4;
+	uint TotalPOWsaved: 		0x13B64, 0xF7C;
+    uint Saves: 				0x1C51C, 0xFEC;
+	uint Health: 				0x113B8, 0xFA4;
+	// PC is the only version where the two positions are identical memories
+	int SnakeXAxisNG:			0x5F388, 0x0, 0xF88;
+	int SnakeFeetYAxisNG:		0x5F388, 0x30, 0x8C4;
+	int SnakeHeadYAxisNG:		0x5F388, 0x18, 0xC28;
+	int SnakeXAxisNGP:			0x5F388, 0x0, 0xF88;
+	int SnakeFeetYAxisNGP:		0x5F388, 0x30, 0x8C4;
+	int SnakeHeadYAxisNGP:		0x5F388, 0x18, 0xC28;
 	// score screen
-	uint Continues: 			0x5C6B0;
-	uint ContPerCheckpoint: 	0x5ED90;
-	uint Alerts: 				0x5C6A4;
-	uint Kills: 				0x5C6A0;
-	uint Rations: 				0x5C69C;
+	uint Continues: 			0x145AC, 0xED0;
+	uint ContPerCheckpoint: 	0x1EBC4, 0x0;
+	uint Alerts: 				0x145AC, 0xEC4;
+	uint Kills: 				0x145AC, 0xEC0;
+	uint Rations: 				0x145AC, 0xEBC;
 	// inventory values
-	uint RationsHeld: 			0x5C5C8;
-	uint PlasticExplosives: 	0x5C680;
-	uint Mines: 				0x5C67C;
-	uint RemoteMissiles: 		0x5C684;
-	uint RocketLauncherAmmo: 	0x5C690;
-	uint GrenadeLauncherAmmo:	0x5C694;
-	uint SMGAmmo: 				0x5C68C;
-	uint PistolAmmo: 			0x5C688;
+	uint RationsHeld: 			0x13B64, 0xF68;
+	uint PlasticExplosives: 	0x145AC, 0xEA0;
+	uint Mines: 				0x145AC, 0xE9C;
+	uint RemoteMissiles: 		0x145AC, 0xEA4;
+	uint RocketLauncherAmmo: 	0x145AC, 0xEB0;
+	uint GrenadeLauncherAmmo:	0x145AC, 0xEB4;
+	uint SMGAmmo: 				0x145AC, 0xEAC;
+	uint PistolAmmo: 			0x145AC, 0xEA8;
 	// menu pointer position
-	uint EquipmentPointX:		0x9DC510;
-	uint EquipmentPointY:		0x9DC51C;
-	uint WeaponPointX:			0x9DC520;
-	uint WeaponPointY:			0x9DC514;
+	uint EquipmentPointX:		0x113B8, 0xF88;
+	uint EquipmentPointY:		0x113B8, 0xF94;
+	uint WeaponPointX:			0x113B8, 0xF8C;
+	uint WeaponPointY:			0x113B8, 0xF98;
 	// inventory slots
-	uint InventorySlot11:		0x9DC548;
-	uint InventorySlot12:		0x9DC54C;
-	uint InventorySlot13:		0x9DC550;
-	uint InventorySlot14:		0x9DC554;
-	uint InventorySlot15:		0x9DC558;
-	uint InventorySlot21:		0x9DC55C;
-	uint InventorySlot22:		0x9DC560;
-	uint InventorySlot23:		0x9DC564;
-	uint InventorySlot24:		0x9DC568;
-	uint InventorySlot25:		0x9DC56C;
-	uint InventorySlot31:		0x9DC570;
-	uint InventorySlot32:		0x9DC574;
-	uint InventorySlot33:		0x9DC578;
-	uint InventorySlot34:		0x9DC57C;
-	uint InventorySlot35:		0x9DC580;
-	uint InventorySlot41:		0x9DC584;
-	uint InventorySlot42:		0x9DC588;
-	uint InventorySlot43:		0x9DC58C;
-	uint InventorySlot44:		0x9DC590;
-	uint InventorySlot45:		0x9DC594;
-	uint InventorySlot51:		0x9DC598;
-	uint InventorySlot52:		0x9DC59C;
-	uint InventorySlot53:		0x9DC5A0;
-	uint InventorySlot54:		0x9DC5A4;
-	uint InventorySlot55:		0x9DC5A8;
+	uint InventorySlot11:		0x113B8, 0xFC0;
+	uint InventorySlot12:		0x113B8, 0xFC4;
+	uint InventorySlot13:		0x113B8, 0xFC8;
+	uint InventorySlot14:		0x113B8, 0xFCC;
+	uint InventorySlot15:		0x113B8, 0xFD0;
+	uint InventorySlot21:		0x113B8, 0xFD4;
+	uint InventorySlot22:		0x113B8, 0xFD8;
+	uint InventorySlot23:		0x113B8, 0xFDC;
+	uint InventorySlot24:		0x113B8, 0xFE0;
+	uint InventorySlot25:		0x113B8, 0xFE4;
+	uint InventorySlot31:		0x113B8, 0xFE8;
+	uint InventorySlot32:		0x113B8, 0xFEC;
+	uint InventorySlot33:		0x113B8, 0xFF0;
+	uint InventorySlot34:		0x113B8, 0xFF4;
+	uint InventorySlot35:		0x113B8, 0xFF8;
+	uint InventorySlot41:		0x113B8, 0xFFC;
+	uint InventorySlot42:		0x113E8, 0xFD4;
+	uint InventorySlot43:		0x113E8, 0xFD8;
+	uint InventorySlot44:		0x113E8, 0xFDC;
+	uint InventorySlot45:		0x113E8, 0xFE0;
+	uint InventorySlot51:		0x113E8, 0xFE4;
+	uint InventorySlot52:		0x113E8, 0xFE8;
+	uint InventorySlot53:		0x113E8, 0xFEC;
+	uint InventorySlot54:		0x113E8, 0xFF0;
+	uint InventorySlot55:		0x113E8, 0xFF4;
 }
 
 state("pcsx2") {
@@ -444,6 +445,7 @@ startup {
 	vars.SnakeYAxisHead = "";
 	vars.SnakeYAxisFeet = "";
 	vars.SnakeXAxis = "";
+	vars.NGorNGP = "";
 }
 
 update {
@@ -573,9 +575,10 @@ update {
 	
 	vars.Location = "";
 
-	vars.SnakeYAxisHead = current.SnakeHeadYAxisNG + current.SnakeHeadYAxisNGP;
-	vars.SnakeYAxisFeet = current.SnakeFeetYAxisNG + current.SnakeFeetYAxisNGP;
-	vars.SnakeXAxis = current.SnakeXAxisNG + current.SnakeXAxisNGP;
+	vars.SnakeYAxisHead = current.InventorySlot12 == 27?current.SnakeHeadYAxisNG:current.SnakeHeadYAxisNGP;
+	vars.SnakeYAxisFeet = current.InventorySlot12 == 27?current.SnakeFeetYAxisNG:current.SnakeFeetYAxisNGP;
+	vars.SnakeXAxis = current.InventorySlot12 == 27?current.SnakeXAxisNG:current.SnakeXAxisNGP;
+	vars.NGorNGP = current.InventorySlot12 == 27?"New Game Plus":"New Game";
 }
 
 gameTime {
@@ -721,6 +724,9 @@ split {
 
 	// PC main menu state to define end of run
 	if ((current.MainMenuState == 192594032) && (current.MainMenuState != old.MainMenuState)) return true;
+
+	// PC main menu state to define end of run
+	if ((current.MainMenuState == 2214592509) && (current.MainMenuState != old.MainMenuState)) return true;
 }
 
 reset {
@@ -729,7 +735,7 @@ reset {
 	// J20A: 	19351408
 	// US: 		22288032 NG 	22287840 NGP
 	// PAL:		22294496 NG		22294520 NGP
-	// PC:		192593504 NG	192593528 NGP 192594032 BS 192593312
+	// PC:		192593504 NG	192593528 NGP 192594032 BS 192593312 192778557
 
 	if(current.BSState == 0) {
 		if((current.MainMenuState == 19351456) && (old.MainMenuState != 19351456)) return true;
@@ -741,9 +747,10 @@ reset {
 		else if((current.MainMenuState == 192593504) && (old.MainMenuState != 192593504)) return true;
 		else if((current.MainMenuState == 192593528) && (old.MainMenuState != 192593528)) return true;
 		else if((current.MainMenuState == 192593312) && (old.MainMenuState != 192593312)) return true;
+		else if((current.MainMenuState == 192778557) && (old.MainMenuState != 192778557)) return true;
 	}
 
     if ( old.BSState == 5 || (current.BSState != 0 && current.BSState == 0)) {
-        return true;
+		return true;
     }
 }
