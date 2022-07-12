@@ -579,18 +579,14 @@ update {
 	// define string that can contain the value based on dictionary key
 	string loc = null;
 	// look up map name based on floor value
-	D.Location.TryGetValue(current.FloorVal, out loc);
-	// if not null, set ASLVV Location to found value
-	if (loc != null) {
+	if (D.Location.TryGetValue(current.FloorVal, out loc)) {
 		vars.Location = loc;
 	}
 
 	// define string that can contain the value based on dictionary key
-	string loc2 = null;
-	// look up sub map name based on Subfloor value
-	D.SubLocation.TryGetValue(current.SubFloorVal, out loc2);
-	// if not null, set ASLVV Sublocation to found value
-	if (loc2 != null) {
+	string loc2 = null;	
+	// look up map name based on floor value
+	if (D.SubLocation.TryGetValue(current.SubFloorVal, out loc2)) {
 		vars.SubLocation = loc2;
 	}
 
