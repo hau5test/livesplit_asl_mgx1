@@ -387,68 +387,70 @@ state("pcsx2") {
 startup {
 	vars.D = new ExpandoObject();
 	var D = vars.D;
-	D.Vars = new ExpandoObject(); // Splitter-specific variables
-	D.Names = new ExpandoObject(); // Sets of friendly names
 
-	D.Names.Location = new Dictionary<string, string>() {
-		{ "0",  "Docks" },
-		{ "1",  "B1 - Ground Floor" },
-		{ "2",  "B1 - First Floor" },
-		{ "3",  "B1 - Second Floor" },
-		{ "4",  "B1 - Underground" },
-		{ "5",  "Desert 1" },
-		{ "6",  "B1 - Elevator" },
-		{ "7",  "B1 - Roof" },
-		{ "8",  "B2 - Ground Floor" },
-		{ "9",  "B2 - First Floor" },
-		{ "10",  "B2 - Underground" },
-		{ "11",  "Desert 2" },
-		{ "12",  "B2 - Elevator" },
-		{ "13",  "B2 - Hellroof" },
-		{ "14",  "B3 - Ground Floor" },
-		{ "15",  "B3 - Underground" },
-		{ "16",  "B2 - Elevator" },
-		{ "17",  "B3 - Escape" }
+	D.Location = new Dictionary<uint, string>() {
+		{ 0,  "Docks" },
+		{ 1,  "B1 - Ground Floor" },
+		{ 2,  "B1 - First Floor" },
+		{ 3,  "B1 - Second Floor" },
+		{ 4,  "B1 - Underground" },
+		{ 5,  "Desert 1" },
+		{ 6,  "B1 - Elevator" },
+		{ 7,  "B1 - Roof" },
+		{ 8,  "B2 - Ground Floor" },
+		{ 9,  "B2 - First Floor" },
+		{ 10,  "B2 - Underground" },
+		{ 11,  "Desert 2" },
+		{ 12,  "B2 - Elevator" },
+		{ 13,  "B2 - Hellroof" },
+		{ 14,  "B3 - Ground Floor" },
+		{ 15,  "B3 - Underground" },
+		{ 16,  "B2 - Elevator" },
+		{ 17,  "B3 - Escape" }
 	};
 
-	D.Names.SubLocation = new Dictionary<string, string>() {
-		{ "1",  "Docks" },
-		{ "2",  "B1 - Ground Floor" },
-		{ "3",  "B1 - First Floor" },
-		{ "4",  "B1 - Second Floor" },
-		{ "5",  "B1 - UG Cells" },
-		{ "49",  "B1 - UG Maze" },
-		{ "6",  "Desert 1" },
-		{ "51",  "Tank / Uniform Check" },
-		{ "7",  "B1 - Elevator" },
-		{ "8",  "B1 - Roof" },
-		{ "53",  "B1 - Hind D + Drop" },
-		{ "9",  "B2 - Ground Floor" },
-		{ "52",  "B2 - Bulldozer" },
-		{ "10",  "B2 - First Floor" },
-		{ "54",  "B2 - Underground" },
-		{ "12",  "Desert 2" },
-		{ "13",  "B2 - Elevator" },
-		{ "14",  "B2 - Hellroof" },
-		{ "15",  "B3 - Ground Floor" },
-		{ "55",  "Dirty Duck Area" },
-		{ "16",  "B3 - Underground" },
-		{ "17",  "B2 - Elevator" },
-		{ "57",  "TX-55" },
-		{ "56",  "Big Boss" },
-		{ "18",  "B3 - Escape" },
-		{ "61",  "Credits" }
+	D.SubLocation = new Dictionary<uint, string>() {
+		{ 1,  "Docks" },
+		{ 2,  "B1 - Ground Floor" },
+		{ 3,  "B1 - First Floor" },
+		{ 4,  "B1 - Second Floor" },
+		{ 5,  "B1 - UG Cells" },
+		{ 6,  "Desert 1" },
+		{ 7,  "B1 - Elevator" },
+		{ 8,  "B1 - Roof" },
+		{ 9,  "B2 - Ground Floor" },
+		{ 10,  "B2 - First Floor" },
+		{ 12,  "Desert 2" },
+		{ 13,  "B2 - Elevator" },
+		{ 14,  "B2 - Hellroof" },
+		{ 15,  "B3 - Ground Floor" },
+		{ 16,  "B3 - Underground" },
+		{ 17,  "B2 - Elevator" },
+		{ 18,  "B3 - Escape" },
+		{ 49,  "B1 - UG Maze" },
+		{ 51,  "Tank / Uniform Check" },
+		{ 52,  "B2 - Bulldozer" },
+		{ 53,  "B1 - Hind D + Drop" },
+		{ 54,  "B2 - Underground" },
+		{ 55,  "Dirty Duck Area" },
+		{ 56,  "Big Boss" },
+		{ 57,  "TX-55" },
+		{ 61,  "Credits" }
 	};
 
+	// define all variables in start up so they can be set before an active run is going on
 	vars.Rank = "";
 	vars.Class = "";
 	vars.SnakeYAxisHead = "";
 	vars.SnakeYAxisFeet = "";
 	vars.SnakeXAxis = "";
 	vars.NGorNGP = "";
+	vars.Location = "";
+	vars.SubLocation = "";
 }
 
 update {
+  	var D = vars.D;
 	// get a casted (to dictionary) reference to current
 	// so we can manipulate it using dynamic keynames
 	var cur = current as IDictionary<string, object>;
@@ -571,14 +573,32 @@ update {
 		}
 	}
 
+	// Set Class according to human counting now machine counting
 	vars.Class = current.ClassValue + 1;
-	
-	vars.Location = "";
 
-	vars.SnakeYAxisHead = current.InventorySlot12 == 27?current.SnakeHeadYAxisNG:current.SnakeHeadYAxisNGP;
-	vars.SnakeYAxisFeet = current.InventorySlot12 == 27?current.SnakeFeetYAxisNG:current.SnakeFeetYAxisNGP;
-	vars.SnakeXAxis = current.InventorySlot12 == 27?current.SnakeXAxisNG:current.SnakeXAxisNGP;
-	vars.NGorNGP = current.InventorySlot12 == 27?"New Game Plus":"New Game";
+	// define string that can contain the value based on dictionary key
+	string loc = null;
+	// look up map name based on floor value
+	D.Location.TryGetValue(current.FloorVal, out loc);
+	// if not null, set ASLVV Location to found value
+	if (loc != null) {
+		vars.Location = loc;
+	}
+
+	// define string that can contain the value based on dictionary key
+	string loc2 = null;
+	// look up sub map name based on Subfloor value
+	D.SubLocation.TryGetValue(current.SubFloorVal, out loc2);
+	// if not null, set ASLVV Sublocation to found value
+	if (loc2 != null) {
+		vars.SubLocation = loc2;
+	}
+
+	// if Item 27 (bandana) is in equipment slot 1 horizontal 2 vertical, use New Game Plus, if not use New Game data
+	vars.SnakeYAxisHead = current.InventorySlot12 != 27?current.SnakeHeadYAxisNG:current.SnakeHeadYAxisNGP;
+	vars.SnakeYAxisFeet = current.InventorySlot12 != 27?current.SnakeFeetYAxisNG:current.SnakeFeetYAxisNGP;
+	vars.SnakeXAxis = current.InventorySlot12 != 27?current.SnakeXAxisNG:current.SnakeXAxisNGP;
+	vars.NGorNGP = current.InventorySlot12 != 27?"New Game":"New Game Plus";
 }
 
 gameTime {
