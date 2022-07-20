@@ -675,21 +675,12 @@ split {
             }
         }
 
-        //on ranking up from Rank 3 to Rank 4
-        // if ((current.ClassValue == 3) && (old.ClassValue == 2)) return true;
-
-        //on entering the B2 elevator, but only if the amount of continues for a single checkpoint 5 (reaching death abuse)
-        //and on transitioning between B2 Elevator and going back into Building 2 - First Floor again
-        // marking the end of the death abuse segment
-        if ((current.ClassValue == 3) && (current.ContPerCheckpoint == 5) && (current.FloorVal == 9) && (old.FloorVal == 12)) return true;
+        //split on successful death abuse first time only
+        if (current.ContPerCheckpoint == 5 && old.ContPerCheckpoint == 4) return true;
 
         //on entering the B2 elevator, but only if the amount of continues for a single checkpoint is higher than 4
         //and on transitioning between Building 2 - First Floor going into the B2 Elevator
-        if ((current.ClassValue == 3) && (current.ContPerCheckpoint > 4) && (current.FloorVal == 12) && (old.FloorVal == 9)) return true;
-
-        // for big boss, the above check will be accepted if the continues per checkpoint are exactly 0
-        // for an intended Big Boss rank run
-        if ((current.ClassValue == 3) && (current.ContPerCheckpoint == 0) && (current.FloorVal == 12) && (old.FloorVal == 9)) return true;
+        if (((current.ContPerCheckpoint == 0) || (current.ContPerCheckpoint == old.ContPerCheckpoint)) && (current.FloorVal == 12) && (old.FloorVal == 9)) return true;
 
         // on reaching Building 3
         if (current.FloorVal == 14) {
