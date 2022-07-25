@@ -720,20 +720,9 @@ split {
     // during Boss Survival
     if ((old.BSState == 4) && (current.BSState == 6)) return true;
 
-	// NTSC-U main menu state to define end of run
-	if ((current.MainMenuState == 22288560) && (current.MainMenuState != old.MainMenuState)) return true;
+	// if on final game screen and the main menu state changes, split
+	if ((old.FloorVal == 17 && old.ScreenVal == 2) && (current.MainMenuState != old.MainMenuState && old.MainMenuState == 0)) return true;
 
-	// NTSC-J (both) main menu state to define end of run
-	if ((current.MainMenuState == 19351936) && (current.MainMenuState != old.MainMenuState)) return true;
-
-	// PAL main menu state to define end of run
-	if ((current.MainMenuState == 22295024) && (current.MainMenuState != old.MainMenuState)) return true;
-
-	// PC main menu state to define end of run
-	if ((current.MainMenuState == 192594032) && (current.MainMenuState != old.MainMenuState)) return true;
-
-	// PC main menu state to define end of run
-	if ((current.MainMenuState == 2214592509) && (current.MainMenuState != old.MainMenuState)) return true;
 }
 
 reset {
