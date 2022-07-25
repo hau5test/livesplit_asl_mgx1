@@ -21,7 +21,7 @@ state("MetalGear") {
 	uint BSGameTimeSeconds: 	0x11854, 0x114;
     uint BSGameTimeMinutes: 	0x11854, 0x110;
 	// variables for state and map location
-	uint MainMenuState:			0x14C44, 0xCB0;
+	uint MainMenuState:			0x1D208, 0x214;
     uint BSState: 				0x11854, 0x120;
 	uint FloorVal: 				0x11854, 0xCC;
 	uint ScreenVal:				0x1183C, 0x4;
