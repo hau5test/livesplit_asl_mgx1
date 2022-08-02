@@ -85,6 +85,7 @@ state("MetalGear") {
 	uint InventorySlot53:		0x113E8, 0xFEC;
 	uint InventorySlot54:		0x113E8, 0xFF0;
 	uint InventorySlot55:		0x113E8, 0xFF4;
+	uint MenuPointerPosition:	0x113E8, 0xF70;
 }
 
 state("pcsx2") {
@@ -172,6 +173,7 @@ state("pcsx2") {
 	uint J20A_InventorySlot53:		0x123E184, 0x8F8;
 	uint J20A_InventorySlot54:		0x123E184, 0x8FC;
 	uint J20A_InventorySlot55:		0x123E184, 0x900;
+	uint JSub_MenuPointerPosition:	0x123E184, 0x87C;
 
     // JP Subsistence
 	// timers
@@ -242,6 +244,7 @@ state("pcsx2") {
 	uint JSub_InventorySlot53:		0x123E184, 0x978;
 	uint JSub_InventorySlot54:		0x123E184, 0x97C;
 	uint JSub_InventorySlot55:		0x123E184, 0x980;
+	uint JSub_MenuPointerPosition:	0x123E184, 0x8FC;
 
 	// US
 	// timers
@@ -312,6 +315,7 @@ state("pcsx2") {
 	uint US_InventorySlot53:		0x123E188, 0x290;
 	uint US_InventorySlot54:		0x123E188, 0x294;
 	uint US_InventorySlot55:		0x123E188, 0x298;
+	uint US_MenuPointerPosition:	0x123E188, 0x214;
 
     // EU
 	// timers
@@ -382,6 +386,7 @@ state("pcsx2") {
 	uint EU_InventorySlot53:		0x123E190, 0xFC8;
 	uint EU_InventorySlot54:		0x123E190, 0xFCC;
 	uint EU_InventorySlot55:		0x123E190, 0xFD0;
+	uint EU_MenuPointerPosition:	0x123E190, 0xF4C;
 }
 
 startup {
@@ -447,6 +452,7 @@ startup {
 	vars.NGorNGP = "";
 	vars.Location = "";
 	vars.SubLocation = "";
+	vars.Difficulty = "";
 }
 
 update {
@@ -520,7 +526,8 @@ update {
 			"InventorySlot52",
 			"InventorySlot53",
 			"InventorySlot54",
-			"InventorySlot55"
+			"InventorySlot55",
+			"MenuPointerPosition"
 			};
 
 		// (placeholder) have some logic to work out the version and create the prefix
@@ -566,10 +573,10 @@ update {
 			vars.Rank = "Jackal";
 		} else if ((current.GameTime>45000)&&(current.GameTime<1080000)) {
 			vars.Rank = "Panther";
-		} else if ((current.Kills > 0) ||(current.Continues > 0) || (current.Alerts > 9) ||(current.Rations > 1)) {
+		} else if ((current.Kills > 0) ||(current.Continues > 0) || (current.Alerts > (8 + current.MenuPointerPosition)) ||(current.Rations > 1)) {
 			vars.Rank = "Eagle";
 		} else {
-			vars.Rank = "Fox";
+			vars.Rank = current.MenuPointerPosition==0?"Big Boss":"Fox";
 		}
 	}
 
@@ -595,6 +602,7 @@ update {
 	vars.SnakeYAxisFeet = current.InventorySlot12 != 27?current.SnakeFeetYAxisNG:current.SnakeFeetYAxisNGP;
 	vars.SnakeXAxis = current.InventorySlot12 != 27?current.SnakeXAxisNG:current.SnakeXAxisNGP;
 	vars.NGorNGP = current.InventorySlot12 != 27?"New Game":"New Game Plus";
+	vars.Difficulty = current.MenuPointerPosition==0?"Original":"Easy";
 }
 
 gameTime {
@@ -726,9 +734,30 @@ split {
 }
 
 reset {
-	if((current.BSState == 0) && (current.GameTime == 0) && (current.GameTime != old.GameTime))  return true;
+	if((current.BSState == 0) && (current.GameTime == 0) && (current.GameTime != old.GameTime))
+	{
+		vars.Rank = "";
+		vars.Class = "";
+		vars.SnakeYAxisHead = "";
+		vars.SnakeYAxisFeet = "";
+		vars.SnakeXAxis = "";
+		vars.NGorNGP = "";
+		vars.Location = "";
+		vars.SubLocation = "";
+		vars.Difficulty = "";
+		return true;
+	}
 
     if ( old.BSState == 5 || (current.BSState != 0 && current.BSState == 0)) {
+		vars.Rank = "";
+		vars.Class = "";
+		vars.SnakeYAxisHead = "";
+		vars.SnakeYAxisFeet = "";
+		vars.SnakeXAxis = "";
+		vars.NGorNGP = "";
+		vars.Location = "";
+		vars.SubLocation = "";
+		vars.Difficulty = "";
 		return true;
     }
 }
