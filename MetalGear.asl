@@ -86,6 +86,14 @@ state("MetalGear") {
 	uint InventorySlot54:		0x113E8, 0xFF0;
 	uint InventorySlot55:		0x113E8, 0xFF4;
 	uint MenuPointerPosition:	0x113E8, 0xF70;
+	uint ActiveWeaponEquipped:	0x113E8, 0xF90;
+	uint ActiveItemEquipped:	0x113E8, 0xF8C;
+	uint CodecInfo:				0x12060, 0xFF0;
+	uint WeaponsUpdate1:		0x12060, 0xFBC;
+	uint WeaponsUpdate2:		0x12060, 0xFC0;
+	uint PowChecklist1:			0x12060, 0xFC8;
+	uint PowChecklist2:			0x12060, 0xFCC;
+	uint PowChecklist3:			0x12060, 0xFD0;
 }
 
 state("pcsx2") {
@@ -173,7 +181,15 @@ state("pcsx2") {
 	uint J20A_InventorySlot53:		0x123E184, 0x8F8;
 	uint J20A_InventorySlot54:		0x123E184, 0x8FC;
 	uint J20A_InventorySlot55:		0x123E184, 0x900;
-	uint JSub_MenuPointerPosition:	0x123E184, 0x87C;
+	uint J20A_MenuPointerPosition:	0x123E184, 0x87C;
+	uint J20A_ActiveWeaponEquipped:	0x123E188, 0x50C;
+	uint J20A_ActiveItemEquipped:	0x123E188, 0x10;
+	uint J20A_CodecInfo:			0x12060, 0xFF0;
+	uint J20A_WeaponsUpdate1:		0x12060, 0xFBC;
+	uint J20A_WeaponsUpdate2:		0x12060, 0xFC0;
+	uint J20A_PowChecklist1:		0x12060, 0xFC8;
+	uint J20A_PowChecklist2:		0x12060, 0xFCC;
+	uint J20A_PowChecklist3:		0x12060, 0xFD0;
 
     // JP Subsistence
 	// timers
@@ -245,6 +261,14 @@ state("pcsx2") {
 	uint JSub_InventorySlot54:		0x123E184, 0x97C;
 	uint JSub_InventorySlot55:		0x123E184, 0x980;
 	uint JSub_MenuPointerPosition:	0x123E184, 0x8FC;
+	uint JSub_ActiveWeaponEquipped:	0x123E188, 0x58C;
+	uint JSub_ActiveItemEquipped:	0x123E188, 0x590;
+	uint JSub_CodecInfo:			0x12060, 0xFF0;
+	uint JSub_WeaponsUpdate1:		0x12060, 0xFBC;
+	uint JSub_WeaponsUpdate2:		0x12060, 0xFC0;
+	uint JSub_PowChecklist1:		0x12060, 0xFC8;
+	uint JSub_PowChecklist2:		0x12060, 0xFCC;
+	uint JSub_PowChecklist3:		0x12060, 0xFD0;
 
 	// US
 	// timers
@@ -316,6 +340,14 @@ state("pcsx2") {
 	uint US_InventorySlot54:		0x123E188, 0x294;
 	uint US_InventorySlot55:		0x123E188, 0x298;
 	uint US_MenuPointerPosition:	0x123E188, 0x214;
+	uint US_ActiveWeaponEquipped:	0x123E188, 0x9B0;
+	uint US_ActiveItemEquipped:		0x123E188, 0x9A8;
+	uint US_CodecInfo:				0x12060, 0xFF0;
+	uint US_WeaponsUpdate1:			0x12060, 0xFBC;
+	uint US_WeaponsUpdate2:			0x12060, 0xFC0;
+	uint US_PowChecklist1:			0x12060, 0xFC8;
+	uint US_PowChecklist2:			0x12060, 0xFCC;
+	uint US_PowChecklist3:			0x12060, 0xFD0;
 
     // EU
 	// timers
@@ -387,6 +419,14 @@ state("pcsx2") {
 	uint EU_InventorySlot54:		0x123E190, 0xFCC;
 	uint EU_InventorySlot55:		0x123E190, 0xFD0;
 	uint EU_MenuPointerPosition:	0x123E190, 0xF4C;
+	uint EU_ActiveWeaponEquipped:	0x123E194, 0x6E8;
+	uint EU_ActiveItemEquipped:		0x123E194, 0x6E0;
+	uint EU_CodecInfo:				0x12060, 0xFF0;
+	uint EU_WeaponsUpdate1:			0x12060, 0xFBC;
+	uint EU_WeaponsUpdate2:			0x12060, 0xFC0;
+	uint EU_PowChecklist1:			0x12060, 0xFC8;
+	uint EU_PowChecklist2:			0x12060, 0xFCC;
+	uint EU_PowChecklist3:			0x12060, 0xFD0;
 }
 
 startup {
@@ -443,6 +483,39 @@ startup {
 		{ 61,  "Credits" }
 	};
 
+	D.ItemList = new Dictionary<uint, string>() {
+		{ 0,  "Cigs"},
+		{ 1,  "Flashlight"},
+		{ 2,  "Oxygen Zylinder"},
+		{ 3,  "Rations"},
+		{ 4,  "Compass"},
+		{ 5,  "Scope"},
+		{ 6,  "Bomb Blast Suit"},
+		{ 7,  "Cardboard Box"},
+		{ 8,  "Infrared Goggles"},
+		{ 9,  "Transmitter"},
+		{ 10,  "Enemy Uniform"},
+		{ 11,  "Antenna"},
+		{ 12,  "Mine Detector"},
+		{ 13,  "Parachute"},
+		{ 14,  "Gas Mask"},
+		{ 15,  "Antidote"},
+		{ 16,  "Cards"},
+		{ 21,  "Emtpy Slot"},
+		{ 27,  "Bandana"},
+		{ 28,  "Body Armor"}
+	};
+
+	D.WeaponList = new Dictionary<uint, string>() {
+		{ 18,  "Mines"},
+		{ 19,  "Explosives"},
+		{ 20,  "RC Missiles"},
+		{ 21,  "Pistol"},
+		{ 22,  "Submachine Gun"},
+		{ 23,  "Rocket Launcher"},
+		{ 24,  "Grenade Launcher"}
+	};
+
 	// define all variables in start up so they can be set before an active run is going on
 	vars.Rank = "";
 	vars.Class = "";
@@ -453,6 +526,22 @@ startup {
 	vars.Location = "";
 	vars.SubLocation = "";
 	vars.Difficulty = "";
+	vars.inventoryCompletion = "";
+	vars.ActiveItem = "";
+	vars.ActiveWeapon = "";
+	D.CodecCompleted = 0;
+	vars.DianeCalled = false;
+	vars.SchneiderCalled = false;
+	vars.JenniferCalled = false;
+	D.WeaponsCompleted = 0;
+	vars.PistolPickedUp = false;
+	vars.MinePickedUp = false;
+	vars.GrenadeLPickedUp = false;
+	vars.RocketLPickedUp = false;
+	vars.RCMissilePickedUp = false;
+	vars.SMGPickedUp = false;
+	vars.PExplosivesPickedUp = false;
+	vars.SilencerPickedUp = false;
 }
 
 update {
@@ -527,7 +616,15 @@ update {
 			"InventorySlot53",
 			"InventorySlot54",
 			"InventorySlot55",
-			"MenuPointerPosition"
+			"MenuPointerPosition",
+			"ActiveWeaponEquipped",
+			"ActiveItemEquipped",
+			"CodecInfo",
+			"WeaponsUpdate1",
+			"WeaponsUpdate2",
+			"PowChecklist1",
+			"PowChecklist2",
+			"PowChecklist3"
 			};
 
 		// (placeholder) have some logic to work out the version and create the prefix
@@ -597,12 +694,123 @@ update {
 		vars.SubLocation = loc2;
 	}
 
+	// define string that can contain the value based on dictionary key
+	string loc3 = null;	
+	// look up Item name based on active item value
+	if (D.ItemList.TryGetValue(current.ActiveItemEquipped, out loc3)) {
+		vars.ActiveItem = loc3;
+	} else { vars.ActiveItem =  "Empty"; }
+
+	// define string that can contain the value based on dictionary key
+	string loc4 = null;	
+	// look up Weapon name based on active weapon value
+	if (D.WeaponList.TryGetValue(current.ActiveWeaponEquipped, out loc4)) {
+		vars.ActiveWeapon = loc4;
+	} else { vars.ActiveWeapon =  "Empty"; }
+
 	// if Item 27 (bandana) is in equipment slot 1 horizontal 2 vertical, use New Game Plus, if not use New Game data
 	vars.SnakeYAxisHead = current.InventorySlot12 != 27?current.SnakeHeadYAxisNG:current.SnakeHeadYAxisNGP;
 	vars.SnakeYAxisFeet = current.InventorySlot12 != 27?current.SnakeFeetYAxisNG:current.SnakeFeetYAxisNGP;
 	vars.SnakeXAxis = current.InventorySlot12 != 27?current.SnakeXAxisNG:current.SnakeXAxisNGP;
 	vars.NGorNGP = current.InventorySlot12 != 27?"New Game":"New Game Plus";
 	vars.Difficulty = current.MenuPointerPosition==0?"Original":"Easy";
+
+	D.Inventory = new Dictionary<uint, uint>() {
+		{ 0, current.InventorySlot11},
+		{ 1, current.InventorySlot12},
+		{ 2, current.InventorySlot13},
+		{ 3, current.InventorySlot14},
+		{ 4, current.InventorySlot15},
+		{ 5, current.InventorySlot21},
+		{ 6, current.InventorySlot22},
+		{ 7, current.InventorySlot23},
+		{ 8, current.InventorySlot24},
+		{ 9, current.InventorySlot25},
+		{ 10, current.InventorySlot31},
+		{ 11, current.InventorySlot32},
+		{ 12, current.InventorySlot33},
+		{ 13, current.InventorySlot34},
+		{ 14, current.InventorySlot35},
+		{ 15, current.InventorySlot41},
+		{ 16, current.InventorySlot42},
+		{ 17, current.InventorySlot43},
+		{ 18, current.InventorySlot44},
+		{ 19, current.InventorySlot45},
+		{ 20, current.InventorySlot51},
+		{ 21, current.InventorySlot52},
+		{ 22, current.InventorySlot53},
+		{ 23, current.InventorySlot54},
+		{ 24, current.InventorySlot55}
+	};
+
+	//var sumOfInventory = D.Inventory.Sum(x => x.Value);
+	vars.sumOfInventory = current.InventorySlot11 + 
+	current.InventorySlot13 + 
+	current.InventorySlot14 + 
+	current.InventorySlot15 + 
+	current.InventorySlot21 + 
+	current.InventorySlot22 + 
+	current.InventorySlot23 + 
+	current.InventorySlot24 + 
+	current.InventorySlot25 + 
+	current.InventorySlot31 + 
+	current.InventorySlot32 + 
+	current.InventorySlot33 + 
+	current.InventorySlot34 + 
+	current.InventorySlot35 + 
+	current.InventorySlot41 + 
+	current.InventorySlot42 + 
+	current.InventorySlot43 + 
+	current.InventorySlot44 + 
+	current.InventorySlot45 + 
+	current.InventorySlot51 + 
+	current.InventorySlot52 + 
+	current.InventorySlot53 + 
+	current.InventorySlot54 + 
+	current.InventorySlot55;
+	if(current.InventorySlot12 != 27) vars.sumOfInventory += current.InventorySlot12; 
+
+	vars.inventoryCompletion = (Math.Floor(((float)vars.sumOfInventory / 267 ) * 100)).ToString() + "%";
+
+	// Codec List Checker
+	if (old.CodecInfo != current.CodecInfo) {
+		if (current.CodecInfo - old.CodecInfo == 8 && !vars.SchneiderCalled) {
+			vars.SchneiderCalled = true;
+			D.CodecCompleted++;
+		}
+		if (current.CodecInfo - old.CodecInfo == 16 && !vars.DianeCalled) {
+			vars.DianeCalled = true;
+			D.CodecCompleted++;
+		}
+		if (current.CodecInfo - old.CodecInfo == 32 && !vars.JenniferCalled) {
+			vars.JenniferCalled = true;
+			D.CodecCompleted++;
+		} 
+	}
+
+	// Weapon Update Checker
+	vars.MinePickedUp = (current.WeaponsUpdate1 & (1 << 4-1)) != 0;
+	vars.PExplosivesPickedUp = (current.WeaponsUpdate1 & (1 << 5-1)) != 0;
+	vars.RCMissilePickedUp = (current.WeaponsUpdate1 & (1 << 6-1)) != 0;
+	vars.PistolPickedUp = (current.WeaponsUpdate1 & (1 << 7-1)) != 0;
+	vars.SMGPickedUp = (current.WeaponsUpdate1 & (1 << 8-1)) != 0;
+
+	vars.GrenadeLPickedUp = (current.WeaponsUpdate2 & (1 << 2-1)) != 0;
+	vars.SilencerPickedUp = (current.WeaponsUpdate2 & (1 << 3-1)) != 0;
+	vars.RocketLPickedUp = (current.WeaponsUpdate2 & (1 << 1-1)) != 0;
+
+	vars.GrayFoxSaved = (current.PowChecklist1 & (1 << 1-1)) != 0;
+	vars.MadnarSaved = (current.PowChecklist1 & (1 << 2-1)) != 0;
+	vars.EllenSaved = (current.PowChecklist1 & (1 << 3-1)) != 0;
+
+	vars.HundredPercentCompletion = (
+	// inventory Completion
+	(
+		Math.Floor(((float)vars.sumOfInventory / (267)) * 100) +
+		Math.Floor( D.CodecCompleted/ (float)3 * 100)
+	) / 2
+	).ToString()
+	+ "%";
 }
 
 gameTime {
@@ -736,28 +944,38 @@ split {
 reset {
 	if((current.BSState == 0) && (current.GameTime == 0) && (current.GameTime != old.GameTime))
 	{
-		vars.Rank = "";
-		vars.Class = "";
-		vars.SnakeYAxisHead = "";
-		vars.SnakeYAxisFeet = "";
-		vars.SnakeXAxis = "";
-		vars.NGorNGP = "";
-		vars.Location = "";
-		vars.SubLocation = "";
-		vars.Difficulty = "";
 		return true;
 	}
 
     if ( old.BSState == 5 || (current.BSState != 0 && current.BSState == 0)) {
-		vars.Rank = "";
-		vars.Class = "";
-		vars.SnakeYAxisHead = "";
-		vars.SnakeYAxisFeet = "";
-		vars.SnakeXAxis = "";
-		vars.NGorNGP = "";
-		vars.Location = "";
-		vars.SubLocation = "";
-		vars.Difficulty = "";
 		return true;
     }
+}
+
+onReset {
+	vars.Rank = "";
+	vars.Class = "";
+	vars.SnakeYAxisHead = "";
+	vars.SnakeYAxisFeet = "";
+	vars.SnakeXAxis = "";
+	vars.NGorNGP = "";
+	vars.Location = "";
+	vars.SubLocation = "";
+	vars.Difficulty = "";
+	vars.inventoryCompletion = "";
+	vars.ActiveItem = "";
+	vars.ActiveWeapon = "";
+	vars.D.CodecCompleted = 0;
+	vars.DianeCalled = false;
+	vars.SchneiderCalled = false;
+	vars.JenniferCalled = false;
+	vars.D.WeaponsCompleted = 0;
+	vars.PistolPickedUp = false;
+	vars.MinePickedUp = false;
+	vars.GrenadeLPickedUp = false;
+	vars.RocketLPickedUp = false;
+	vars.RCMissilePickedUp = false;
+	vars.SMGPickedUp = false;
+	vars.PExplosivesPickedUp = false;
+	vars.SilencerPickedUp = false;
 }
