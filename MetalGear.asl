@@ -715,78 +715,48 @@ update {
 	vars.NGorNGP = current.InventorySlot12 != 27?"New Game":"New Game Plus";
 	vars.Difficulty = current.MenuPointerPosition==0?"Original":"Easy";
 
-	D.Inventory = new Dictionary<uint, uint>() {
-		{ 0, current.InventorySlot11},
-		{ 1, current.InventorySlot12},
-		{ 2, current.InventorySlot13},
-		{ 3, current.InventorySlot14},
-		{ 4, current.InventorySlot15},
-		{ 5, current.InventorySlot21},
-		{ 6, current.InventorySlot22},
-		{ 7, current.InventorySlot23},
-		{ 8, current.InventorySlot24},
-		{ 9, current.InventorySlot25},
-		{ 10, current.InventorySlot31},
-		{ 11, current.InventorySlot32},
-		{ 12, current.InventorySlot33},
-		{ 13, current.InventorySlot34},
-		{ 14, current.InventorySlot35},
-		{ 15, current.InventorySlot41},
-		{ 16, current.InventorySlot42},
-		{ 17, current.InventorySlot43},
-		{ 18, current.InventorySlot44},
-		{ 19, current.InventorySlot45},
-		{ 20, current.InventorySlot51},
-		{ 21, current.InventorySlot52},
-		{ 22, current.InventorySlot53},
-		{ 23, current.InventorySlot54},
-		{ 24, current.InventorySlot55}
-	};
+	// count all items in the euipment inventory when value is higher than 0
+	vars.sumOfInventory = (new []{
+		current.InventorySlot11,
+		current.InventorySlot12,
+		current.InventorySlot13,
+		current.InventorySlot14,
+		current.InventorySlot15,
+		current.InventorySlot21,
+		current.InventorySlot22,
+		current.InventorySlot23,
+		current.InventorySlot24,
+		current.InventorySlot25,
+		current.InventorySlot31,
+		current.InventorySlot32,
+		current.InventorySlot33,
+		current.InventorySlot34,
+		current.InventorySlot35,
+		current.InventorySlot41,
+		current.InventorySlot42,
+		current.InventorySlot43,
+		current.InventorySlot44,
+		current.InventorySlot45,
+		current.InventorySlot51,
+		current.InventorySlot52,
+		current.InventorySlot53,
+		current.InventorySlot54,
+		current.InventorySlot55
+	}).Count(x => x > 0);
 
-	//var sumOfInventory = D.Inventory.Sum(x => x.Value);
-	vars.sumOfInventory = current.InventorySlot11 + 
-	current.InventorySlot13 + 
-	current.InventorySlot14 + 
-	current.InventorySlot15 + 
-	current.InventorySlot21 + 
-	current.InventorySlot22 + 
-	current.InventorySlot23 + 
-	current.InventorySlot24 + 
-	current.InventorySlot25 + 
-	current.InventorySlot31 + 
-	current.InventorySlot32 + 
-	current.InventorySlot33 + 
-	current.InventorySlot34 + 
-	current.InventorySlot35 + 
-	current.InventorySlot41 + 
-	current.InventorySlot42 + 
-	current.InventorySlot43 + 
-	current.InventorySlot44 + 
-	current.InventorySlot45 + 
-	current.InventorySlot51 + 
-	current.InventorySlot52 + 
-	current.InventorySlot53 + 
-	current.InventorySlot54 + 
-	current.InventorySlot55;
-	if(current.InventorySlot12 != 27) vars.sumOfInventory += current.InventorySlot12; 
+	// remove bandana from count since it is irrelevant to 100% completion
+	vars.sumOfInventory = current.InventorySlot12 == 27? vars.sumOfInventory--:vars.sumOfInventory;
 
-	vars.inventoryCompletion = (Math.Floor(((float)vars.sumOfInventory / 267 ) * 100)).ToString() + "%";
+	// count all saved codecs in the codec viewer
+	vars.SchneiderCalled = (current.CodecInfo & (1 << 4-1)) != 0;
+	vars.DianeCalled = (current.CodecInfo & (1 << 5-1)) != 0;
+	vars.JenniferCalled = (current.CodecInfo & (1 << 6-1)) != 0;
 
-	// Codec List Checker
-	if (old.CodecInfo != current.CodecInfo) {
-		if (current.CodecInfo - old.CodecInfo == 8 && !vars.SchneiderCalled) {
-			vars.SchneiderCalled = true;
-			D.CodecCompleted++;
-		}
-		if (current.CodecInfo - old.CodecInfo == 16 && !vars.DianeCalled) {
-			vars.DianeCalled = true;
-			D.CodecCompleted++;
-		}
-		if (current.CodecInfo - old.CodecInfo == 32 && !vars.JenniferCalled) {
-			vars.JenniferCalled = true;
-			D.CodecCompleted++;
-		} 
-	}
+	D.CodecCompleted = (new []{
+		vars.SchneiderCalled,
+		vars.DianeCalled,
+		vars.JenniferCalled
+	}).Count(x=>x);
 
 	// Weapon Update Checker
 	vars.MinePickedUp = (current.WeaponsUpdate1 & (1 << 4-1)) != 0;
@@ -799,16 +769,80 @@ update {
 	vars.SilencerPickedUp = (current.WeaponsUpdate2 & (1 << 3-1)) != 0;
 	vars.RocketLPickedUp = (current.WeaponsUpdate2 & (1 << 1-1)) != 0;
 
+	// count all bools for weapon pick ups
+	vars.WeaponsPickedUp = (new []{
+		vars.MinePickedUp, 
+		vars.PExplosivesPickedUp, 
+		vars.RCMissilePickedUp, 
+		vars.SMGPickedUp, 
+		vars.GrenadeLPickedUp, 
+		vars.SilencerPickedUp, 
+		vars.RocketLPickedUp
+	}).Count(x=>x);
+
+	// check the three main int variables for the individual bits
 	vars.GrayFoxSaved = (current.PowChecklist1 & (1 << 1-1)) != 0;
 	vars.MadnarSaved = (current.PowChecklist1 & (1 << 2-1)) != 0;
 	vars.EllenSaved = (current.PowChecklist1 & (1 << 3-1)) != 0;
+	vars.POW1Saved = (current.PowChecklist1 & (1 << 4-1)) != 0;
+	vars.POW2Saved = (current.PowChecklist1 & (1 << 5-1)) != 0;
+	vars.POW3Saved = (current.PowChecklist1 & (1 << 6-1)) != 0;
+	vars.POW4Saved = (current.PowChecklist1 & (1 << 7-1)) != 0;
+	vars.POW5Saved = (current.PowChecklist1 & (1 << 8-1)) != 0;
+	
+	vars.POW6Saved = (current.PowChecklist2 & (1 << 1-1)) != 0;
+	vars.POW7Saved = (current.PowChecklist2 & (1 << 2-1)) != 0;
+	vars.POW8Saved = (current.PowChecklist2 & (1 << 3-1)) != 0;
+	vars.POW9Saved = (current.PowChecklist2 & (1 << 4-1)) != 0;
+	vars.POW10Saved = (current.PowChecklist2 & (1 << 5-1)) != 0;
+	vars.POW11Saved = (current.PowChecklist2 & (1 << 6-1)) != 0;
+	vars.POW12Saved = (current.PowChecklist2 & (1 << 7-1)) != 0;
+	vars.POW13Saved = (current.PowChecklist2 & (1 << 8-1)) != 0;
 
+	vars.POW14Saved = (current.PowChecklist3 & (1 << 1-1)) != 0;
+	vars.POW15Saved = (current.PowChecklist3 & (1 << 2-1)) != 0;
+	vars.POW16Saved = (current.PowChecklist3 & (1 << 3-1)) != 0;
+	vars.POW17Saved = (current.PowChecklist3 & (1 << 4-1)) != 0;
+	vars.POW18Saved = (current.PowChecklist3 & (1 << 5-1)) != 0;
+	vars.POW19Saved = (current.PowChecklist3 & (1 << 6-1)) != 0;
+	vars.POW20Saved = (current.PowChecklist3 & (1 << 7-1)) != 0;
+	vars.POW21Saved = (current.PowChecklist3 & (1 << 8-1)) != 0;
+
+	// count all saved POWs including Gray Fox, Madnar and Ellen
+	vars.POWsPickedUp = (new []{
+		vars.GrayFoxSaved, 
+		vars.MadnarSaved, 
+		vars.EllenSaved, 
+		vars.POW1Saved, 
+		vars.POW2Saved, 
+		vars.POW3Saved, 
+		vars.POW4Saved, 
+		vars.POW5Saved, 
+		vars.POW6Saved, 
+		vars.POW7Saved, 
+		vars.POW8Saved, 
+		vars.POW9Saved, 
+		vars.POW10Saved, 
+		vars.POW11Saved, 
+		vars.POW12Saved, 
+		vars.POW13Saved, 
+		vars.POW14Saved, 
+		vars.POW15Saved, 
+		vars.POW16Saved, 
+		vars.POW17Saved, 
+		vars.POW18Saved, 
+		vars.POW19Saved, 
+		vars.POW20Saved,
+		vars.POW21Saved
+	}).Count(x=>x);
+
+	// calculate percentage of all colectibles
 	vars.HundredPercentCompletion = (
-	// inventory Completion
 	(
-		Math.Floor(((float)vars.sumOfInventory / (267)) * 100) +
-		Math.Floor( D.CodecCompleted/ (float)3 * 100)
-	) / 2
+		Math.Floor((
+			(vars.sumOfInventory + vars.WeaponsPickedUp + vars.POWsPickedUp + D.CodecCompleted)
+			 / 57f) * 100)
+	)
 	).ToString()
 	+ "%";
 }
