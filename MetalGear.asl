@@ -538,11 +538,11 @@ startup {
 	vars.CalledDiane = false;
 	vars.CalledSchneider = false;
 	vars.CalledJennifer = false;
-	vars.InventoryCompletion = "0 out of 25";
+	vars.InventoryCompletion = "0 out of 24";
 	vars.CodecCompletion = "0 out of 4";
 	vars.WeaponsCompletion = "0 out of 7";
 	vars.POWsCompletion = "0 out of 24";
-	vars.BossesCompletion = "0 out of 24";
+	vars.BossesCompletion = "0 out of 10";
 
 	// add splits based on checkpoints
 	settings.Add("checkpoint_splits", true, "Checkpoint Splits");
@@ -595,9 +595,6 @@ startup {
 
 	// add splits on death farm success
 	settings.Add("death_farm", true, "Death Farm Completed", "bonus_splits");
-	settings.Add("death_farm_b1_2f", false, "Death Farm B1 2F Completed", "death_farm");
-	settings.Add("death_farm_b1_roof", false, "Death Farm B1 Roof Completed", "death_farm");
-	settings.Add("death_farm_b2_1f", true, "Death Farm B2 1F Completed", "death_farm");
 
 	// add splits on Scuba Swim
 	settings.Add("scuba_swim_splits", true, "Scuba Swim Splits", "bonus_splits");
@@ -958,7 +955,7 @@ update {
 
 	// completion of individual categories
 	// Inventory completion
-	vars.InventoryCompletion = (D.sumOfInventory + 1) + " out of 25";
+	vars.InventoryCompletion = (D.sumOfInventory + 1) + " out of 24";
 	// Codec completion
 	vars.CodecCompletion = D.CodecCompleted + " out of 4";
 	// Weapons completion
@@ -966,7 +963,7 @@ update {
 	// POWs completion
 	vars.POWsCompletion = D.POWsPickedUp + " out of 24";
 	// Bosses completion
-	vars.BossesCompletion = D.BossesFought + " out of 24";
+	vars.BossesCompletion = D.BossesFought + " out of 10";
 }
 
 gameTime {
@@ -1047,11 +1044,7 @@ split {
         }
 
         //split on successful death abuse first time only
-        if (current.ContPerCheckpoint == 5 && old.ContPerCheckpoint == 4) {
-			if((old.FloorVal == 3 || current.FloorVal == 3) && settings["death_farm_b1_2f"]) return true;
-			if((old.FloorVal == 7 || current.FloorVal == 7) && settings["death_farm_b1_roof"]) return true;
-			if((old.FloorVal == 9 || current.FloorVal == 9) && settings["death_farm_b2_1f"]) return true;
-		};
+        if (current.ContPerCheckpoint == 5 && old.ContPerCheckpoint == 4 && (settings["death_farm"])) return true;
 
         //on entering the B2 elevator, but only if the amount of continues for a single checkpoint is higher than 4
         //and on transitioning between Building 2 - First Floor going into the B2 Elevator
@@ -1160,9 +1153,9 @@ onReset {
 	vars.CalledDiane = false;
 	vars.CalledSchneider = false;
 	vars.CalledJennifer = false;
-	vars.InventoryCompletion = "0 out of 25";
+	vars.InventoryCompletion = "0 out of 24";
 	vars.CodecCompletion = "0 out of 4";
 	vars.WeaponsCompletion = "0 out of 7";
 	vars.POWsCompletion = "0 out of 24";
-	vars.BossesCompletion = "0 out of 24";
+	vars.BossesCompletion = "0 out of 10";
 }
