@@ -94,6 +94,8 @@ state("MetalGear") {
 	uint PowChecklist1:			0x12060, 0xFC8;
 	uint PowChecklist2:			0x12060, 0xFCC;
 	uint PowChecklist3:			0x12060, 0xFD0;
+	uint BossData1:				0x12060, 0xFFC;
+	uint BossData2:				0x13B64, 0xFD8;
 }
 
 state("pcsx2") {
@@ -190,6 +192,8 @@ state("pcsx2") {
 	uint J20A_PowChecklist1:		0x12060, 0xFC8;
 	uint J20A_PowChecklist2:		0x12060, 0xFCC;
 	uint J20A_PowChecklist3:		0x12060, 0xFD0;
+	uint J20A_BossData1:				0x12060, 0xFFC;
+	uint J20A_BossData2:				0x12060, 0xFFC;
 
     // JP Subsistence
 	// timers
@@ -269,6 +273,8 @@ state("pcsx2") {
 	uint JSub_PowChecklist1:		0x12060, 0xFC8;
 	uint JSub_PowChecklist2:		0x12060, 0xFCC;
 	uint JSub_PowChecklist3:		0x12060, 0xFD0;
+	uint JSub_BossData1:				0x12060, 0xFFC;
+	uint JSub_BossData2:				0x12060, 0xFFC;
 
 	// US
 	// timers
@@ -348,6 +354,8 @@ state("pcsx2") {
 	uint US_PowChecklist1:			0x12060, 0xFC8;
 	uint US_PowChecklist2:			0x12060, 0xFCC;
 	uint US_PowChecklist3:			0x12060, 0xFD0;
+	uint US_BossData1:				0x12060, 0xFFC;
+	uint US_BossData2:				0x12060, 0xFFC;
 
     // EU
 	// timers
@@ -427,6 +435,8 @@ state("pcsx2") {
 	uint EU_PowChecklist1:			0x12060, 0xFC8;
 	uint EU_PowChecklist2:			0x12060, 0xFCC;
 	uint EU_PowChecklist3:			0x12060, 0xFD0;
+	uint EU_BossData1:				0x12060, 0xFFC;
+	uint EU_BossData2:				0x12060, 0xFFC;
 }
 
 startup {
@@ -542,6 +552,16 @@ startup {
 	vars.SMGPickedUp = false;
 	vars.PExplosivesPickedUp = false;
 	vars.SilencerPickedUp = false;
+	vars.FHMFought = false;
+	vars.ShotmakerFought = false;
+	vars.MGKFought = false;
+	vars.HindFought = false;
+	vars.TankFought = false;
+	vars.BulldozerFought = false;
+	vars.FiretrooperFought = false;
+	vars.DirtyDuckFought = false;
+	vars.TX55Fought = false;
+	vars.BigBossFought = false;
 }
 
 update {
@@ -624,7 +644,9 @@ update {
 			"WeaponsUpdate2",
 			"PowChecklist1",
 			"PowChecklist2",
-			"PowChecklist3"
+			"PowChecklist3",
+			"BossData1",
+			"BossData2"
 			};
 
 		// (placeholder) have some logic to work out the version and create the prefix
@@ -836,12 +858,43 @@ update {
 		vars.POW21Saved
 	}).Count(x=>x);
 
+	// boss data
+	vars.FHMFought = (current.BossData1 & (1 << 2-1)) != 0;
+	vars.ShotmakerFought = (current.BossData1 & (1 << 3-1)) != 0;
+	vars.MGKFought = (current.BossData1 & (1 << 4-1)) != 0;
+	vars.TankFought = (current.BossData1 & (1 << 5-1)) != 0;
+	vars.BulldozerFought = (current.BossData1 & (1 << 6-1)) != 0;
+	vars.HindFought = (current.BossData1 & (1 << 7-1)) != 0;
+	vars.FiretrooperFought = (current.BossData1 & (1 << 8-1)) != 0;
+
+	vars.DirtyDuckFought = (current.BossData2 & (1 << 1-1)) != 0;
+	vars.BigBossFought = (current.BossData2 & (1 << 2-1)) != 0;
+	vars.TX55Fought = (current.BossData2 & (1 << 3-1)) != 0;
+	vars.Boss6Fought = (current.BossData2 & (1 << 4-1)) != 0;
+	vars.Boss7Fought = (current.BossData2 & (1 << 5-1)) != 0;
+	vars.Boss8Fought = (current.BossData2 & (1 << 6-1)) != 0;
+	vars.Boss9Fought = (current.BossData2 & (1 << 7-1)) != 0;
+	vars.Boss10Fought = (current.BossData2 & (1 << 8-1)) != 0;
+
+	vars.BossesFought = (new []{
+	vars.FHMFought,
+	vars.ShotmakerFought,
+	vars.MGKFought,
+	vars.HindFought,
+	vars.TankFought,
+	vars.BulldozerFought,
+	vars.FiretrooperFought,
+	vars.DirtyDuckFought,
+	vars.TX55Fought,
+	vars.BigBossFought,
+	}).Count(x=>x);
+
 	// calculate percentage of all colectibles
 	vars.HundredPercentCompletion = (
 	(
 		Math.Floor((
-			(vars.sumOfInventory + vars.WeaponsPickedUp + vars.POWsPickedUp + D.CodecCompleted)
-			 / 57f) * 100)
+			(vars.sumOfInventory + vars.WeaponsPickedUp + vars.POWsPickedUp + D.CodecCompleted + vars.BossesFought)
+			 / 67f) * 100)
 	)
 	).ToString()
 	+ "%";
@@ -1012,4 +1065,14 @@ onReset {
 	vars.SMGPickedUp = false;
 	vars.PExplosivesPickedUp = false;
 	vars.SilencerPickedUp = false;
+	vars.FHMFought = false;
+	vars.ShotmakerFought = false;
+	vars.MGKFought = false;
+	vars.HindFought = false;
+	vars.TankFought = false;
+	vars.BulldozerFought = false;
+	vars.FiretrooperFought = false;
+	vars.DirtyDuckFought = false;
+	vars.TX55Fought = false;
+	vars.BigBossFought = false;
 }
