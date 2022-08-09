@@ -538,6 +538,11 @@ startup {
 	vars.CalledDiane = false;
 	vars.CalledSchneider = false;
 	vars.CalledJennifer = false;
+	vars.InventoryCompletion = "0 out of 25";
+	vars.CodecCompletion = "0 out of 4";
+	vars.WeaponsCompletion = "0 out of 7";
+	vars.POWsCompletion = "0 out of 24";
+	vars.BossesCompletion = "0 out of 24";
 
 	// add splits based on checkpoints
 	settings.Add("checkpoint_splits", true, "Checkpoint Splits");
@@ -945,11 +950,23 @@ update {
 	vars.HundredPercentCompletion = (
 	(
 		Math.Floor((
-			(D.sumOfInventory + D.WeaponsPickedUp + D.POWsPickedUp + D.CodecCompleted + D.BossesFought)
-			 / 68f) * 100)
+			(D.sumOfInventory + D.CodecCompleted + D.WeaponsPickedUp + D.POWsPickedUp + D.BossesFought + current.ClassValue)
+			 / 71f) * 100)
 	)
 	).ToString()
 	+ "%";
+
+	// completion of individual categories
+	// Inventory completion
+	vars.InventoryCompletion = (D.sumOfInventory + 1) + " out of 25";
+	// Codec completion
+	vars.CodecCompletion = D.CodecCompleted + " out of 4";
+	// Weapons completion
+	vars.WeaponsCompletion = D.WeaponsPickedUp + " out of 7";
+	// POWs completion
+	vars.POWsCompletion = D.POWsPickedUp + " out of 24";
+	// Bosses completion
+	vars.BossesCompletion = D.BossesFought + " out of 24";
 }
 
 gameTime {
@@ -1139,10 +1156,13 @@ onReset {
 	vars.Difficulty = "";
 	vars.ActiveItem = "";
 	vars.ActiveWeapon = "";
-	vars.D.CodecCompleted = 0;
 	vars.CalledBigBoss = false;
 	vars.CalledDiane = false;
 	vars.CalledSchneider = false;
 	vars.CalledJennifer = false;
-	vars.D.WeaponsCompleted = 0;
+	vars.InventoryCompletion = "0 out of 25";
+	vars.CodecCompletion = "0 out of 4";
+	vars.WeaponsCompletion = "0 out of 7";
+	vars.POWsCompletion = "0 out of 24";
+	vars.BossesCompletion = "0 out of 24";
 }
