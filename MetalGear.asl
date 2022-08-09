@@ -435,6 +435,7 @@ state("pcsx2") {
 }
 
 startup {
+	// add D shorthand to context
 	vars.D = new ExpandoObject();
 	var D = vars.D;
 
@@ -531,33 +532,12 @@ startup {
 	vars.Location = "";
 	vars.SubLocation = "";
 	vars.Difficulty = "";
-	vars.inventoryCompletion = "";
 	vars.ActiveItem = "";
 	vars.ActiveWeapon = "";
-	D.CodecCompleted = 0;
-	vars.BigBossCalled = false;
-	vars.DianeCalled = false;
-	vars.SchneiderCalled = false;
-	vars.JenniferCalled = false;
-	D.WeaponsCompleted = 0;
-	vars.PistolPickedUp = false;
-	vars.MinePickedUp = false;
-	vars.GrenadeLPickedUp = false;
-	vars.RocketLPickedUp = false;
-	vars.RCMissilePickedUp = false;
-	vars.SMGPickedUp = false;
-	vars.PExplosivesPickedUp = false;
-	vars.SilencerPickedUp = false;
-	vars.FHMFought = false;
-	vars.ShotmakerFought = false;
-	vars.MGKFought = false;
-	vars.HindFought = false;
-	vars.TankFought = false;
-	vars.BulldozerFought = false;
-	vars.FiretrooperFought = false;
-	vars.DirtyDuckFought = false;
-	vars.TX55Fought = false;
-	vars.BigBossFought = false;
+	vars.CalledBigBoss = false;
+	vars.CalledDiane = false;
+	vars.CalledSchneider = false;
+	vars.CalledJennifer = false;
 
 	// add splits based on checkpoints
 	settings.Add("checkpoint_splits", true, "Checkpoint Splits");
@@ -601,27 +581,36 @@ startup {
 
 	// add bonus splits outside of checkpoints
 	settings.Add("bonus_splits", true, "Bonus Splits");
+
 	// add splits on class change
 	settings.Add("class_upgrade", false, "Class Upgrade", "bonus_splits");
 	settings.Add("class2_upgrade", false, "Upgrade to Class 2", "class_upgrade");
 	settings.Add("class3_upgrade", false, "Upgrade to Class 3", "class_upgrade");
 	settings.Add("class4_upgrade", false, "Upgrade to Class 4", "class_upgrade");
+
 	// add splits on death farm success
 	settings.Add("death_farm", true, "Death Farm Completed", "bonus_splits");
 	settings.Add("death_farm_b1_2f", false, "Death Farm B1 2F Completed", "death_farm");
 	settings.Add("death_farm_b1_roof", false, "Death Farm B1 Roof Completed", "death_farm");
 	settings.Add("death_farm_b2_1f", true, "Death Farm B2 1F Completed", "death_farm");
+
 	// add splits on Scuba Swim
 	settings.Add("scuba_swim_splits", true, "Scuba Swim Splits", "bonus_splits");
 	settings.Add("scuba_swim_north_finished", true, "Scuba Swim North Finished", "scuba_swim_splits");
 	settings.Add("scuba_swim_south_finished", true, "Scuba Swim South Finished", "scuba_swim_splits");
+
+	// add splits for special POWs
+	settings.Add("pow_splits", true, "Special POW Splits", "bonus_splits");
+	settings.Add("gray_fox_saved", true, "Gray Fox Saved", "pow_splits");
+	settings.Add("dr_madnar_saved", true, "Dr. Madnar Saved", "pow_splits");
+	settings.Add("ellen_saved", true, "Ellen Saved", "pow_splits");
 
 	// add Boss Survival spliting behaviour
 	settings.Add("bossrush_splits", true, "Boss Survival Splits");
 	settings.Add("bossrush_split", true, "Boss Survival Split", "bossrush_splits");
 	settings.Add("bossrush_stop", true, "Boss Survival Finish", "bossrush_splits");
 
-
+	// add legacy splits
 	settings.Add("legacy_splits", true, "Legacy Split Definitions");
 	settings.Add("scuba_swim_south_started", true, "Scuba Swim South Started", "legacy_splits");
 	settings.SetToolTip("scuba_swim_south_started", "on returning back to Building 2 Ground Floor after having visited Building 3 (post Dirty Duck)");
@@ -631,6 +620,7 @@ startup {
 }
 
 update {
+	// add D shorthand to context
   	var D = vars.D;
 	// get a casted (to dictionary) reference to current
 	// so we can manipulate it using dynamic keynames
@@ -803,7 +793,7 @@ update {
 	vars.Difficulty = current.MenuPointerPosition==0?"Original":"Easy";
 
 	// count all items in the euipment inventory when value is higher than 0
-	vars.sumOfInventory = (new []{
+	D.sumOfInventory = (new []{
 		current.InventorySlot11,
 		current.InventorySlot12,
 		current.InventorySlot13,
@@ -832,130 +822,130 @@ update {
 	}).Count(x => x > 0);
 
 	// remove bandana from count since it is irrelevant to 100% completion
-	vars.sumOfInventory = current.InventorySlot12 == 27? vars.sumOfInventory--:vars.sumOfInventory;
+	D.sumOfInventory = current.InventorySlot12 == 27? D.sumOfInventory--:D.sumOfInventory;
 
 	// count all saved codecs in the codec viewer	
-	vars.BigBossCalled = (current.BossData2 & (1 << 4-1)) != 0;
-	vars.SchneiderCalled = (current.BossData2 & (1 << 6-1)) != 0;
-	vars.DianeCalled = (current.BossData2 & (1 << 7-1)) != 0;
-	vars.JenniferCalled = (current.BossData2 & (1 << 8-1)) != 0;
+	vars.CalledBigBoss = (current.BossData2 & (1 << 4-1)) != 0;
+	vars.CalledSchneider = (current.BossData2 & (1 << 6-1)) != 0;
+	vars.CalledDiane = (current.BossData2 & (1 << 7-1)) != 0;
+	vars.CalledJennifer = (current.BossData2 & (1 << 8-1)) != 0;
 
 	D.CodecCompleted = (new []{
-		vars.BigBossCalled,
-		vars.SchneiderCalled,
-		vars.DianeCalled,
-		vars.JenniferCalled
+		vars.CalledBigBoss,
+		vars.CalledSchneider,
+		vars.CalledDiane,
+		vars.CalledJennifer
 	}).Count(x=>x);
 
 	// Weapon Update Checker
-	vars.MinePickedUp = (current.WeaponsUpdate1 & (1 << 4-1)) != 0;
-	vars.PExplosivesPickedUp = (current.WeaponsUpdate1 & (1 << 5-1)) != 0;
-	vars.RCMissilePickedUp = (current.WeaponsUpdate1 & (1 << 6-1)) != 0;
-	vars.PistolPickedUp = (current.WeaponsUpdate1 & (1 << 7-1)) != 0;
-	vars.SMGPickedUp = (current.WeaponsUpdate1 & (1 << 8-1)) != 0;
+	D.MinePickedUp = (current.WeaponsUpdate1 & (1 << 4-1)) != 0;
+	D.PExplosivesPickedUp = (current.WeaponsUpdate1 & (1 << 5-1)) != 0;
+	D.RCMissilePickedUp = (current.WeaponsUpdate1 & (1 << 6-1)) != 0;
+	D.PistolPickedUp = (current.WeaponsUpdate1 & (1 << 7-1)) != 0;
+	D.SMGPickedUp = (current.WeaponsUpdate1 & (1 << 8-1)) != 0;
 
-	vars.GrenadeLPickedUp = (current.WeaponsUpdate2 & (1 << 2-1)) != 0;
-	vars.SilencerPickedUp = (current.WeaponsUpdate2 & (1 << 3-1)) != 0;
-	vars.RocketLPickedUp = (current.WeaponsUpdate2 & (1 << 1-1)) != 0;
+	D.GrenadeLPickedUp = (current.WeaponsUpdate2 & (1 << 2-1)) != 0;
+	D.SilencerPickedUp = (current.WeaponsUpdate2 & (1 << 3-1)) != 0;
+	D.RocketLPickedUp = (current.WeaponsUpdate2 & (1 << 1-1)) != 0;
 
 	// count all bools for weapon pick ups
-	vars.WeaponsPickedUp = (new []{
-		vars.MinePickedUp, 
-		vars.PExplosivesPickedUp, 
-		vars.RCMissilePickedUp, 
-		vars.SMGPickedUp, 
-		vars.GrenadeLPickedUp, 
-		vars.SilencerPickedUp, 
-		vars.RocketLPickedUp
+	D.WeaponsPickedUp = (new []{
+		D.MinePickedUp, 
+		D.PExplosivesPickedUp, 
+		D.RCMissilePickedUp, 
+		D.SMGPickedUp, 
+		D.GrenadeLPickedUp, 
+		D.SilencerPickedUp, 
+		D.RocketLPickedUp
 	}).Count(x=>x);
 
 	// check the three main int variables for the individual bits
-	vars.GrayFoxSaved = (current.PowChecklist1 & (1 << 1-1)) != 0;
-	vars.MadnarSaved = (current.PowChecklist1 & (1 << 2-1)) != 0;
-	vars.EllenSaved = (current.PowChecklist1 & (1 << 3-1)) != 0;
-	vars.POW1Saved = (current.PowChecklist1 & (1 << 4-1)) != 0;
-	vars.POW2Saved = (current.PowChecklist1 & (1 << 5-1)) != 0;
-	vars.POW3Saved = (current.PowChecklist1 & (1 << 6-1)) != 0;
-	vars.POW4Saved = (current.PowChecklist1 & (1 << 7-1)) != 0;
-	vars.POW5Saved = (current.PowChecklist1 & (1 << 8-1)) != 0;
+	D.GrayFoxSaved = (current.PowChecklist1 & (1 << 1-1)) != 0;
+	D.MadnarSaved = (current.PowChecklist1 & (1 << 2-1)) != 0;
+	D.EllenSaved = (current.PowChecklist1 & (1 << 3-1)) != 0;
+	D.POW1Saved = (current.PowChecklist1 & (1 << 4-1)) != 0;
+	D.POW2Saved = (current.PowChecklist1 & (1 << 5-1)) != 0;
+	D.POW3Saved = (current.PowChecklist1 & (1 << 6-1)) != 0;
+	D.POW4Saved = (current.PowChecklist1 & (1 << 7-1)) != 0;
+	D.POW5Saved = (current.PowChecklist1 & (1 << 8-1)) != 0;
 	
-	vars.POW6Saved = (current.PowChecklist2 & (1 << 1-1)) != 0;
-	vars.POW7Saved = (current.PowChecklist2 & (1 << 2-1)) != 0;
-	vars.POW8Saved = (current.PowChecklist2 & (1 << 3-1)) != 0;
-	vars.POW9Saved = (current.PowChecklist2 & (1 << 4-1)) != 0;
-	vars.POW10Saved = (current.PowChecklist2 & (1 << 5-1)) != 0;
-	vars.POW11Saved = (current.PowChecklist2 & (1 << 6-1)) != 0;
-	vars.POW12Saved = (current.PowChecklist2 & (1 << 7-1)) != 0;
-	vars.POW13Saved = (current.PowChecklist2 & (1 << 8-1)) != 0;
+	D.POW6Saved = (current.PowChecklist2 & (1 << 1-1)) != 0;
+	D.POW7Saved = (current.PowChecklist2 & (1 << 2-1)) != 0;
+	D.POW8Saved = (current.PowChecklist2 & (1 << 3-1)) != 0;
+	D.POW9Saved = (current.PowChecklist2 & (1 << 4-1)) != 0;
+	D.POW10Saved = (current.PowChecklist2 & (1 << 5-1)) != 0;
+	D.POW11Saved = (current.PowChecklist2 & (1 << 6-1)) != 0;
+	D.POW12Saved = (current.PowChecklist2 & (1 << 7-1)) != 0;
+	D.POW13Saved = (current.PowChecklist2 & (1 << 8-1)) != 0;
 
-	vars.POW14Saved = (current.PowChecklist3 & (1 << 1-1)) != 0;
-	vars.POW15Saved = (current.PowChecklist3 & (1 << 2-1)) != 0;
-	vars.POW16Saved = (current.PowChecklist3 & (1 << 3-1)) != 0;
-	vars.POW17Saved = (current.PowChecklist3 & (1 << 4-1)) != 0;
-	vars.POW18Saved = (current.PowChecklist3 & (1 << 5-1)) != 0;
-	vars.POW19Saved = (current.PowChecklist3 & (1 << 6-1)) != 0;
-	vars.POW20Saved = (current.PowChecklist3 & (1 << 7-1)) != 0;
-	vars.POW21Saved = (current.PowChecklist3 & (1 << 8-1)) != 0;
+	D.POW14Saved = (current.PowChecklist3 & (1 << 1-1)) != 0;
+	D.POW15Saved = (current.PowChecklist3 & (1 << 2-1)) != 0;
+	D.POW16Saved = (current.PowChecklist3 & (1 << 3-1)) != 0;
+	D.POW17Saved = (current.PowChecklist3 & (1 << 4-1)) != 0;
+	D.POW18Saved = (current.PowChecklist3 & (1 << 5-1)) != 0;
+	D.POW19Saved = (current.PowChecklist3 & (1 << 6-1)) != 0;
+	D.POW20Saved = (current.PowChecklist3 & (1 << 7-1)) != 0;
+	D.POW21Saved = (current.PowChecklist3 & (1 << 8-1)) != 0;
 
 	// count all saved POWs including Gray Fox, Madnar and Ellen
-	vars.POWsPickedUp = (new []{
-		vars.GrayFoxSaved, 
-		vars.MadnarSaved, 
-		vars.EllenSaved, 
-		vars.POW1Saved, 
-		vars.POW2Saved, 
-		vars.POW3Saved, 
-		vars.POW4Saved, 
-		vars.POW5Saved, 
-		vars.POW6Saved, 
-		vars.POW7Saved, 
-		vars.POW8Saved, 
-		vars.POW9Saved, 
-		vars.POW10Saved, 
-		vars.POW11Saved, 
-		vars.POW12Saved, 
-		vars.POW13Saved, 
-		vars.POW14Saved, 
-		vars.POW15Saved, 
-		vars.POW16Saved, 
-		vars.POW17Saved, 
-		vars.POW18Saved, 
-		vars.POW19Saved, 
-		vars.POW20Saved,
-		vars.POW21Saved
+	D.POWsPickedUp = (new []{
+		D.GrayFoxSaved, 
+		D.MadnarSaved, 
+		D.EllenSaved, 
+		D.POW1Saved, 
+		D.POW2Saved, 
+		D.POW3Saved, 
+		D.POW4Saved, 
+		D.POW5Saved, 
+		D.POW6Saved, 
+		D.POW7Saved, 
+		D.POW8Saved, 
+		D.POW9Saved, 
+		D.POW10Saved, 
+		D.POW11Saved, 
+		D.POW12Saved, 
+		D.POW13Saved, 
+		D.POW14Saved, 
+		D.POW15Saved, 
+		D.POW16Saved, 
+		D.POW17Saved, 
+		D.POW18Saved, 
+		D.POW19Saved, 
+		D.POW20Saved,
+		D.POW21Saved
 	}).Count(x=>x);
 
 	// boss data
-	vars.FHMFought = (current.BossData1 & (1 << 2-1)) != 0;
-	vars.ShotmakerFought = (current.BossData1 & (1 << 3-1)) != 0;
-	vars.MGKFought = (current.BossData1 & (1 << 4-1)) != 0;
-	vars.TankFought = (current.BossData1 & (1 << 5-1)) != 0;
-	vars.BulldozerFought = (current.BossData1 & (1 << 6-1)) != 0;
-	vars.HindFought = (current.BossData1 & (1 << 7-1)) != 0;
-	vars.FiretrooperFought = (current.BossData1 & (1 << 8-1)) != 0;
+	D.FHMFought = (current.BossData1 & (1 << 2-1)) != 0;
+	D.ShotmakerFought = (current.BossData1 & (1 << 3-1)) != 0;
+	D.MGKFought = (current.BossData1 & (1 << 4-1)) != 0;
+	D.TankFought = (current.BossData1 & (1 << 5-1)) != 0;
+	D.BulldozerFought = (current.BossData1 & (1 << 6-1)) != 0;
+	D.HindFought = (current.BossData1 & (1 << 7-1)) != 0;
+	D.FiretrooperFought = (current.BossData1 & (1 << 8-1)) != 0;
 
-	vars.DirtyDuckFought = (current.BossData2 & (1 << 1-1)) != 0;
-	vars.BigBossFought = (current.BossData2 & (1 << 2-1)) != 0;
-	vars.TX55Fought = (current.BossData2 & (1 << 3-1)) != 0;
+	D.DirtyDuckFought = (current.BossData2 & (1 << 1-1)) != 0;
+	D.BigBossFought = (current.BossData2 & (1 << 2-1)) != 0;
+	D.TX55Fought = (current.BossData2 & (1 << 3-1)) != 0;
 
-	vars.BossesFought = (new []{
-	vars.FHMFought,
-	vars.ShotmakerFought,
-	vars.MGKFought,
-	vars.HindFought,
-	vars.TankFought,
-	vars.BulldozerFought,
-	vars.FiretrooperFought,
-	vars.DirtyDuckFought,
-	vars.TX55Fought,
-	vars.BigBossFought,
+	D.BossesFought = (new []{
+	D.FHMFought,
+	D.ShotmakerFought,
+	D.MGKFought,
+	D.HindFought,
+	D.TankFought,
+	D.BulldozerFought,
+	D.FiretrooperFought,
+	D.DirtyDuckFought,
+	D.TX55Fought,
+	D.BigBossFought,
 	}).Count(x=>x);
 
 	// calculate percentage of all colectibles
 	vars.HundredPercentCompletion = (
 	(
 		Math.Floor((
-			(vars.sumOfInventory + vars.WeaponsPickedUp + vars.POWsPickedUp + D.CodecCompleted + vars.BossesFought)
+			(D.sumOfInventory + D.WeaponsPickedUp + D.POWsPickedUp + D.CodecCompleted + D.BossesFought)
 			 / 68f) * 100)
 	)
 	).ToString()
@@ -979,24 +969,23 @@ gameTime {
 }
 
 isLoading {
+	
 	if(current.BSState == 0 || current.BSState == 4) return false;
 	else return true;
 }
 
 start {
-	// various start texts and values
-	// J-SUB: 	19351456 NG		19351408 NGP
-	// J20A: 	19351408 NG		19351408 NGP
-	// US: 		22288032 NG 	22287840 NGP
-	// PAL:		22294496 NG		22294520 NGP	22294304 BS
-	// PC:		192593504 NG	192593528 NGP 192593864
-
+	// if currently the Boss Survival State is 0, listen to the main menu state for change
     if ((current.BSState == 0) && (current.MainMenuState == 0 && current.MainMenuState != old.MainMenuState)) {
         return  true;
     } else if ((old.BSState == 0) && (current.BSState == 8)) return true;
+	// start splitting once the Boss Survival state goes from 0 to 8 (loading game mode after selecting difficulty)
 }
 
-split {	
+split {
+	// add D shorthand to context
+  	var D = vars.D;
+
     if (current.GameTime > 0 && current.BSState == 0) {
         //on entering the elevator on building 1
         if (current.FloorVal == 6) {
@@ -1098,23 +1087,31 @@ split {
 
 // Boss Kill Splits
 if (current.BossData1 != old.BossData1) {
-	if(vars.ShotmakerFought && settings["shotmaker_split"]) return true;
-	if(vars.MGKFought && settings["mgk_split"]) return true;
-	if(vars.TankFought && settings["tank_split"]) return true;
-	if(vars.BulldozerFought && settings["bulldozer_split"]) return true;
-	if(vars.HindFought && settings["hindd_split"]) return true;
-	if(vars.FiretrooperFought && settings["firetrooper_split"]) return true;
+	if(D.ShotmakerFought && settings["shotmaker_split"]) return true;
+	if(D.MGKFought && settings["mgk_split"]) return true;
+	if(D.TankFought && settings["tank_split"]) return true;
+	if(D.BulldozerFought && settings["bulldozer_split"]) return true;
+	if(D.HindFought && settings["hindd_split"]) return true;
+	if(D.FiretrooperFought && settings["firetrooper_split"]) return true;
 }
 if (current.BossData2 != old.BossData2) {
-	if(vars.DirtyDuckFought && settings["dirtyduck_split"]) return true;
-	if(vars.BigBossFought && settings["55_split"]) return true;
-	if(vars.TX55Fought && settings["bigboss_split"]) return true;
+	if(D.DirtyDuckFought && settings["dirtyduck_split"]) return true;
+	if(D.BigBossFought && settings["55_split"]) return true;
+	if(D.TX55Fought && settings["bigboss_split"]) return true;
 }
 
+// class change splits
 if (current.ClassValue != old.ClassValue) {
-	if(current.ClassValue = 1 && settings["class2_upgrade"]) return true;
-	if(current.ClassValue = 2 && settings["class3_upgrade"]) return true;
-	if(current.ClassValue = 3 && settings["class4_upgrade"]) return true;
+	if(current.ClassValue == 1 && settings["class2_upgrade"]) return true;
+	if(current.ClassValue == 2 && settings["class3_upgrade"]) return true;
+	if(current.ClassValue == 3 && settings["class4_upgrade"]) return true;
+}
+
+// special POW splits
+if (current.PowChecklist1 != old.PowChecklist1) {
+	if(D.GrayFoxSaved && settings["gray_fox_saved"]) return true;
+	if(D.MadnarSaved && settings["dr_madnar_saved"]) return true;
+	if(D.EllenSaved && settings["ellen_saved"]) return true;
 }
 
 }
@@ -1140,31 +1137,12 @@ onReset {
 	vars.Location = "";
 	vars.SubLocation = "";
 	vars.Difficulty = "";
-	vars.inventoryCompletion = "";
 	vars.ActiveItem = "";
 	vars.ActiveWeapon = "";
 	vars.D.CodecCompleted = 0;
-	vars.BigBossCalled = false;
-	vars.DianeCalled = false;
-	vars.SchneiderCalled = false;
-	vars.JenniferCalled = false;
+	vars.CalledBigBoss = false;
+	vars.CalledDiane = false;
+	vars.CalledSchneider = false;
+	vars.CalledJennifer = false;
 	vars.D.WeaponsCompleted = 0;
-	vars.PistolPickedUp = false;
-	vars.MinePickedUp = false;
-	vars.GrenadeLPickedUp = false;
-	vars.RocketLPickedUp = false;
-	vars.RCMissilePickedUp = false;
-	vars.SMGPickedUp = false;
-	vars.PExplosivesPickedUp = false;
-	vars.SilencerPickedUp = false;
-	vars.FHMFought = false;
-	vars.ShotmakerFought = false;
-	vars.MGKFought = false;
-	vars.HindFought = false;
-	vars.TankFought = false;
-	vars.BulldozerFought = false;
-	vars.FiretrooperFought = false;
-	vars.DirtyDuckFought = false;
-	vars.TX55Fought = false;
-	vars.BigBossFought = false;
 }
