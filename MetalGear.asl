@@ -88,7 +88,6 @@ state("MetalGear") {
 	uint MenuPointerPosition:	0x113E8, 0xF70;
 	uint ActiveWeaponEquipped:	0x113E8, 0xF90;
 	uint ActiveItemEquipped:	0x113E8, 0xF8C;
-	uint CodecInfo:				0x12060, 0xFF0;
 	uint WeaponsUpdate1:		0x12060, 0xFBC;
 	uint WeaponsUpdate2:		0x12060, 0xFC0;
 	uint PowChecklist1:			0x12060, 0xFC8;
@@ -186,14 +185,13 @@ state("pcsx2") {
 	uint J20A_MenuPointerPosition:	0x123E184, 0x87C;
 	uint J20A_ActiveWeaponEquipped:	0x123E188, 0x50C;
 	uint J20A_ActiveItemEquipped:	0x123E188, 0x10;
-	uint J20A_CodecInfo:			0x12060, 0xFF0;
-	uint J20A_WeaponsUpdate1:		0x12060, 0xFBC;
-	uint J20A_WeaponsUpdate2:		0x12060, 0xFC0;
-	uint J20A_PowChecklist1:		0x12060, 0xFC8;
-	uint J20A_PowChecklist2:		0x12060, 0xFCC;
-	uint J20A_PowChecklist3:		0x12060, 0xFD0;
-	uint J20A_BossData1:				0x12060, 0xFFC;
-	uint J20A_BossData2:				0x12060, 0xFFC;
+	uint J20A_WeaponsUpdate1:		0x123E184, 0x94C;
+	uint J20A_WeaponsUpdate2:		0x123E184, 0x950;
+	uint J20A_PowChecklist1:		0x123E184, 0x958;
+	uint J20A_PowChecklist2:		0x123E184, 0x95C;
+	uint J20A_PowChecklist3:		0x123E184, 0x960;
+	uint J20A_BossData1:			0x123E184, 0x98C;
+	uint J20A_BossData2:			0x123E184, 0x990;
 
     // JP Subsistence
 	// timers
@@ -267,14 +265,13 @@ state("pcsx2") {
 	uint JSub_MenuPointerPosition:	0x123E184, 0x8FC;
 	uint JSub_ActiveWeaponEquipped:	0x123E188, 0x58C;
 	uint JSub_ActiveItemEquipped:	0x123E188, 0x590;
-	uint JSub_CodecInfo:			0x12060, 0xFF0;
-	uint JSub_WeaponsUpdate1:		0x12060, 0xFBC;
-	uint JSub_WeaponsUpdate2:		0x12060, 0xFC0;
-	uint JSub_PowChecklist1:		0x12060, 0xFC8;
-	uint JSub_PowChecklist2:		0x12060, 0xFCC;
-	uint JSub_PowChecklist3:		0x12060, 0xFD0;
-	uint JSub_BossData1:				0x12060, 0xFFC;
-	uint JSub_BossData2:				0x12060, 0xFFC;
+	uint JSub_WeaponsUpdate1:		0x123E184, 0x9CC;
+	uint JSub_WeaponsUpdate2:		0x123E184, 0x9D0;
+	uint JSub_PowChecklist1:		0x123E184, 0x9D8;
+	uint JSub_PowChecklist2:		0x123E184, 0x9DC;
+	uint JSub_PowChecklist3:		0x123E184, 0x9E0;
+	uint JSub_BossData1:			0x123E184, 0xA0C;
+	uint JSub_BossData2:			0x123E184, 0xA10;
 
 	// US
 	// timers
@@ -348,14 +345,13 @@ state("pcsx2") {
 	uint US_MenuPointerPosition:	0x123E188, 0x214;
 	uint US_ActiveWeaponEquipped:	0x123E188, 0x9B0;
 	uint US_ActiveItemEquipped:		0x123E188, 0x9A8;
-	uint US_CodecInfo:				0x12060, 0xFF0;
-	uint US_WeaponsUpdate1:			0x12060, 0xFBC;
-	uint US_WeaponsUpdate2:			0x12060, 0xFC0;
-	uint US_PowChecklist1:			0x12060, 0xFC8;
-	uint US_PowChecklist2:			0x12060, 0xFCC;
-	uint US_PowChecklist3:			0x12060, 0xFD0;
-	uint US_BossData1:				0x12060, 0xFFC;
-	uint US_BossData2:				0x12060, 0xFFC;
+	uint US_WeaponsUpdate1:			0x123E188, 0x2E4;
+	uint US_WeaponsUpdate2:			0x123E188, 0x2E8;
+	uint US_PowChecklist1:			0x123E188, 0x2F0;
+	uint US_PowChecklist2:			0x123E188, 0x2F4;
+	uint US_PowChecklist3:			0x123E188, 0x2F8;
+	uint US_BossData1:				0x123E188, 0x324;
+	uint US_BossData2:				0x123E188, 0x328;
 
     // EU
 	// timers
@@ -429,14 +425,13 @@ state("pcsx2") {
 	uint EU_MenuPointerPosition:	0x123E190, 0xF4C;
 	uint EU_ActiveWeaponEquipped:	0x123E194, 0x6E8;
 	uint EU_ActiveItemEquipped:		0x123E194, 0x6E0;
-	uint EU_CodecInfo:				0x12060, 0xFF0;
-	uint EU_WeaponsUpdate1:			0x12060, 0xFBC;
-	uint EU_WeaponsUpdate2:			0x12060, 0xFC0;
-	uint EU_PowChecklist1:			0x12060, 0xFC8;
-	uint EU_PowChecklist2:			0x12060, 0xFCC;
-	uint EU_PowChecklist3:			0x12060, 0xFD0;
-	uint EU_BossData1:				0x12060, 0xFFC;
-	uint EU_BossData2:				0x12060, 0xFFC;
+	uint EU_WeaponsUpdate1:			0x123E194, 0x1C;
+	uint EU_WeaponsUpdate2:			0x123E194, 0x20;
+	uint EU_PowChecklist1:			0x123E194, 0x28;
+	uint EU_PowChecklist2:			0x123E194, 0x2C;
+	uint EU_PowChecklist3:			0x123E194, 0x30;
+	uint EU_BossData1:				0x123E194, 0x5C;
+	uint EU_BossData2:				0x123E194, 0x60;
 }
 
 startup {
@@ -540,6 +535,7 @@ startup {
 	vars.ActiveItem = "";
 	vars.ActiveWeapon = "";
 	D.CodecCompleted = 0;
+	vars.BigBossCalled = false;
 	vars.DianeCalled = false;
 	vars.SchneiderCalled = false;
 	vars.JenniferCalled = false;
@@ -639,7 +635,6 @@ update {
 			"MenuPointerPosition",
 			"ActiveWeaponEquipped",
 			"ActiveItemEquipped",
-			"CodecInfo",
 			"WeaponsUpdate1",
 			"WeaponsUpdate2",
 			"PowChecklist1",
@@ -769,12 +764,14 @@ update {
 	// remove bandana from count since it is irrelevant to 100% completion
 	vars.sumOfInventory = current.InventorySlot12 == 27? vars.sumOfInventory--:vars.sumOfInventory;
 
-	// count all saved codecs in the codec viewer
-	vars.SchneiderCalled = (current.CodecInfo & (1 << 4-1)) != 0;
-	vars.DianeCalled = (current.CodecInfo & (1 << 5-1)) != 0;
-	vars.JenniferCalled = (current.CodecInfo & (1 << 6-1)) != 0;
+	// count all saved codecs in the codec viewer	
+	vars.BigBossCalled = (current.BossData2 & (1 << 4-1)) != 0;
+	vars.SchneiderCalled = (current.BossData2 & (1 << 6-1)) != 0;
+	vars.DianeCalled = (current.BossData2 & (1 << 7-1)) != 0;
+	vars.JenniferCalled = (current.BossData2 & (1 << 8-1)) != 0;
 
 	D.CodecCompleted = (new []{
+		vars.BigBossCalled,
 		vars.SchneiderCalled,
 		vars.DianeCalled,
 		vars.JenniferCalled
@@ -870,11 +867,6 @@ update {
 	vars.DirtyDuckFought = (current.BossData2 & (1 << 1-1)) != 0;
 	vars.BigBossFought = (current.BossData2 & (1 << 2-1)) != 0;
 	vars.TX55Fought = (current.BossData2 & (1 << 3-1)) != 0;
-	vars.Boss6Fought = (current.BossData2 & (1 << 4-1)) != 0;
-	vars.Boss7Fought = (current.BossData2 & (1 << 5-1)) != 0;
-	vars.Boss8Fought = (current.BossData2 & (1 << 6-1)) != 0;
-	vars.Boss9Fought = (current.BossData2 & (1 << 7-1)) != 0;
-	vars.Boss10Fought = (current.BossData2 & (1 << 8-1)) != 0;
 
 	vars.BossesFought = (new []{
 	vars.FHMFought,
@@ -894,7 +886,7 @@ update {
 	(
 		Math.Floor((
 			(vars.sumOfInventory + vars.WeaponsPickedUp + vars.POWsPickedUp + D.CodecCompleted + vars.BossesFought)
-			 / 67f) * 100)
+			 / 68f) * 100)
 	)
 	).ToString()
 	+ "%";
@@ -931,7 +923,7 @@ start {
 
     if ((current.BSState == 0) && (current.MainMenuState == 0 && current.MainMenuState != old.MainMenuState)) {
         return  true;
-    } else if ((old.BSState == 8) && (current.BSState == 1)) return true;
+    } else if ((old.BSState == 0) && (current.BSState == 8)) return true;
 }
 
 split {	
@@ -1021,7 +1013,7 @@ split {
     }
 
     // during Boss Survival
-    if ((old.BSState == 4) && (current.BSState == 6)) return true;
+    if ((old.BSState == 6) && (current.BSState == 1) || (old.BSState == 6) && (current.BSState == 0)) return true;
 
 	// if on final game screen and the main menu state changes, split
 	if ((old.FloorVal == 17 && old.ScreenVal == 2) && (current.MainMenuState != old.MainMenuState && old.MainMenuState == 0)) return true;
@@ -1053,6 +1045,7 @@ onReset {
 	vars.ActiveItem = "";
 	vars.ActiveWeapon = "";
 	vars.D.CodecCompleted = 0;
+	vars.BigBossCalled = false;
 	vars.DianeCalled = false;
 	vars.SchneiderCalled = false;
 	vars.JenniferCalled = false;
