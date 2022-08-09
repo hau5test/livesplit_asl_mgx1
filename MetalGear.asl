@@ -558,6 +558,76 @@ startup {
 	vars.DirtyDuckFought = false;
 	vars.TX55Fought = false;
 	vars.BigBossFought = false;
+
+	// add splits based on checkpoints
+	settings.Add("checkpoint_splits", true, "Checkpoint Splits");
+	// add splits based on being checkpoints in the first building
+	settings.Add("building1_finished", true, "Building 1 Split", "checkpoint_splits");
+	settings.Add("b1_gf_to_elevator", true, "Ground Floor to Elevator", "building1_finished");
+	settings.Add("b1_1f_to_elevator", true, "First Floor to Elevator", "building1_finished");
+	settings.Add("b1_captured", true, "Getting Captured", "building1_finished");
+	settings.Add("b1_2f_to_elevator", true, "Second Floor to Elevator", "building1_finished");
+	settings.Add("b1_ug_to_elevator", true, "UnderGround to Elevator", "building1_finished");
+	settings.Add("b1_roof_to_ground", true, "Roof to Central Courtyard", "building1_finished");
+	// add splits based on being checkpoints in the second building
+	settings.Add("building2_finished", true, "Building 2 Split", "checkpoint_splits");
+	settings.Add("b2_enter_from_B1_desert", true, "Entering Building 2 from Building 1 Desert", "building2_finished");
+	settings.Add("b2_enter_from_B3_desert", true, "Entering Building 2 from Building 3 Desert", "building2_finished");
+	settings.Add("b2_gf_to_elevator", true, "Ground Floor to Elevator", "building2_finished");
+	settings.Add("b2_1f_to_elevator", true, "First Floor to Elevator", "building2_finished");
+	settings.SetToolTip("b2_1f_to_elevator", "Splits only if deaths on this checkpoint are 0 or have not increased between map changes to avoid splitting during death farming.");
+	settings.Add("b2_roof_to_elevator", true, "Hell Roof to Elevator", "building2_finished");
+	settings.Add("b2_ug_to_elevator", true, "UnderGround to Elevator", "building2_finished");
+	// add splits based on being checkpoints in the third building
+	settings.Add("building3_finished", true, "Building 3 Split", "checkpoint_splits");
+	settings.Add("b3_enter", true, "Entering Building 3", "building3_finished");
+	settings.Add("b3_gf_to_elevator", true, "Ground Floor to Elevator", "building3_finished");
+	settings.Add("b3_ug_to_elevator", true, "Ground Floor to Elevator", "building3_finished");
+
+	// add settings block
+	settings.Add("stop_timer", true, "Stop Timer on Finishing the Game");
+
+	// add bonus splits outside of checkpoints
+	settings.Add("boss_splits", false, "Boss Splits");
+	settings.Add("shotmaker_split", true, "Shotmaker Split", "boss_splits");
+	settings.Add("mgk_split", true, "MGK Split", "boss_splits");
+	settings.Add("hindd_split", true, "Hind D Split", "boss_splits");
+	settings.Add("tank_split", true, "Tank Split", "boss_splits");
+	settings.Add("bulldozer_split", true, "Bulldozer Split", "boss_splits");
+	settings.Add("firetrooper_split", true, "Firetrooper Split", "boss_splits");
+	settings.Add("dirtyduck_split", true, "Dirty Duck Split", "boss_splits");
+	settings.Add("tx-55_split", true, "TX-55 Split", "boss_splits");
+	settings.Add("bigboss_split", true, "Big Boss Split", "boss_splits");
+
+	// add bonus splits outside of checkpoints
+	settings.Add("bonus_splits", true, "Bonus Splits");
+	// add splits on class change
+	settings.Add("class_upgrade", false, "Class Upgrade", "bonus_splits");
+	settings.Add("class2_upgrade", false, "Upgrade to Class 2", "class_upgrade");
+	settings.Add("class3_upgrade", false, "Upgrade to Class 3", "class_upgrade");
+	settings.Add("class4_upgrade", false, "Upgrade to Class 4", "class_upgrade");
+	// add splits on death farm success
+	settings.Add("death_farm", true, "Death Farm Completed", "bonus_splits");
+	settings.Add("death_farm_b1_2f", false, "Death Farm B1 2F Completed", "death_farm");
+	settings.Add("death_farm_b1_roof", false, "Death Farm B1 Roof Completed", "death_farm");
+	settings.Add("death_farm_b2_1f", true, "Death Farm B2 1F Completed", "death_farm");
+	// add splits on Scuba Swim
+	settings.Add("scuba_swim_splits", true, "Scuba Swim Splits", "bonus_splits");
+	settings.Add("scuba_swim_north_finished", true, "Scuba Swim North Finished", "scuba_swim_splits");
+	settings.Add("scuba_swim_south_finished", true, "Scuba Swim South Finished", "scuba_swim_splits");
+
+	// add Boss Survival spliting behaviour
+	settings.Add("bossrush_splits", true, "Boss Survival Splits");
+	settings.Add("bossrush_split", true, "Boss Survival Split", "bossrush_splits");
+	settings.Add("bossrush_stop", true, "Boss Survival Finish", "bossrush_splits");
+
+
+	settings.Add("legacy_splits", true, "Legacy Split Definitions");
+	settings.Add("scuba_swim_south_started", true, "Scuba Swim South Started", "legacy_splits");
+	settings.SetToolTip("scuba_swim_south_started", "on returning back to Building 2 Ground Floor after having visited Building 3 (post Dirty Duck)");
+	settings.Add("b3_enter_tx55_room", true, "Enter TX-55 Room" , "legacy_splits");
+	settings.Add("b3_enter_bb_room", true, "Enter Big Boss Room", "legacy_splits");
+	settings.Add("b3_enter_ladder_map", true, "Room Change Big Boss to Ladders", "legacy_splits");
 }
 
 update {
@@ -932,91 +1002,120 @@ split {
         if (current.FloorVal == 6) {
             if (old.FloorVal == 1) {
             //if previous map was Building 1 - Ground Floor
-                return true;
+			if (settings["b1_gf_to_elevator"]) return true;
             } else if (old.FloorVal == 3) {
-            //if previous map was Building 1 - First Floor
-                return true;
+            //if previous map was Building 1 - Second Floor
+			if (settings["b1_2f_to_elevator"]) return true;
             } else if (old.FloorVal == 4) {
             //if previous map was Building 1 - Underground
-                return true;
+			if (settings["b1_ug_to_elevator"]) return true;
             } else if (old.FloorVal == 2) {
-            //if previous map was Building 1 - MGK Floor
-                return true;
+            //if previous map was Building 1 - First Floor
+			if (settings["b1_1f_to_elevator"]) return true;
             }
         }
         //on capture on B1 Ground Floor to being put in the underground
-        if ((current.FloorVal == 4) && (old.FloorVal == 1)) return true;
+        if ((current.FloorVal == 4) && (old.FloorVal == 1) && settings["b1_captured"]) return true;
 
         //on switching from Building 1 - Roof to Building 1 - Ground Floor via parachute drop
-        if ((current.FloorVal == 1) && (old.FloorVal == 7)) return true;
+        if ((current.FloorVal == 1) && (old.FloorVal == 7) && settings["b1_roof_to_ground"]) return true;
 
         //on entering Desert between Building 1 to Building 2 with B1 - GF as previous map
-        if ((current.FloorVal == 5) && (old.FloorVal == 1)) return true;
+        if ((current.FloorVal == 5) && (old.FloorVal == 1) && settings["building1_finished"]) return true;
 
         //on entering Building 2 with connecting desert as previous map
-        if ((current.FloorVal == 8) && (old.FloorVal == 5)) return true;
+        if ((current.FloorVal == 8) && (old.FloorVal == 5) && settings["b2_enter_from_B1_desert"]) return true;
 
         //on entering the elevator on building 2
         if (current.FloorVal == 12) {
             if (old.FloorVal == 8) {
             //if previous map was Building 2 - Ground Floor
-                return true;
+			if (settings["b2_gf_to_elevator"]) return true;
             } else if (old.FloorVal == 13) {
             //if previous map was Building 2 - Hell Roof
-                return true;
+			if (settings["b2_roof_to_elevator"]) return true;
             } else if (old.FloorVal == 10) {
             //if previous map was Building 2 - Underground
-                return true;
+			if (settings["b2_ug_to_elevator"]) return true;
             }
         }
 
         //split on successful death abuse first time only
-        if (current.ContPerCheckpoint == 5 && old.ContPerCheckpoint == 4) return true;
+        if (current.ContPerCheckpoint == 5 && old.ContPerCheckpoint == 4) {
+			if((old.FloorVal == 3 || current.FloorVal == 3) && settings["death_farm_b1_2f"]) return true;
+			if((old.FloorVal == 7 || current.FloorVal == 7) && settings["death_farm_b1_roof"]) return true;
+			if((old.FloorVal == 9 || current.FloorVal == 9) && settings["death_farm_b2_1f"]) return true;
+		};
 
         //on entering the B2 elevator, but only if the amount of continues for a single checkpoint is higher than 4
         //and on transitioning between Building 2 - First Floor going into the B2 Elevator
-        if (((current.ContPerCheckpoint == 0) || (current.ContPerCheckpoint == old.ContPerCheckpoint)) && (current.FloorVal == 12) && (old.FloorVal == 9)) return true;
+        if (((current.ContPerCheckpoint == 0) || (current.ContPerCheckpoint == old.ContPerCheckpoint)) && (current.FloorVal == 12) && (old.FloorVal == 9) && settings["b2_1f_to_elevator"]) return true;
 
         // on reaching Building 3
         if (current.FloorVal == 14) {
             if (old.FloorVal == 8) {
             // if previous map was B2 Ground Floor
-                return true;
+			if (settings["scuba_swim_north_finished"]) return true;
             } else if (old.FloorVal == 11) {
             // if previous map was Connecting Desert between Building 2 and Building 3
-                return true;
+			if (settings["b3_enter"]) return true;
             }
         }
 
         // on returning back to Building 2 Ground Floor after having visited Building 3 (post Dirty Duck)
-        if ((current.FloorVal == 8) && (old.FloorVal == 14)) return true;
+        if ((current.FloorVal == 8) && (old.FloorVal == 14) && settings["scuba_swim_south_started"]) return true;
 
         // going from Buildin 2 Ground Floor into the connecting desert between Building 2 and Building 3
-        if ((current.FloorVal == 11) && (old.FloorVal == 8)) return true;
+        if ((current.FloorVal == 11) && (old.FloorVal == 8) && settings["building2_finished"]) return true;
         
         // going from Desert between B2 and B3 into Building 2 Ground Floor
-        if ((current.FloorVal == 8) && (old.FloorVal == 11)) return true;
+        if ((current.FloorVal == 8) && (old.FloorVal == 11) && settings["b2_enter_from_B3_desert"]) return true;
         
         // on entering Building 3 elevator after having visited Building 3 Ground Floor
-        if ((current.FloorVal == 16) && (old.FloorVal == 14)) return true;
+        if ((current.FloorVal == 16) && (old.FloorVal == 14) && settings["b3_gf_to_elevator"]) return true;
+
+        // on entering Building 3 elevator after having visited Building 3 Ground Floor
+        if ((current.FloorVal == 16) && (old.FloorVal == 15) && settings["b3_ug_to_elevator"]) return true;
 
         // on entering Building 3 Underground
         if (current.FloorVal == 15) {
             // after map has switched from underground to TX-55 boss room
-            if ((old.SubFloorVal == 16) && (current.SubFloorVal == 57)) return true;
+            if ((old.SubFloorVal == 16) && (current.SubFloorVal == 57) && settings["b3_enter_tx55_room"]) return true;
             // after map has switched from TX-55 boss room to Big Boss Boss fight room
-            if ((old.SubFloorVal == 57) && (current.SubFloorVal == 56)) return true;
+            if ((old.SubFloorVal == 57) && (current.SubFloorVal == 56) && settings["b3_enter_bb_room"]) return true;
         }
         // on entering the final map
-        if ((current.FloorVal == 17) && (old.FloorVal == 15)) return true;
+        if ((current.FloorVal == 17) && (old.FloorVal == 15) && settings["b3_enter_ladder_map"]) return true;
         
     }
 
     // during Boss Survival
-    if ((old.BSState == 6) && (current.BSState == 1) || (old.BSState == 6) && (current.BSState == 0)) return true;
+    if ((old.BSState == 6) && (current.BSState == 1) && settings["bossrush_split"]) return true;
+	if ((old.BSState == 6) && (current.BSState == 0) && settings["bossrush_stop"]) return true;
 
 	// if on final game screen and the main menu state changes, split
 	if ((old.FloorVal == 17 && old.ScreenVal == 2) && (current.MainMenuState != old.MainMenuState && old.MainMenuState == 0)) return true;
+
+// Boss Kill Splits
+if (current.BossData1 != old.BossData1) {
+	if(vars.ShotmakerFought && settings["shotmaker_split"]) return true;
+	if(vars.MGKFought && settings["mgk_split"]) return true;
+	if(vars.TankFought && settings["tank_split"]) return true;
+	if(vars.BulldozerFought && settings["bulldozer_split"]) return true;
+	if(vars.HindFought && settings["hindd_split"]) return true;
+	if(vars.FiretrooperFought && settings["firetrooper_split"]) return true;
+}
+if (current.BossData2 != old.BossData2) {
+	if(vars.DirtyDuckFought && settings["dirtyduck_split"]) return true;
+	if(vars.BigBossFought && settings["55_split"]) return true;
+	if(vars.TX55Fought && settings["bigboss_split"]) return true;
+}
+
+if (current.ClassValue != old.ClassValue) {
+	if(current.ClassValue = 1 && settings["class2_upgrade"]) return true;
+	if(current.ClassValue = 2 && settings["class3_upgrade"]) return true;
+	if(current.ClassValue = 3 && settings["class4_upgrade"]) return true;
+}
 
 }
 
