@@ -7,17 +7,20 @@
   </LayoutPath>
   <Metadata>
     <Run id="" />
-    <Platform usesEmulator="False">PlayStation 2</Platform>
+    <Platform usesEmulator="False">
+    </Platform>
     <Region>
     </Region>
     <Variables />
   </Metadata>
   <Offset>00:00:00</Offset>
-  <AttemptCount>0</AttemptCount>
-  <AttemptHistory />
+  <AttemptCount>1</AttemptCount>
+  <AttemptHistory>
+    <Attempt id="1" started="08/10/2022 11:26:16" isStartedSynced="True" ended="08/10/2022 11:27:10" isEndedSynced="True" />
+  </AttemptHistory>
   <Segments>
     <Segment>
-      <Name>-F1</Name>
+      <Name>-do them squats yo</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -44,6 +47,15 @@
       <SegmentHistory />
     </Segment>
     <Segment>
+      <Name>Save Gray Fox</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
       <Name>-Escape</Name>
       <Icon />
       <SplitTimes>
@@ -53,7 +65,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-MGK</Name>
+      <Name>MGK</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -62,7 +74,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-HIND</Name>
+      <Name>HIND</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -71,7 +83,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>Building 1</Name>
+      <Name>-Parachute!</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -80,7 +92,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Tank</Name>
+      <Name>-Building 1</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -89,7 +101,25 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Bulldozer</Name>
+      <Name>-Desert 1</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>Bulldozer</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>-Enter Elevator</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -152,7 +182,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Dirty Duck</Name>
+      <Name>Dirty Duck</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -161,7 +191,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>Building 2</Name>
+      <Name>-Exit Building 2</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -180,15 +210,6 @@
     </Segment>
     <Segment>
       <Name>-Pitfalls</Name>
-      <Icon />
-      <SplitTimes>
-        <SplitTime name="Personal Best" />
-      </SplitTimes>
-      <BestSegmentTime />
-      <SegmentHistory />
-    </Segment>
-    <Segment>
-      <Name>-Underground</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
