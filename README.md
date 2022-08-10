@@ -24,8 +24,12 @@ The following and more ASL Var Viewer States are available:
 - ScreenVal         - lists number of current screen loaded from map
 - AlertCountdown    - shows the alert countdown from the final section of the game
 
-- TotalPOWsaved     - lists how many POWs have been saved
-- Health            - lists Snake's health
+- POWs Collected     - lists how many POWs have been saved
+- Weapons Collected  - lists how many weapons have been collected
+- Items Collected    - lists how many items have been collected
+- Codecs Collected   - lists how many codecs have been saved
+- Bosses Beated      - lists how many bosses in total have been beaten
+- Health             - lists Snake's health
 
 All key variables for the score screen
 - Saves
@@ -46,7 +50,5 @@ All inventory variables
 - PistolAmmo
 
 Current pointer position for Equipment and Weapon Inventory
-- EquipmentPointX
-- EquipmentPointY
-- WeaponPointX
-- WeaponPointY
+- Active Weapon
+- Active Item
