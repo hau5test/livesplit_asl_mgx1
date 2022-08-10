@@ -1094,7 +1094,7 @@ split {
 	if ((old.BSState == 6) && (current.BSState == 0) && settings["bossrush_stop"]) return true;
 
 	// if on final game screen and the main menu state changes, split
-	if ((old.FloorVal == 17 && old.ScreenVal == 2) && (current.MainMenuState != old.MainMenuState && old.MainMenuState == 0)) return true;
+	if ((old.FloorVal == 17 && old.ScreenVal == 2) && (current.MainMenuState != old.MainMenuState && old.MainMenuState == 0) && settings["stop_timer"]) return true;
 
 // Boss Kill Splits
 if (current.BossData1 != old.BossData1) {
