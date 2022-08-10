@@ -6,10 +6,10 @@
 /*                                                       */
 /* Game Compatibility:                                   */
 /*  * Metal Gear PC                                      */
-/*  * Metal Gear PS2 PAL                                 */
-/*  * Metal Gear PS2 NTSC-U Subsistence Release          */
-/*  * Metal Gear PS2 NTSC-J Subsistence Release          */
-/*  * Metal Gear PS2 NTSC-J 20th Anniversary Disc        */
+/*  * Metal Gear PCXS2 PS2 PAL                           */
+/*  * Metal Gear PCXS2 PS2 NTSC-U Subsistence Release    */
+/*  * Metal Gear PCXS2 PS2 NTSC-J Subsistence Release    */
+/*  * Metal Gear PCXS2 PS2 NTSC-J 20th Anniversary Disc  */
 /*                                                       */
 /* Created by Hau5test for Metal Gear Solid Speedrunners */
 /*                                                       */
@@ -573,7 +573,7 @@ startup {
 	settings.Add("stop_timer", true, "Stop Timer on Finishing the Game");
 
 	// add bonus splits outside of checkpoints
-	settings.Add("boss_splits", false, "Boss Splits");
+	settings.Add("boss_splits", true, "Boss Splits");
 	settings.Add("shotmaker_split", true, "Shotmaker Split", "boss_splits");
 	settings.Add("mgk_split", true, "MGK Split", "boss_splits");
 	settings.Add("hindd_split", true, "Hind D Split", "boss_splits");
@@ -613,12 +613,12 @@ startup {
 	settings.Add("bossrush_stop", true, "Boss Survival Finish", "bossrush_splits");
 
 	// add legacy splits
-	settings.Add("legacy_splits", true, "Legacy Split Definitions");
-	settings.Add("scuba_swim_south_started", true, "Scuba Swim South Started", "legacy_splits");
+	settings.Add("legacy_splits", false, "Legacy Split Definitions");
+	settings.Add("scuba_swim_south_started", false, "Scuba Swim South Started", "legacy_splits");
 	settings.SetToolTip("scuba_swim_south_started", "on returning back to Building 2 Ground Floor after having visited Building 3 (post Dirty Duck)");
-	settings.Add("b3_enter_tx55_room", true, "Enter TX-55 Room" , "legacy_splits");
-	settings.Add("b3_enter_bb_room", true, "Enter Big Boss Room", "legacy_splits");
-	settings.Add("b3_enter_ladder_map", true, "Room Change Big Boss to Ladders", "legacy_splits");
+	settings.Add("b3_enter_tx55_room", false, "Enter TX-55 Room" , "legacy_splits");
+	settings.Add("b3_enter_bb_room", false, "Enter Big Boss Room", "legacy_splits");
+	settings.Add("b3_enter_ladder_map", false, "Room Change Big Boss to Ladders", "legacy_splits");
 }
 
 update {
