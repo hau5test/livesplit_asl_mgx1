@@ -27,7 +27,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-F2 (4 POW)</Name>
+      <Name>-F2</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -36,7 +36,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Capture (2 POW)</Name>
+      <Name>-Capture</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -45,7 +45,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Escape</Name>
+      <Name>Save Gray Fox</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -54,7 +54,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-MGK (2 POW)</Name>
+      <Name>Shotmaker</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -63,7 +63,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-HIND (1POW)</Name>
+      <Name>-Maze</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -72,7 +72,43 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-L4 Card + Mines (1POW)</Name>
+      <Name>MGK</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>-To Roof</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>HIND</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>-Parachute!</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>-L4 Card + Mines</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -99,7 +135,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Tank</Name>
+      <Name>Tank</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -108,7 +144,25 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Bulldozer</Name>
+      <Name>-Enter Building 2</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>Bulldozer</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>-Enter Elevator</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -126,7 +180,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Firetrooper (2 POW)</Name>
+      <Name>Firetrooper</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -135,7 +189,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Ground Floor (1 POW)</Name>
+      <Name>-Enter Elevator</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -144,7 +198,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Save Ellen</Name>
+      <Name>-Ground Floor</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -153,7 +207,34 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>- Rocket Launcher (2 POW)</Name>
+      <Name>Save Ellen</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>-Return to Building 2</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>Save Dr. Madnar</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>-Rocket Launcher</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -180,7 +261,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Scuba Skip</Name>
+      <Name>-Scuba Skip North</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -189,7 +270,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Dirty Duck</Name>
+      <Name>Dirty Duck</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -198,7 +279,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>Building 2</Name>
+      <Name>-End of Building 2</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -225,7 +306,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Underground (1 POW)</Name>
+      <Name>TX-55</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -234,7 +315,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-TX-55</Name>
+      <Name>Big Boss</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
@@ -243,16 +324,7 @@
       <SegmentHistory />
     </Segment>
     <Segment>
-      <Name>-Big Boss</Name>
-      <Icon />
-      <SplitTimes>
-        <SplitTime name="Personal Best" />
-      </SplitTimes>
-      <BestSegmentTime />
-      <SegmentHistory />
-    </Segment>
-    <Segment>
-      <Name>{Building 3}Ladder Choice</Name>
+      <Name>{Building 3}Operation Intrude N313</Name>
       <Icon />
       <SplitTimes>
         <SplitTime name="Personal Best" />
