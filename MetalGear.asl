@@ -540,7 +540,7 @@ startup {
 	vars.CalledJennifer = false;
 	vars.InventoryCompletion = "0 out of 24";
 	vars.CodecCompletion = "0 out of 4";
-	vars.WeaponsCompletion = "0 out of 7";
+	vars.WeaponsCompletion = "0 out of 8";
 	vars.POWsCompletion = "0 out of 24";
 	vars.BossesCompletion = "0 out of 10";
 
@@ -852,7 +852,8 @@ update {
 
 	// count all bools for weapon pick ups
 	D.WeaponsPickedUp = (new []{
-		D.MinePickedUp, 
+		D.MinePickedUp,
+		D.PistolPickedUp,
 		D.PExplosivesPickedUp, 
 		D.RCMissilePickedUp, 
 		D.SMGPickedUp, 
@@ -948,7 +949,7 @@ update {
 	(
 		Math.Floor((
 			(D.sumOfInventory + D.CodecCompleted + D.WeaponsPickedUp + D.POWsPickedUp + D.BossesFought + current.ClassValue)
-			 / 71f) * 100)
+			 / 72f) * 100)
 	)
 	).ToString()
 	+ "%";
@@ -959,7 +960,7 @@ update {
 	// Codec completion
 	vars.CodecCompletion = D.CodecCompleted + " out of 4";
 	// Weapons completion
-	vars.WeaponsCompletion = D.WeaponsPickedUp + " out of 7";
+	vars.WeaponsCompletion = D.WeaponsPickedUp + " out of 8";
 	// POWs completion
 	vars.POWsCompletion = D.POWsPickedUp + " out of 24";
 	// Bosses completion
@@ -1155,7 +1156,7 @@ onReset {
 	vars.CalledJennifer = false;
 	vars.InventoryCompletion = "0 out of 24";
 	vars.CodecCompletion = "0 out of 4";
-	vars.WeaponsCompletion = "0 out of 7";
+	vars.WeaponsCompletion = "0 out of 8";
 	vars.POWsCompletion = "0 out of 24";
 	vars.BossesCompletion = "0 out of 10";
 }
