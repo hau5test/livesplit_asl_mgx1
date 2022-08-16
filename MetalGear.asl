@@ -547,13 +547,14 @@ startup {
 	// add splits based on checkpoints
 	settings.Add("checkpoint_splits", true, "Checkpoint Splits");
 	// add splits based on being checkpoints in the first building
-	settings.Add("building1_finished", true, "Building 1 Split", "checkpoint_splits");
-	settings.Add("b1_gf_to_elevator", true, "Ground Floor to Elevator", "building1_finished");
-	settings.Add("b1_1f_to_elevator", true, "First Floor to Elevator", "building1_finished");
-	settings.Add("b1_captured", true, "Getting Captured", "building1_finished");
-	settings.Add("b1_2f_to_elevator", true, "Second Floor to Elevator", "building1_finished");
-	settings.Add("b1_ug_to_elevator", true, "UnderGround to Elevator", "building1_finished");
-	settings.Add("b1_roof_to_ground", true, "Roof to Central Courtyard", "building1_finished");
+	settings.Add("building1_splits", true, "Building 1 Split", "checkpoint_splits");
+	settings.Add("b1_gf_to_elevator", true, "Ground Floor to Elevator", "building1_splits");
+	settings.Add("b1_1f_to_elevator", true, "First Floor to Elevator", "building1_splits");
+	settings.Add("b1_captured", true, "Getting Captured", "building1_splits");
+	settings.Add("b1_2f_to_elevator", true, "Second Floor to Elevator", "building1_splits");
+	settings.Add("b1_ug_to_elevator", true, "UnderGround to Elevator", "building1_splits");
+	settings.Add("b1_roof_to_ground", true, "Roof to Central Courtyard", "building1_splits");
+	settings.Add("building1_finished", true, "End of Building 1 - start of Desert 1", "building1_splits");
 	// add splits based on being checkpoints in the second building
 	settings.Add("building2_finished", true, "Building 2 Split", "checkpoint_splits");
 	settings.Add("b2_enter_from_B1_desert", true, "Entering Building 2 from Building 1 Desert", "building2_finished");
