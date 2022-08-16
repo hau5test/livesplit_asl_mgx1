@@ -556,14 +556,15 @@ startup {
 	settings.Add("b1_roof_to_ground", true, "Roof to Central Courtyard", "building1_splits");
 	settings.Add("building1_finished", true, "End of Building 1 - start of Desert 1", "building1_splits");
 	// add splits based on being checkpoints in the second building
-	settings.Add("building2_finished", true, "Building 2 Split", "checkpoint_splits");
-	settings.Add("b2_enter_from_B1_desert", true, "Entering Building 2 from Building 1 Desert", "building2_finished");
-	settings.Add("b2_enter_from_B3_desert", true, "Entering Building 2 from Building 3 Desert", "building2_finished");
-	settings.Add("b2_gf_to_elevator", true, "Ground Floor to Elevator", "building2_finished");
-	settings.Add("b2_1f_to_elevator", true, "First Floor to Elevator", "building2_finished");
+	settings.Add("building2_splits", true, "Building 2 Split", "checkpoint_splits");
+	settings.Add("b2_enter_from_B1_desert", true, "Entering Building 2 from Building 1 Desert", "building2_splits");
+	settings.Add("b2_enter_from_B3_desert", true, "Entering Building 2 from Building 3 Desert", "building2_splits");
+	settings.Add("b2_gf_to_elevator", true, "Ground Floor to Elevator", "building2_splits");
+	settings.Add("b2_1f_to_elevator", true, "First Floor to Elevator", "building2_splits");
 	settings.SetToolTip("b2_1f_to_elevator", "Splits only if deaths on this checkpoint are 0 or have not increased between map changes to avoid splitting during death farming.");
-	settings.Add("b2_roof_to_elevator", true, "Hell Roof to Elevator", "building2_finished");
-	settings.Add("b2_ug_to_elevator", true, "UnderGround to Elevator", "building2_finished");
+	settings.Add("b2_roof_to_elevator", true, "Hell Roof to Elevator", "building2_splits");
+	settings.Add("b2_ug_to_elevator", true, "UnderGround to Elevator", "building2_splits");
+	settings.Add("building2_finished", true, "End of Building 2 - start of Desert 2", "building2_splits");
 	// add splits based on being checkpoints in the third building
 	settings.Add("building3_finished", true, "Building 3 Split", "checkpoint_splits");
 	settings.Add("b3_enter", true, "Entering Building 3", "building3_finished");
