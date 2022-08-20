@@ -522,6 +522,24 @@ startup {
 		{ 24,  "Grenade Launcher"}
 	};
 
+	D.Bosses = new Dictionary<uint, string>() {
+		{ 2,  "shotmaker"},
+		{ 3,  "mgk"},
+		{ 4,  "tank"},
+		{ 5,  "hindd"},
+		{ 6,  "bulldozer"},
+		{ 7,  "firetrooper"},
+		{ 8,  "dirtyduck"},
+		{ 9,  "tx55"},
+		{ 10,  "bigboss"}
+	};
+
+	D.SpecialPOWs = new Dictionary<uint, string>() {
+		{ 0, "grayfox"},
+		{ 1, "ellen"},
+		{ 2, "madnar"}
+	};
+
 	// define all variables in start up so they can be set before an active run is going on
 	vars.Rank = "";
 	vars.Class = "";
@@ -576,15 +594,15 @@ startup {
 
 	// add bonus splits outside of checkpoints
 	settings.Add("boss_splits", true, "Boss Splits");
-	settings.Add("shotmaker_split", true, "Shotmaker Split", "boss_splits");
-	settings.Add("mgk_split", true, "MGK Split", "boss_splits");
-	settings.Add("hindd_split", true, "Hind D Split", "boss_splits");
-	settings.Add("tank_split", true, "Tank Split", "boss_splits");
-	settings.Add("bulldozer_split", true, "Bulldozer Split", "boss_splits");
-	settings.Add("firetrooper_split", true, "Firetrooper Split", "boss_splits");
-	settings.Add("dirtyduck_split", true, "Dirty Duck Split", "boss_splits");
-	settings.Add("tx-55_split", true, "TX-55 Split", "boss_splits");
-	settings.Add("bigboss_split", true, "Big Boss Split", "boss_splits");
+	settings.Add("shotmaker_beaten", true, "Shotmaker Split", "boss_splits");
+	settings.Add("mgk_beaten", true, "MGK Split", "boss_splits");
+	settings.Add("hindd_beaten", true, "Hind D Split", "boss_splits");
+	settings.Add("tank_beaten", true, "Tank Split", "boss_splits");
+	settings.Add("bulldozer_beaten", true, "Bulldozer Split", "boss_splits");
+	settings.Add("firetrooper_beaten", true, "Firetrooper Split", "boss_splits");
+	settings.Add("dirtyduck_beaten", true, "Dirty Duck Split", "boss_splits");
+	settings.Add("tx55_beaten", true, "TX-55 Split", "boss_splits");
+	settings.Add("bigboss_beaten", true, "Big Boss Split", "boss_splits");
 
 	// add bonus splits outside of checkpoints
 	settings.Add("bonus_splits", true, "Bonus Splits");
@@ -605,8 +623,8 @@ startup {
 
 	// add splits for special POWs
 	settings.Add("pow_splits", true, "Special POW Splits", "bonus_splits");
-	settings.Add("gray_fox_saved", true, "Gray Fox Saved", "pow_splits");
-	settings.Add("dr_madnar_saved", true, "Dr. Madnar Saved", "pow_splits");
+	settings.Add("grayfox_saved", true, "Gray Fox Saved", "pow_splits");
+	settings.Add("madnar_saved", true, "Dr. Madnar Saved", "pow_splits");
 	settings.Add("ellen_saved", true, "Ellen Saved", "pow_splits");
 
 	// add Boss Survival spliting behaviour
@@ -1098,21 +1116,6 @@ split {
 	// if on final game screen and the main menu state changes, split
 	if ((old.FloorVal == 17 && old.ScreenVal == 2) && (current.MainMenuState != old.MainMenuState && old.MainMenuState == 0) && settings["stop_timer"]) return true;
 
-// Boss Kill Splits
-if (current.BossData1 != old.BossData1) {
-	if(D.ShotmakerFought && settings["shotmaker_split"]) return true;
-	if(D.MGKFought && settings["mgk_split"]) return true;
-	if(D.TankFought && settings["tank_split"]) return true;
-	if(D.BulldozerFought && settings["bulldozer_split"]) return true;
-	if(D.HindFought && settings["hindd_split"]) return true;
-	if(D.FiretrooperFought && settings["firetrooper_split"]) return true;
-}
-if (current.BossData2 != old.BossData2) {
-	if(D.DirtyDuckFought && settings["dirtyduck_split"]) return true;
-	if(D.BigBossFought && settings["55_split"]) return true;
-	if(D.TX55Fought && settings["bigboss_split"]) return true;
-}
-
 // class change splits
 if (current.ClassValue != old.ClassValue) {
 	if(current.ClassValue == 1 && settings["class2_upgrade"]) return true;
@@ -1120,13 +1123,79 @@ if (current.ClassValue != old.ClassValue) {
 	if(current.ClassValue == 3 && settings["class4_upgrade"]) return true;
 }
 
-// special POW splits
-if (current.PowChecklist1 != old.PowChecklist1) {
-	if(D.GrayFoxSaved && settings["gray_fox_saved"]) return true;
-	if(D.MadnarSaved && settings["dr_madnar_saved"]) return true;
-	if(D.EllenSaved && settings["ellen_saved"]) return true;
-}
+// the following block is used to split on weapon pick up or drop (drops usually don't happen)
+		var splitname = "_beaten";
+		// use temp data
+		uint lookUpThisBoss = 0;
+		var bossName ="";
+		// on value change for the weaponsupdate variable
+		if(current.BossData1 != old.BossData1) {
+			//if the new value is bigger, a weapon got added
+			if(current.BossData1 > old.BossData1) {
+				// get the log of 2 from this new number, so we know which ID to look up
+				lookUpThisBoss = Convert.ToUInt32(Math.Log(current.BossData1 - old.BossData1));
+			// if the new value is smaller, a weapon got removed
+			}
+			print("number of bit flipped: " + lookUpThisBoss.ToString());
 
+			// define string that can contain the value based on dictionary key
+			string loc = null;
+			// now that we know the log of 2 from the difference, we know which item ID to look up
+			if (D.Bosses.TryGetValue(lookUpThisBoss, out loc)) {
+				bossName = loc;
+			}
+			print("found this boss " + bossName.ToString());
+			// after everything is done, we can check if a split setting has been set to true for this weapon being picked up OR dropped and split accordingly
+			if(settings[(string)bossName + (string)splitname]) return true;
+		}
+
+		splitname = "_beaten";
+		// use temp data
+		uint lookUpThisBoss2 = 0;
+		var bossName2 ="";
+		// on value change for the weaponsupdate variable
+		if(current.BossData2 != old.BossData2) {
+			//if the new value is bigger, a weapon got added
+			if(current.BossData2 > old.BossData2) {
+				// get the log of 2 from this new number, so we know which ID to look up
+				lookUpThisBoss2 = Convert.ToUInt32(Math.Log(current.BossData2 - old.BossData2) + 8);
+			// if the new value is smaller, a weapon got removed
+			}
+			print("number of bit flipped: " + lookUpThisBoss2.ToString());
+
+			// define string that can contain the value based on dictionary key
+			string loc = null;
+			// now that we know the log of 2 from the difference, we know which item ID to look up
+			if (D.Bosses.TryGetValue(lookUpThisBoss2, out loc)) {
+				bossName2 = loc;
+			}
+			print("found this boss " + bossName2.ToString());
+			// after everything is done, we can check if a split setting has been set to true for this weapon being picked up OR dropped and split accordingly
+			if(settings[(string)bossName2 + (string)splitname]) return true;
+		}
+
+		splitname = "_saved";
+		// use temp data
+		uint lookUpThisPow = 0;
+		var powName ="";
+		// on value change for the weaponsupdate variable
+		if(current.PowChecklist1 != old.PowChecklist1) {
+			//if the new value is bigger, a weapon got added
+			if(current.PowChecklist1 > old.PowChecklist1) {
+				// get the log of 2 from this new number, so we know which ID to look up
+				lookUpThisPow = Convert.ToUInt32(Math.Log(current.PowChecklist1 - old.PowChecklist1));
+			// if the new value is smaller, a weapon got removed
+			}
+
+			// define string that can contain the value based on dictionary key
+			string loc = null;
+			// now that we know the log of 2 from the difference, we know which item ID to look up
+			if (D.SpecialPOWs.TryGetValue(lookUpThisPow, out loc)) {
+				powName = loc;
+			}
+			// after everything is done, we can check if a split setting has been set to true for this weapon being picked up OR dropped and split accordingly
+			if(settings[(string)powName + (string)splitname]) return true;
+		}
 }
 
 reset {
