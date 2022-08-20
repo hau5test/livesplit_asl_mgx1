@@ -526,12 +526,12 @@ startup {
 		{ 2,  "shotmaker"},
 		{ 3,  "mgk"},
 		{ 4,  "tank"},
-		{ 5,  "hindd"},
-		{ 6,  "bulldozer"},
+		{ 5,  "bulldozer"},
+		{ 6,  "hindd"},
 		{ 7,  "firetrooper"},
 		{ 8,  "dirtyduck"},
-		{ 9,  "tx55"},
-		{ 10,  "bigboss"}
+		{ 9,  "bigboss"},
+		{ 10,  "tx55"}
 	};
 
 	D.SpecialPOWs = new Dictionary<uint, string>() {
@@ -1133,10 +1133,9 @@ if (current.ClassValue != old.ClassValue) {
 			//if the new value is bigger, a weapon got added
 			if(current.BossData1 > old.BossData1) {
 				// get the log of 2 from this new number, so we know which ID to look up
-				lookUpThisBoss = Convert.ToUInt32(Math.Log(current.BossData1 - old.BossData1));
+				lookUpThisBoss = Convert.ToUInt32(Math.Log(current.BossData1 - old.BossData1, 2));
 			// if the new value is smaller, a weapon got removed
 			}
-			print("number of bit flipped: " + lookUpThisBoss.ToString());
 
 			// define string that can contain the value based on dictionary key
 			string loc = null;
@@ -1158,7 +1157,7 @@ if (current.ClassValue != old.ClassValue) {
 			//if the new value is bigger, a weapon got added
 			if(current.BossData2 > old.BossData2) {
 				// get the log of 2 from this new number, so we know which ID to look up
-				lookUpThisBoss2 = Convert.ToUInt32(Math.Log(current.BossData2 - old.BossData2) + 8);
+				lookUpThisBoss2 = Convert.ToUInt32(Math.Log(current.BossData2 - old.BossData2, 2) + 8);
 			// if the new value is smaller, a weapon got removed
 			}
 			print("number of bit flipped: " + lookUpThisBoss2.ToString());
