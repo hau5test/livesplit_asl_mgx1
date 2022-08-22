@@ -1,7 +1,7 @@
 # livesplit_asl_mgx1
 A set of Livesplit autosplitters for Metal Gear (MSX) from 1987 the PS2 and PC ports.
 
-Supports the PC version (GOG release) and PCXS2 emulator.
+Supports the PC version (GOG release) and PCXS2 emulator version 1.6.0.
 
 For the PCXS2 emulator the following releases are supported:
 - Metal Gear Solid 3: Subsistence PAL (SLES-820.43)
