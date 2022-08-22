@@ -9,6 +9,9 @@ For the PCXS2 emulator the following releases are supported:
 - Metal Gear Solid 3: Subsistence NTSC-J (SLPM-662.21)
 - Metal Gear 20th Anniversary Collection NTSC-J (SLPM-667.95)
 
+Setup video tutorial:
+https://www.youtube.com/watch?v=vuQAJS0_XGk
+
 The following ASL Var Viewer Variables are available:
 - Rank              - shows the current rank name
 - Class             - shows the current class level
