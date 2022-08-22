@@ -1,5 +1,5 @@
 /*********************************************************/
-/* Metal Gear (PC/PS2) Autosplitter v1.3                 */
+/* Metal Gear (PC/PS2) Autosplitter v1.3a                */
 /*                                                       */
 /* Emulator Compatibility:                               */
 /*  * PCXS2                                              */
