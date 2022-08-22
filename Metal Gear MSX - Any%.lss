@@ -14,10 +14,8 @@
     <Variables />
   </Metadata>
   <Offset>00:00:00</Offset>
-  <AttemptCount>1</AttemptCount>
-  <AttemptHistory>
-    <Attempt id="1" started="08/10/2022 11:26:16" isStartedSynced="True" ended="08/10/2022 11:27:10" isEndedSynced="True" />
-  </AttemptHistory>
+  <AttemptCount>0</AttemptCount>
+  <AttemptHistory />
   <Segments>
     <Segment>
       <Name>-do them squats yo</Name>
