@@ -1182,7 +1182,7 @@ if (current.ClassValue != old.ClassValue) {
 			//if the new value is bigger, a weapon got added
 			if(current.PowChecklist1 > old.PowChecklist1) {
 				// get the log of 2 from this new number, so we know which ID to look up
-				lookUpThisPow = Convert.ToUInt32(Math.Log(current.PowChecklist1 - old.PowChecklist1));
+				lookUpThisPow = Convert.ToUInt32(Math.Log(current.PowChecklist1 - old.PowChecklist1, 2));
 			// if the new value is smaller, a weapon got removed
 			}
 
