@@ -1143,7 +1143,6 @@ if (current.ClassValue != old.ClassValue) {
 			if (D.Bosses.TryGetValue(lookUpThisBoss, out loc)) {
 				bossName = loc;
 			}
-			print("found this boss " + bossName.ToString());
 			// after everything is done, we can check if a split setting has been set to true for this weapon being picked up OR dropped and split accordingly
 			if(settings[(string)bossName + (string)splitname]) return true;
 		}
@@ -1160,7 +1159,6 @@ if (current.ClassValue != old.ClassValue) {
 				lookUpThisBoss2 = Convert.ToUInt32(Math.Log(current.BossData2 - old.BossData2, 2) + 8);
 			// if the new value is smaller, a weapon got removed
 			}
-			print("number of bit flipped: " + lookUpThisBoss2.ToString());
 
 			// define string that can contain the value based on dictionary key
 			string loc = null;
@@ -1168,7 +1166,6 @@ if (current.ClassValue != old.ClassValue) {
 			if (D.Bosses.TryGetValue(lookUpThisBoss2, out loc)) {
 				bossName2 = loc;
 			}
-			print("found this boss " + bossName2.ToString());
 			// after everything is done, we can check if a split setting has been set to true for this weapon being picked up OR dropped and split accordingly
 			if(settings[(string)bossName2 + (string)splitname]) return true;
 		}
@@ -1178,7 +1175,7 @@ if (current.ClassValue != old.ClassValue) {
 		uint lookUpThisPow = 0;
 		var powName ="";
 		// on value change for the weaponsupdate variable
-		if(current.PowChecklist1 != old.PowChecklist1) {
+		if(current.PowChecklist1 != old.PowChecklist1 && (old.PowChecklist1 - current.PowChecklist1 < 8)) {
 			//if the new value is bigger, a weapon got added
 			if(current.PowChecklist1 > old.PowChecklist1) {
 				// get the log of 2 from this new number, so we know which ID to look up
