@@ -59,6 +59,10 @@ startup
 	settings.Add("Gun", false, "Weapons");
 	settings.CurrentDefaultParent = "Gun";
 	settings.Add("EQ3_6", false, "Handgun");
+	settings.Add("EQ3_3", false, "Land Mine");
+	settings.Add("EQ3_4", false, "Plastic Explosives");
+	settings.Add("EQ3_5", false, "RC Missiles");
+	settings.Add("EQ4_2", false, "Suppressor");
 	settings.Add("EQ3_7", false, "Submachine Gun");
 	settings.Add("EQ4_1", false, "Grenade Launcher");
 	settings.Add("EQ4_0", false, "Rocket Launcher");
@@ -80,7 +84,6 @@ startup
 	settings.Add("EQ2_6", false, "Parachute");
 	settings.Add("EQ2_7", false, "Gas Mask");
 	settings.Add("EQ3_0", false, "Antidote");
-	settings.Add("EQ4_2", false, "Suppressor");
 	settings.Add("EQ4_5", false, "Body Armour");
 	settings.CurrentDefaultParent = "Item";
 	settings.CurrentDefaultParent = null;
@@ -88,7 +91,7 @@ startup
 	settings.Add("Hostage", false, "Splits On Hostage Rescues");
 	settings.CurrentDefaultParent = "Hostage";
 	settings.Add("PR1_0", false, "Gray Fox (Bldg 1, B1)");
-	settings.Add("PR1_1", false, "Dr. Madnar (Bldg 2, 2F)");
+	settings.Add("PR1_1", false, "Dr. Madnar (Bldg 2, 2F) (After Saving Ellen)");
 	settings.Add("PR1_2", false, "Ellen (Bldg 1, B1)");
 	settings.Add("PR1_3", false, "Prisoner 1 (Bldg 1: 3F)");
 	settings.Add("PR1_4", false, "Prisoner 2 (Bldg 1, 3F)");
@@ -130,8 +133,7 @@ startup
 init
 {
 	//This is used for our splits
-	vars.completedSplits = new bool[61];
-
+	vars.completedSplits = new bool[64];
 }
 
 update
@@ -170,7 +172,7 @@ update
 onStart
 {
 	//resets the splits bools when a new run starts
-	vars.completedSplits = new bool[61];
+	vars.completedSplits = new bool[64];
 }
 
 start
@@ -180,7 +182,6 @@ start
 
 split
 {
-
 	//Key Cards
 	if (settings["EQ3_1"] && vars.bitCheck(current.MGEQ3, 1) && !vars.completedSplits[0])		{return vars.completedSplits[0]  = true;}
 	if (settings["EQ4_6"] && vars.bitCheck(current.MGEQ4, 6) && !vars.completedSplits[1])		{return vars.completedSplits[1]  = true;}
@@ -195,6 +196,10 @@ split
 	if (settings["EQ3_7"] && vars.bitCheck(current.MGEQ3, 7) && !vars.completedSplits[9])		{return vars.completedSplits[9]  = true;}
 	if (settings["EQ4_1"] && vars.bitCheck(current.MGEQ4, 1) && !vars.completedSplits[10])		{return vars.completedSplits[10]  = true;}
 	if (settings["EQ4_0"] && vars.bitCheck(current.MGEQ4, 0) && !vars.completedSplits[11])		{return vars.completedSplits[11]  = true;}
+	if (settings["EQ4_2"] && vars.bitCheck(current.MGEQ4, 2) && !vars.completedSplits[26])		{return vars.completedSplits[26]  = true;}
+	if (settings["EQ3_3"] && vars.bitCheck(current.MGEQ3, 3) && !vars.completedSplits[62])		{return vars.completedSplits[62]  = true;}
+	if (settings["EQ3_4"] && vars.bitCheck(current.MGEQ3, 4) && !vars.completedSplits[63])		{return vars.completedSplits[63]  = true;}
+	if (settings["EQ3_5"] && vars.bitCheck(current.MGEQ3, 5) && !vars.completedSplits[64])		{return vars.completedSplits[64]  = true;}
 	//Misc Items
 	if (settings["EQ1_2"] && vars.bitCheck(current.MGEQ1, 2) && !vars.completedSplits[12])		{return vars.completedSplits[12]  = true;}
 	if (settings["EQ1_3"] && vars.bitCheck(current.MGEQ1, 3) && !vars.completedSplits[13])		{return vars.completedSplits[13]  = true;}
@@ -210,11 +215,10 @@ split
 	if (settings["EQ2_6"] && vars.bitCheck(current.MGEQ2, 6) && !vars.completedSplits[23])		{return vars.completedSplits[23]  = true;}
 	if (settings["EQ2_7"] && vars.bitCheck(current.MGEQ2, 7) && !vars.completedSplits[24])		{return vars.completedSplits[24]  = true;}
 	if (settings["EQ3_0"] && vars.bitCheck(current.MGEQ3, 0) && !vars.completedSplits[25])		{return vars.completedSplits[25]  = true;}
-	if (settings["EQ4_2"] && vars.bitCheck(current.MGEQ4, 2) && !vars.completedSplits[26])		{return vars.completedSplits[26]  = true;}
 	if (settings["EQ4_5"] && vars.bitCheck(current.MGEQ4, 5) && !vars.completedSplits[27])		{return vars.completedSplits[27]  = true;}
 	//Prisoners
 	if (settings["PR1_0"] && vars.bitCheck(current.MGPR1, 0) && !vars.completedSplits[28])		{return vars.completedSplits[28]  = true;}
-	if (settings["PR1_1"] && vars.bitCheck(current.MGPR1, 1) && !vars.completedSplits[29])		{return vars.completedSplits[29]  = true;}
+	if (settings["PR1_1"] && vars.bitCheck(current.MGPR1, 1) && vars.bitCheck(current.MGPR1, 2) && !vars.completedSplits[29])		{return vars.completedSplits[29]  = true;}
 	if (settings["PR1_2"] && vars.bitCheck(current.MGPR1, 2) && !vars.completedSplits[30])		{return vars.completedSplits[30]  = true;}
 	if (settings["PR1_3"] && vars.bitCheck(current.MGPR1, 3) && !vars.completedSplits[31])		{return vars.completedSplits[31]  = true;}
 	if (settings["PR1_4"] && vars.bitCheck(current.MGPR1, 4) && !vars.completedSplits[32])		{return vars.completedSplits[32]  = true;}
@@ -247,7 +251,7 @@ split
 	if (settings["BO2_0"] && vars.bitCheck(current.MGBO2, 0) && !vars.completedSplits[58])		{return vars.completedSplits[58]  = true;}
 	if (settings["BO2_1"] && vars.bitCheck(current.MGBO2, 1) && !vars.completedSplits[59])		{return vars.completedSplits[59]  = true;}
 	if (settings["BO1_2"] && vars.bitCheck(current.MGBO1, 2) && !vars.completedSplits[60])		{return vars.completedSplits[60]  = true;}
-
+	
 	//Final Split On Results Screen
 	if(current.MGGameState == 15 && !vars.completedSplits[61])		{return vars.completedSplits[61]  = true;}
 }
