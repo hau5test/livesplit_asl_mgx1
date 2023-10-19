@@ -182,6 +182,22 @@ startup
 	settings.CurrentDefaultParent = null;
 	
 	settings.Add("End", true, "Final Split (Always Active)");
+
+	// define all variables in start up so they can be set before an active run is going on
+	vars.Rank = "";
+	vars.Class = "";
+	vars.Location = "";
+	vars.SubLocation = "";
+	vars.Difficulty = "";
+	vars.CalledBigBoss = false;
+	vars.CalledDiane = false;
+	vars.CalledSchneider = false;
+	vars.CalledJennifer = false;
+	vars.InventoryCompletion = "0 out of 24";
+	vars.CodecCompletion = "0 out of 4";
+	vars.WeaponsCompletion = "0 out of 8";
+	vars.POWsCompletion = "0 out of 24";
+	vars.BossesCompletion = "0 out of 10";
 }
 
 init
@@ -259,6 +275,12 @@ update
 		current.PR3 = current.JA_PR3;
 		current.BO1 = current.JA_BO1;
 		current.BO2 = current.JA_BO2;
+	}
+
+	if(current.Diff == 1) {
+		vars.Difficulty = "Original";
+	} else {
+		vars.Difficulty = "Easy";
 	}
 }
 
@@ -362,5 +384,21 @@ isLoading
 
 reset
 {
+
+	vars.Rank = "";
+	vars.Class = "";
+	vars.Location = "";
+	vars.SubLocation = "";
+	vars.Difficulty = "";
+	vars.CalledBigBoss = false;
+	vars.CalledDiane = false;
+	vars.CalledSchneider = false;
+	vars.CalledJennifer = false;
+	vars.InventoryCompletion = "0 out of 24";
+	vars.CodecCompletion = "0 out of 4";
+	vars.WeaponsCompletion = "0 out of 8";
+	vars.POWsCompletion = "0 out of 24";
+	vars.BossesCompletion = "0 out of 10";
+	
 	return current.GameState != 10 && old.GameState == 10;
 }
