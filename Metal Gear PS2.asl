@@ -224,7 +224,7 @@ update
 		current.GLAmmo = current.U_GLAmmo;
 		
 		current.IGT = current.U_IGT;
-		current.Rations533 = current.U_Ration;
+		current.Rations = current.U_Ration;
 		current.Kills = current.U_Kills;
 		current.Alerts = current.U_Alert;
 		current.Special = current.U_Special;
