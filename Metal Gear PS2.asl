@@ -224,12 +224,12 @@ update
 		current.GLAmmo = current.U_GLAmmo;
 		
 		current.IGT = current.U_IGT;
-		current.Ration = current.U_Ration;
+		current.Rations533 = current.U_Ration;
 		current.Kills = current.U_Kills;
-		current.Alert = current.U_Alert;
+		current.Alerts = current.U_Alert;
 		current.Special = current.U_Special;
-		current.Save = current.U_Save;
-		current.Continue = current.U_Continue;
+		current.Saves = current.U_Save;
+		current.Continues = current.U_Continue;
 		current.Diff = current.U_Diff;
 		current.Load = current.U_Load;
 		
@@ -256,12 +256,12 @@ update
 		current.GLAmmo = current.JA_GLAmmo;
 		
 		current.IGT = current.JA_IGT;
-		current.Ration = current.JA_Ration;
+		current.Rations = current.JA_Ration;
 		current.Kills = current.JA_Kills;
-		current.Alert = current.JA_Alert;
+		current.Alerts = current.JA_Alert;
 		current.Special = current.JA_Special;
-		current.Save = current.JA_Save;
-		current.Continue = current.JA_Continue;
+		current.Saves = current.JA_Save;
+		current.Continues = current.JA_Continue;
 		current.Diff = current.JA_Diff;
 		current.Load = current.JA_Load;
 		
@@ -277,10 +277,39 @@ update
 		current.BO2 = current.JA_BO2;
 	}
 
+	// Set Var Viewer Variable for Difficulty
 	if(current.Diff == 1) {
 		vars.Difficulty = "Original";
 	} else {
 		vars.Difficulty = "Easy";
+	}
+
+	// any more code for update goes here
+		//function to display the current rank
+	if(current.IGT>1079999) {
+		vars.Rank = "Chicken";
+	} else if ((current.IGT>863999)&&(current.IGT<1080000)) {
+		vars.Rank = "Turtle";
+	} else if ((current.IGT>647999)&&(current.IGT<864000)) {
+		vars.Rank = "Hippopotamus";
+	} else if ((current.IGT>431999)&&(current.IGT<648000)) {
+		vars.Rank = "Elephant";
+	} else if ((current.IGT>215999)&&(current.IGT<1080000)) {
+		vars.Rank = "Deer";
+	} else if (current.Kills > 3) {
+		vars.Rank = "Deer";
+	} else if (current.Kills < 4) {
+		if ((current.IGT>108000)&&(current.IGT<432000)) {
+			vars.Rank = "Zebra";
+		} else if ((current.IGT>81000)&&(current.IGT<1080000)) {
+			vars.Rank = "Jackal";
+		} else if ((current.IGT>45000)&&(current.IGT<1080000)) {
+			vars.Rank = "Panther";
+		} else if ((current.Kills > 0) ||(current.Continues > 0) || (current.Alerts > (8 + current.Diff)) ||(current.Rations > 1)) {
+			vars.Rank = "Eagle";
+		} else {
+			vars.Rank = current.Diff==1?"Big Boss":"Fox";
+		}
 	}
 }
 
@@ -384,7 +413,10 @@ isLoading
 
 reset
 {
+	return (current.GameState == 10 && old.GameState != 10);
+}
 
+onReset {
 	vars.Rank = "";
 	vars.Class = "";
 	vars.Location = "";
@@ -399,6 +431,4 @@ reset
 	vars.WeaponsCompletion = "0 out of 8";
 	vars.POWsCompletion = "0 out of 24";
 	vars.BossesCompletion = "0 out of 10";
-	
-	return current.GameState != 10 && old.GameState == 10;
 }
