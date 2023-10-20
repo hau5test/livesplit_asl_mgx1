@@ -60,6 +60,9 @@ startup
 		//These are for the NTSCU (American) Version of the game
         emu.Make<byte>("U_GameState", 0x272C7C);
 		emu.Make<byte>("U_Load", 0x272C84);
+		emu.Make<byte>("U_FloorVal", 0x272c88);
+		emu.Make<byte>("U_ScreenVal", 0x272c8c);
+		emu.Make<byte>("U_OnElevator", 0x272cc4);
 		//Weapon Ammo
 		emu.Make<uint>("U_MineAmmo", 0x27236C);
 		emu.Make<uint>("U_ExplAmmo", 0x272370);
@@ -68,6 +71,8 @@ startup
 		emu.Make<uint>("U_SubAmmo", 0x27237C);
 		emu.Make<uint>("U_RockAmmo", 0x272380);
 		emu.Make<uint>("U_GLAmmo", 0x272384);
+		emu.Make<uint>("U_RationsHeld", 0x2722b8);
+		emu.Make<uint>("U_Health", 0x27221c);
 		//Playthrough Info
 		emu.Make<uint>("U_IGT", 0x272388);
 		emu.Make<uint>("U_Ration", 0x27238C);
@@ -76,6 +81,7 @@ startup
 		emu.Make<uint>("U_Special", 0x272398);
 		emu.Make<uint>("U_Save", 0x27239C);
 		emu.Make<uint>("U_Continue", 0x2723A0);
+		emu.Make<uint>("U_ContPerCheckpoint", 0x272568);
 		emu.Make<byte>("U_Diff", 0x27246C);
 		//Items In Inventory Bits
 		emu.Make<byte>("U_EQ1", 0x2722DC);
@@ -92,6 +98,34 @@ startup
 		emu.Make<byte>("U_BO2", 0x272328);
 		return true;
     });
+
+	// add splits based on checkpoints
+	settings.Add("checkpoint_splits", true, "Checkpoint Splits");
+	// add splits based on being checkpoints in the first building
+	settings.Add("building1_splits", true, "Building 1 Split", "checkpoint_splits");
+	settings.Add("b1_gf_to_elevator", true, "Ground Floor to Elevator", "building1_splits");
+	settings.Add("b1_1f_to_elevator", true, "First Floor to Elevator", "building1_splits");
+	settings.Add("b1_captured", true, "Getting Captured", "building1_splits");
+	settings.Add("b1_2f_to_elevator", true, "Second Floor to Elevator", "building1_splits");
+	settings.Add("b1_ug_to_elevator", true, "UnderGround to Elevator", "building1_splits");
+	settings.Add("b1_roof_to_ground", true, "Roof to Central Courtyard", "building1_splits");
+	settings.Add("building1_finished", true, "End of Building 1 - start of Desert 1", "building1_splits");
+	// add splits based on being checkpoints in the second building
+	settings.Add("building2_splits", true, "Building 2 Split", "checkpoint_splits");
+	settings.Add("b2_enter_from_B1_desert", true, "Entering Building 2 from Building 1 Desert", "building2_splits");
+	settings.Add("b2_enter_from_B3_desert", true, "Entering Building 2 from Building 3 Desert", "building2_splits");
+	settings.Add("b2_gf_to_elevator", true, "Ground Floor to Elevator", "building2_splits");
+	settings.Add("b2_1f_to_elevator", true, "First Floor to Elevator", "building2_splits");
+	settings.SetToolTip("b2_1f_to_elevator", "Splits only if deaths on this checkpoint are 0 or have not increased between map changes to avoid splitting during death farming.");
+	settings.Add("b2_roof_to_elevator", true, "Hell Roof to Elevator", "building2_splits");
+	settings.Add("b2_ug_to_elevator", true, "UnderGround to Elevator", "building2_splits");
+	settings.Add("building2_finished", true, "End of Building 2 - start of Desert 2", "building2_splits");
+	// add splits based on being checkpoints in the third building
+	settings.Add("building3_finished", true, "Building 3 Split", "checkpoint_splits");
+	settings.Add("b3_enter", true, "Entering Building 3", "building3_finished");
+	settings.Add("b3_gf_to_elevator", true, "Ground Floor to Elevator", "building3_finished");
+	settings.Add("b3_ug_to_elevator", true, "Ground Floor to Elevator", "building3_finished");
+	settings.Add("b3_enter_tx55_room", false, "Enter TX-55 Room" , "building3_finished");
 	
 	settings.Add("Item", false, "Splits On Equipment & Weapons Entering Inventory");
 	settings.CurrentDefaultParent = "Item";
@@ -214,6 +248,9 @@ update
 	}
 	else if(current.Gamecode == "SLUS_212.43"){
 		current.GameState = current.U_GameState;
+		current.FloorVal = current.U_FloorVal;
+		current.ScreenVal = current.U_ScreenVal;
+		current.OnElevator = current.U_OnElevator;
 		
 		current.MineAmmo = current.U_MineAmmo;
 		current.ExplAmmo = current.U_ExplAmmo;
@@ -222,6 +259,8 @@ update
 		current.SubAmmo = current.U_SubAmmo;
 		current.RockAmmo = current.U_RockAmmo;
 		current.GLAmmo = current.U_GLAmmo;
+		current.RationsHeld = current.U_RationsHeld;
+		current.Health = current.U_Health;
 		
 		current.IGT = current.U_IGT;
 		current.Rations = current.U_Ration;
@@ -230,6 +269,7 @@ update
 		current.Special = current.U_Special;
 		current.Saves = current.U_Save;
 		current.Continues = current.U_Continue;
+		current.ContPerCheckpoint = current.U_ContPerCheckpoint;
 		current.Diff = current.U_Diff;
 		current.Load = current.U_Load;
 		
@@ -316,7 +356,7 @@ update
 onStart
 {
 	//resets the splits bools when a new run starts
-	vars.completedSplits = new bool[64];
+	vars.completedSplits = new bool[65];
 }
 
 start
@@ -396,6 +436,87 @@ split
 	if (settings["BO2_1"] && vars.bitCheck(current.BO2, 1) && !vars.completedSplits[59])		{return vars.completedSplits[59]  = true;}
 	if (settings["BO2_2"] && vars.bitCheck(current.BO2, 2) && !vars.completedSplits[60])		{return vars.completedSplits[60]  = true;}
 	
+
+	if (current.FloorVal == 6) {
+            if (old.FloorVal == 1) {
+            //if previous map was Building 1 - Ground Floor
+			if (settings["b1_gf_to_elevator"]) return true;
+            } else if (old.FloorVal == 3) {
+            //if previous map was Building 1 - Second Floor
+			if (settings["b1_2f_to_elevator"]) return true;
+            } else if (old.FloorVal == 4) {
+            //if previous map was Building 1 - Underground
+			if (settings["b1_ug_to_elevator"]) return true;
+            } else if (old.FloorVal == 2) {
+            //if previous map was Building 1 - First Floor
+			if (settings["b1_1f_to_elevator"]) return true;
+            }
+        }
+        //on capture on B1 Ground Floor to being put in the underground
+        if ((current.FloorVal == 4) && (old.FloorVal == 1) && settings["b1_captured"]) return true;
+
+        //on switching from Building 1 - Roof to Building 1 - Ground Floor via parachute drop
+        if ((current.FloorVal == 1) && (old.FloorVal == 7) && settings["b1_roof_to_ground"]) return true;
+
+        //on entering Desert between Building 1 to Building 2 with B1 - GF as previous map
+        if ((current.FloorVal == 5) && (old.FloorVal == 1) && settings["building1_finished"]) return true;
+
+        //on entering Building 2 with connecting desert as previous map
+        if ((current.FloorVal == 8) && (old.FloorVal == 5) && settings["b2_enter_from_B1_desert"]) return true;
+
+        //on entering the elevator on building 2
+        if (current.FloorVal == 12) {
+            if (old.FloorVal == 8) {
+            //if previous map was Building 2 - Ground Floor
+			if (settings["b2_gf_to_elevator"]) return true;
+            } else if (old.FloorVal == 13) {
+            //if previous map was Building 2 - Hell Roof
+			if (settings["b2_roof_to_elevator"]) return true;
+            } else if (old.FloorVal == 10) {
+            //if previous map was Building 2 - Underground
+			if (settings["b2_ug_to_elevator"]) return true;
+            }
+        }
+
+        //split on successful death abuse first time only
+        if (current.ContPerCheckpoint == 5 && old.ContPerCheckpoint == 4 && (settings["death_farm"])) return true;
+
+        //on entering the B2 elevator, but only if the amount of continues for a single checkpoint is higher than 4
+        //and on transitioning between Building 2 - First Floor going into the B2 Elevator
+        if (((current.ContPerCheckpoint == 0) || (current.ContPerCheckpoint == old.ContPerCheckpoint)) && (current.FloorVal == 12) && (old.FloorVal == 9) && settings["b2_1f_to_elevator"]) return true;
+
+        // on reaching Building 3
+        if (current.FloorVal == 14) {
+            if (old.FloorVal == 8) {
+            // if previous map was B2 Ground Floor
+			if (settings["scuba_swim_north_finished"]) return true;
+            } else if (old.FloorVal == 11) {
+            // if previous map was Connecting Desert between Building 2 and Building 3
+			if (settings["b3_enter"]) return true;
+            }
+        }
+
+        // on returning back to Building 2 Ground Floor after having visited Building 3 (post Dirty Duck)
+        if ((current.FloorVal == 8) && (old.FloorVal == 14) && settings["scuba_swim_south_started"]) return true;
+
+        // going from Buildin 2 Ground Floor into the connecting desert between Building 2 and Building 3
+        if ((current.FloorVal == 11) && (old.FloorVal == 8) && settings["building2_finished"]) return true;
+        
+        // going from Desert between B2 and B3 into Building 2 Ground Floor
+        if ((current.FloorVal == 8) && (old.FloorVal == 11) && settings["b2_enter_from_B3_desert"]) return true;
+        
+        // on entering Building 3 elevator after having visited Building 3 Ground Floor
+        if ((current.FloorVal == 16) && (old.FloorVal == 14) && settings["b3_gf_to_elevator"]) return true;
+
+        // on entering Building 3 elevator after having visited Building 3 Ground Floor
+        if ((current.FloorVal == 16) && (old.FloorVal == 15) && settings["b3_ug_to_elevator"]) return true;
+
+        // on entering Building 3 Underground
+        if (current.FloorVal == 15) {
+            // after map has switched from underground to TX-55 boss room
+            if ((old.ScreenVal == 5) && (current.ScreenVal == 6) && settings["b3_enter_tx55_room"]) return true;        }
+        // on entering the final map
+
 	//Final Split On Results Screen
 	if(current.GameState == 21 && current.Load == 0 && old.Load == 1 && !vars.completedSplits[61])		{return vars.completedSplits[61]  = true;}
 }
