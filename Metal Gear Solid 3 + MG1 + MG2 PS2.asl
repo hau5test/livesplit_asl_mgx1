@@ -17,6 +17,7 @@ startup
 		//Address of Gamecode (This can be multiple addresses in some cases but it seems this is all 1 for the Subsistence disks)
 		emu.MakeString("Gamecode", 11, 0x20C0C8);		//SLES_820.43, SLUS_212.43, SLUS_213.59
 		emu.MakeString("AniGamecode", 11, 0x20BEC8);	//SLPM_667.95
+		emu.MakeString("JGamecode", 11, 0x20BE0C);		//SLPM_662.21
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		//These are for the PAL (European Eng, Fr) Version of the game
         emu.Make<byte>("PEF_MGGameState", 0x2759B4);
@@ -60,7 +61,8 @@ startup
 		//These are for the NTSCU (American) Version of the game
 		//Metal Gear Solid 3
 		emu.Make<uint>("U_IGT", 0x1d5b38, 0x4C);
-		emu.MakeString("U_Map", 0x1d5b38, 0x24);
+		emu.MakeString("U_Map", 5, 0x1d5b38, 0x24);
+		emu.Make<byte>("U_Diff", 0x1d5b38, 0x06);
 		emu.Make<uint>("U_KE1", 0x1d5b40, 0x242);
 		emu.Make<uint>("U_KE2", 0x1d5b40, 0x243);
 		emu.Make<uint>("U_KE3", 0x1d5b40, 0x244);
@@ -492,7 +494,17 @@ onStart
 
 start
 {
-		return current.MGGameState != 10 && old.MGGameState == 10 && current.MGIGT > old.MGIGT || current.MG2GameState != 8 && old.MG2GameState == 8 && current.MG2IGT > old.MG2IGT;
+	if(settings["mg1"]){
+		return current.MGGameState != 10 && old.MGGameState == 10 && current.MGIGT > old.MGIGT;
+	}
+	
+	if(settings["mg1"]){
+		return current.MG2GameState != 8 && old.MG2GameState == 8 && current.MG2IGT > old.MG2IGT;
+	}
+	
+	if(settings["mgs3"]){
+		return current.Map == "v000a" && current.IGT > old.IGT;;
+	}
 }
 
 split
@@ -656,7 +668,7 @@ split
 	//Metal Gear Solid 3 Splits
 	if(settings["mgs3"]){
 		if(settings["Area"]){
-			return current.Map != old.Map;
+			return current.Map != old.Map && vars.mgs3AreaID.Contains(current.Map);
 		}
 		
 		if(settings["Map"]){
@@ -754,5 +766,9 @@ reset
 	
 	if(settings["mg2"]){
 		return current.MG2GameState != 8 && old.MG2GameState == 8;
+	}
+	
+	if(settings["mgs3"]){
+		return current.Map == "title" && old.Map != "title";
 	}
 }
