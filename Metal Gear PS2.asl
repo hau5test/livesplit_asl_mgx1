@@ -15,49 +15,50 @@ startup
 	vars.Helper.Load = (Func<dynamic, bool>)(emu => 
     {
 		//Address of Gamecode (This can be multiple addresses in some cases but it seems this is all 1 for the Subsistence disks)
-		emu.MakeString("Gamecode", 11, 0x20C0C8);		//SLES_820.43, SLUS_212.43
-		emu.MakeString("AniGamecode", 11, 0x20BEC8);	//SLPM_667.95
+		emu.MakeString("UGamecode", 11, 0x20C0C8);        //SLUS_212.43, SLUS_213.59
+		emu.MakeString("PGamecode", 11, 0x20C0C8);        //SLES_820.43,
 		emu.MakeString("JGamecode", 11, 0x20BE0C);        //SLPM_662.21
+		emu.MakeString("AniGamecode", 11, 0x20BEC8);    //SLPM_667.95
 
 		//These are for the PAL (European Eng, Fr) Version of the game
-        emu.Make<byte>("PEF_GameState", 0x2759B4);
-		emu.Make<byte>("JA_Load", 0x2722EC);
-		emu.Make<byte>("JA_FloorVal", 0x2722F0);
-		emu.Make<byte>("JA_ScreenVal", 0x2722F4);
-		emu.Make<byte>("JA_OnElevator", 0x27232C);
+        emu.Make<byte>("PAL_EN_GameState", 0x2759B4);
+		emu.Make<byte>("PAL_EN_Load", 0x2759BC);
+		emu.Make<byte>("PAL_EN_FloorVal", 0x2759C0);
+		emu.Make<byte>("PAL_EN_ScreenVal", 0x2759C4);
+		emu.Make<byte>("PAL_EN_OnElevator", 0x2759C8);
 		//Weapon Ammo
-		emu.Make<uint>("JA_MineAmmo", 0x2719D4);
-		emu.Make<uint>("JA_ExplAmmo", 0x2719D8);
-		emu.Make<uint>("JA_RCAmmo", 0x2719DC);
-		emu.Make<uint>("JA_HandAmmo", 0x2719E0);
-		emu.Make<uint>("JA_SubAmmo", 0x2719E4);
-		emu.Make<uint>("JA_RockAmmo", 0x2719E8);
-		emu.Make<uint>("JA_GLAmmo", 0x2719EC);
-		emu.Make<uint>("JA_RationsHeld", 0x271920);
-		emu.Make<uint>("JA_Health", 0x271884);
+		emu.Make<uint>("PAL_EN_MineAmmo", 0x2750A4);
+		emu.Make<uint>("PAL_EN_ExplAmmo", 0x2750A8);
+		emu.Make<uint>("PAL_EN_RCAmmo", 0x2750AC);
+		emu.Make<uint>("PAL_EN_HandAmmo", 0x2750B0);
+		emu.Make<uint>("PAL_EN_SubAmmo", 0x2750B4);
+		emu.Make<uint>("PAL_EN_RockAmmo", 0x2750B8);
+		emu.Make<uint>("PAL_EN_GLAmmo", 0x2750BC);
+		emu.Make<uint>("PAL_EN_RationsHeld", 0x274FF0);
+		emu.Make<uint>("PAL_EN_Health", 0x274F54);
 		//Playthrough Info
-		emu.Make<uint>("JA_IGT", 0x2719F0);
-		emu.Make<uint>("JA_Ration", 0x2719F4);
-		emu.Make<uint>("JA_Kills", 0x2719F8);
-		emu.Make<uint>("JA_Alert", 0x2719FC);
-		emu.Make<uint>("JA_Special", 0x271A00);
-		emu.Make<uint>("JA_Save", 0x271A04);
-		emu.Make<uint>("JA_Continue", 0x271A08);
-		emu.Make<uint>("JA_ContPerCheckpoint", 0x272BD0);
-		emu.Make<byte>("JA_Diff", 0x271AD4);
+		emu.Make<uint>("PAL_EN_IGT", 0x2750C0);
+		emu.Make<uint>("PAL_EN_Ration", 0x2750C4);
+		emu.Make<uint>("PAL_EN_Kills", 0x2750C8);
+		emu.Make<uint>("PAL_EN_Alert", 0x2750CC);
+		emu.Make<uint>("PAL_EN_Special", 0x2750D0);
+		emu.Make<uint>("PAL_EN_Save", 0x2750D4);
+		emu.Make<uint>("PAL_EN_Continue", 0x2750D8);
+		emu.Make<uint>("PAL_EN_ContPerCheckpoint", 0x2752A0);
+		emu.Make<byte>("PAL_EN_Diff", 0x2751A4);
 		//Items In Inventory Bits
-		emu.Make<byte>("JA_EQ1", 0x271944);
-		emu.Make<byte>("JA_EQ2", 0x271948);
-		emu.Make<byte>("JA_EQ3", 0x27194C);
-		emu.Make<byte>("JA_EQ4", 0x271950);
-		emu.Make<byte>("JA_EQ5", 0x271954);
+		emu.Make<byte>("PAL_EN_EQ1", 0x275014);
+		emu.Make<byte>("PAL_EN_EQ2", 0x275018);
+		emu.Make<byte>("PAL_EN_EQ3", 0x27501C);
+		emu.Make<byte>("PAL_EN_EQ4", 0x275020);
+		emu.Make<byte>("PAL_EN_EQ5", 0x275024);
 		//Rescued Prisoner Bits
-		emu.Make<byte>("JA_PR1", 0x271958);
-		emu.Make<byte>("JA_PR2", 0x27195C);
-		emu.Make<byte>("JA_PR3", 0x271960);
+		emu.Make<byte>("PAL_EN_PR1", 0x275028);
+		emu.Make<byte>("PAL_EN_PR2", 0x27502C);
+		emu.Make<byte>("PAL_EN_PR3", 0x275030);
 		//Boss Kills
-		emu.Make<byte>("JA_BO1", 0x27198C);
-		emu.Make<byte>("JA_BO2", 0x271990);
+		emu.Make<byte>("PAL_EN_BO1", 0x27505C);
+		emu.Make<byte>("PAL_EN_BO2", 0x275060);
 		
 		//These are for the JPN (20th Anniversary) Version of the game
         emu.Make<byte>("JA_GameState", 0x2722E4);
@@ -156,8 +157,8 @@ startup
 		emu.Make<uint>("U_SubAmmo", 0x27237C);
 		emu.Make<uint>("U_RockAmmo", 0x272380);
 		emu.Make<uint>("U_GLAmmo", 0x272384);
-		emu.Make<uint>("U_RationsHeld", 0x2722b8);
-		emu.Make<uint>("U_Health", 0x27221c);
+		emu.Make<uint>("U_RationsHeld", 0x2722B8);
+		emu.Make<uint>("U_Health", 0x27221C);
 		//Playthrough Info
 		emu.Make<uint>("U_IGT", 0x272388);
 		emu.Make<uint>("U_Ration", 0x27238C);
@@ -328,10 +329,45 @@ init
 update
 {
 	//Checks what version you are on via the regional gamecode, then casts the correct information for that version
-	if(current.Gamecode == "SLES_820.43"){
-
+	if(current.PGamecode == "SLES_820.43"){
+		current.GameState = current.PAL_EN_GameState;
+		current.FloorVal = current.PAL_EN_FloorVal;
+		current.ScreenVal = current.PAL_EN_ScreenVal;
+		current.OnElevator = current.PAL_EN_OnElevator;
+		
+		current.MineAmmo = current.PAL_EN_MineAmmo;
+		current.ExplAmmo = current.PAL_EN_ExplAmmo;
+		current.RCAmmo = current.PAL_EN_RCAmmo;
+		current.HandAmmo = current.PAL_EN_HandAmmo;
+		current.SubAmmo = current.PAL_EN_SubAmmo;
+		current.RockAmmo = current.PAL_EN_RockAmmo;
+		current.GLAmmo = current.PAL_EN_GLAmmo;
+		current.RationsHeld = current.PAL_EN_RationsHeld;
+		current.Health = current.PAL_EN_Health;
+		
+		current.IGT = current.PAL_EN_IGT;
+		current.Rations = current.PAL_EN_Ration;
+		current.Kills = current.PAL_EN_Kills;
+		current.Alerts = current.PAL_EN_Alert;
+		current.Special = current.PAL_EN_Special;
+		current.Saves = current.PAL_EN_Save;
+		current.Continues = current.PAL_EN_Continue;
+		current.ContPerCheckpoint = current.PAL_EN_ContPerCheckpoint;
+		current.Diff = current.PAL_EN_Diff;
+		current.Load = current.PAL_EN_Load;
+		
+		current.EQ1 = current.PAL_EN_EQ1;
+		current.EQ2 = current.PAL_EN_EQ2;
+		current.EQ3 = current.PAL_EN_EQ3;
+		current.EQ4 = current.PAL_EN_EQ4;
+		current.EQ5 = current.PAL_EN_EQ5;
+		current.PR1 = current.PAL_EN_PR1;
+		current.PR2 = current.PAL_EN_PR2;
+		current.PR3 = current.PAL_EN_PR3;
+		current.BO1 = current.PAL_EN_BO1;
+		current.BO2 = current.PAL_EN_BO2;
 	}
-	else if(current.Gamecode == "SLUS_212.43"){
+	else if(current.UGamecode == "SLUS_212.43"){
 		current.GameState = current.U_GameState;
 		current.FloorVal = current.U_FloorVal;
 		current.ScreenVal = current.U_ScreenVal;
@@ -445,7 +481,7 @@ update
 		current.BO1 = current.J_BO1;
 		current.BO2 = current.J_BO2;
 	}
-
+	/*
 	// Set Var Viewer Variable for Difficulty
 	if(current.Diff == 1) {
 		vars.Difficulty = "Original";
@@ -480,6 +516,7 @@ update
 			vars.Rank = current.Diff==1?"Big Boss":"Fox";
 		}
 	}
+	*/
 }
 
 onStart
