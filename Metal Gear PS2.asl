@@ -17,14 +17,14 @@ startup
 		//Address of Gamecode (This can be multiple addresses in some cases but it seems this is all 1 for the Subsistence disks)
 		emu.MakeString("Gamecode", 11, 0x20C0C8);		//SLES_820.43, SLUS_212.43
 		emu.MakeString("AniGamecode", 11, 0x20BEC8);	//SLPM_667.95
-		
+		emu.MakeString("JGamecode", 11, 0x20BE0C);        //SLPM_662.21
+
 		//These are for the PAL (European Eng, Fr) Version of the game
         emu.Make<byte>("PEF_GameState", 0x2759B4);
-		
-		
-		//These are for the JPN (20th Anniversary) Version of the game
-        emu.Make<byte>("JA_GameState", 0x2722E4);
 		emu.Make<byte>("JA_Load", 0x2722EC);
+		emu.Make<byte>("JA_FloorVal", 0x2722F0);
+		emu.Make<byte>("JA_ScreenVal", 0x2722F4);
+		emu.Make<byte>("JA_OnElevator", 0x27232C);
 		//Weapon Ammo
 		emu.Make<uint>("JA_MineAmmo", 0x2719D4);
 		emu.Make<uint>("JA_ExplAmmo", 0x2719D8);
@@ -33,6 +33,8 @@ startup
 		emu.Make<uint>("JA_SubAmmo", 0x2719E4);
 		emu.Make<uint>("JA_RockAmmo", 0x2719E8);
 		emu.Make<uint>("JA_GLAmmo", 0x2719EC);
+		emu.Make<uint>("JA_RationsHeld", 0x271920);
+		emu.Make<uint>("JA_Health", 0x271884);
 		//Playthrough Info
 		emu.Make<uint>("JA_IGT", 0x2719F0);
 		emu.Make<uint>("JA_Ration", 0x2719F4);
@@ -41,6 +43,7 @@ startup
 		emu.Make<uint>("JA_Special", 0x271A00);
 		emu.Make<uint>("JA_Save", 0x271A04);
 		emu.Make<uint>("JA_Continue", 0x271A08);
+		emu.Make<uint>("JA_ContPerCheckpoint", 0x272BD0);
 		emu.Make<byte>("JA_Diff", 0x271AD4);
 		//Items In Inventory Bits
 		emu.Make<byte>("JA_EQ1", 0x271944);
@@ -53,16 +56,98 @@ startup
 		emu.Make<byte>("JA_PR2", 0x27195C);
 		emu.Make<byte>("JA_PR3", 0x271960);
 		//Boss Kills
-		emu.Make<byte>("JA_BO1", 0x271964);
-		emu.Make<byte>("JA_BO2", 0x271968);
+		emu.Make<byte>("JA_BO1", 0x27198C);
+		emu.Make<byte>("JA_BO2", 0x271990);
+		
+		//These are for the JPN (20th Anniversary) Version of the game
+        emu.Make<byte>("JA_GameState", 0x2722E4);
+		emu.Make<byte>("JA_Load", 0x2722EC);
+		emu.Make<byte>("JA_FloorVal", 0x2722F0);
+		emu.Make<byte>("JA_ScreenVal", 0x2722F4);
+		emu.Make<byte>("JA_OnElevator", 0x27232C);
+		//Weapon Ammo
+		emu.Make<uint>("JA_MineAmmo", 0x2719D4);
+		emu.Make<uint>("JA_ExplAmmo", 0x2719D8);
+		emu.Make<uint>("JA_RCAmmo", 0x2719DC);
+		emu.Make<uint>("JA_HandAmmo", 0x2719E0);
+		emu.Make<uint>("JA_SubAmmo", 0x2719E4);
+		emu.Make<uint>("JA_RockAmmo", 0x2719E8);
+		emu.Make<uint>("JA_GLAmmo", 0x2719EC);
+		emu.Make<uint>("JA_RationsHeld", 0x271920);
+		emu.Make<uint>("JA_Health", 0x271884);
+		//Playthrough Info
+		emu.Make<uint>("JA_IGT", 0x2719F0);
+		emu.Make<uint>("JA_Ration", 0x2719F4);
+		emu.Make<uint>("JA_Kills", 0x2719F8);
+		emu.Make<uint>("JA_Alert", 0x2719FC);
+		emu.Make<uint>("JA_Special", 0x271A00);
+		emu.Make<uint>("JA_Save", 0x271A04);
+		emu.Make<uint>("JA_Continue", 0x271A08);
+		emu.Make<uint>("JA_ContPerCheckpoint", 0x272BD0);
+		emu.Make<byte>("JA_Diff", 0x271AD4);
+		//Items In Inventory Bits
+		emu.Make<byte>("JA_EQ1", 0x271944);
+		emu.Make<byte>("JA_EQ2", 0x271948);
+		emu.Make<byte>("JA_EQ3", 0x27194C);
+		emu.Make<byte>("JA_EQ4", 0x271950);
+		emu.Make<byte>("JA_EQ5", 0x271954);
+		//Rescued Prisoner Bits
+		emu.Make<byte>("JA_PR1", 0x271958);
+		emu.Make<byte>("JA_PR2", 0x27195C);
+		emu.Make<byte>("JA_PR3", 0x271960);
+		//Boss Kills
+		emu.Make<byte>("JA_BO1", 0x27198C);
+		emu.Make<byte>("JA_BO2", 0x271990);
+
+		//These are for the JPN Version of the game
+        emu.Make<byte>("J_GameState", 0x271364);
+		emu.Make<byte>("J_Load", 0x27136C);
+		emu.Make<byte>("J_FloorVal", 0x272370);
+		emu.Make<byte>("J_ScreenVal", 0x272374);
+		emu.Make<byte>("J_OnElevator", 0x2723AC);
+		//Weapon Ammo
+		emu.Make<uint>("J_MineAmmo", 0x271A54);
+		emu.Make<uint>("J_ExplAmmo", 0x271A58);
+		emu.Make<uint>("J_RCAmmo", 0x271A5C);
+		emu.Make<uint>("J_HandAmmo", 0x271A60);
+		emu.Make<uint>("J_SubAmmo", 0x271A64);
+		emu.Make<uint>("J_RockAmmo", 0x271A68);
+		emu.Make<uint>("J_GLAmmo", 0x271A6C);
+		emu.Make<uint>("J_RationsHeld", 0x2719A0);
+		emu.Make<uint>("J_Health", 0x271904);
+		emu.Make<uint>("J_ContPerCheckpoint", 0x271C50);
+		emu.Make<byte>("J_Diff", 0x271B54); 
+		//Items In Inventory Bits
+		emu.Make<byte>("J_EQ1", 0x2719C4);
+		emu.Make<byte>("J_EQ2", 0x2719C8);
+		emu.Make<byte>("J_EQ3", 0x2719CC);
+		emu.Make<byte>("J_EQ4", 0x2719D0);
+		emu.Make<byte>("J_EQ5", 0x2719D4);
+		//Rescued Prisoner Bits
+		emu.Make<byte>("J_PR1", 0x2719D8);
+		emu.Make<byte>("J_PR2", 0x2719DC);
+		emu.Make<byte>("J_PR3", 0x2719E0);
+		
+		//Boss Kills
+		emu.Make<byte>("J_BO1", 0x271A0C);
+		emu.Make<byte>("J_BO2", 0x271A10);
+
+		//Playthrough Info
+		emu.Make<uint>("J_IGT", 0x271A70);
+		emu.Make<uint>("J_Ration", 0x271A74);
+		emu.Make<uint>("J_Kills", 0x271A78);
+		emu.Make<uint>("J_Alert", 0x271A7C);
+		emu.Make<uint>("J_Special", 0x271A80);
+		emu.Make<uint>("J_Save", 0x271A84);
+		emu.Make<uint>("J_Continue", 0x271A88);
 		
 		
 		//These are for the NTSCU (American) Version of the game
         emu.Make<byte>("U_GameState", 0x272C7C);
 		emu.Make<byte>("U_Load", 0x272C84);
-		emu.Make<byte>("U_FloorVal", 0x272c88);
-		emu.Make<byte>("U_ScreenVal", 0x272c8c);
-		emu.Make<byte>("U_OnElevator", 0x272cc4);
+		emu.Make<byte>("U_FloorVal", 0x272C88);
+		emu.Make<byte>("U_ScreenVal", 0x272C8C);
+		emu.Make<byte>("U_OnElevator", 0x272CC4);
 		//Weapon Ammo
 		emu.Make<uint>("U_MineAmmo", 0x27236C);
 		emu.Make<uint>("U_ExplAmmo", 0x272370);
@@ -196,7 +281,7 @@ startup
 	settings.Add("PR3_1", false, "Prisoner 17 (Bldg 2, 2F)");
 	settings.Add("PR3_2", false, "Prisoner 16 (Bldg 2 2F)");
 	settings.Add("PR3_3", false, "Prisoner 15 (Bldg 2, 1F)");
-	settings.Add("PR3_4", false, "Prisoner 18 (Bldg 3, 1F Dirty Duck))");
+	settings.Add("PR3_4", false, "Prisoner 18 (Bldg 3, 1F Dirty Duck)");
 	settings.Add("PR3_5", false, "Prisoner 19 (Bldg 3, 1F Dirty Duck)");
 	settings.Add("PR3_6", false, "Prisoner 20 (Bldg 3, 1F Dirty Duck)");
 	settings.Add("PR3_7", false, "Prisoner 21 (Bldg 3, B100)");
@@ -237,7 +322,7 @@ startup
 init
 {
 	//This is used for our splits
-	vars.completedSplits = new bool[64];
+	vars.completedSplits = new bool[65];
 }
 
 update
@@ -286,6 +371,9 @@ update
 	}
 	else if(current.AniGamecode == "SLPM_667.95"){
 		current.GameState = current.JA_GameState;
+		current.FloorVal = current.JA_FloorVal;
+		current.ScreenVal = current.JA_ScreenVal;
+		current.OnElevator = current.JA_OnElevator;
 		
 		current.MineAmmo = current.JA_MineAmmo;
 		current.ExplAmmo = current.JA_ExplAmmo;
@@ -294,6 +382,8 @@ update
 		current.SubAmmo = current.JA_SubAmmo;
 		current.RockAmmo = current.JA_RockAmmo;
 		current.GLAmmo = current.JA_GLAmmo;
+		current.RationsHeld = current.JA_RationsHeld;
+		current.Health = current.JA_Health;
 		
 		current.IGT = current.JA_IGT;
 		current.Rations = current.JA_Ration;
@@ -302,6 +392,7 @@ update
 		current.Special = current.JA_Special;
 		current.Saves = current.JA_Save;
 		current.Continues = current.JA_Continue;
+		current.ContPerCheckpoint = current.JA_ContPerCheckpoint;
 		current.Diff = current.JA_Diff;
 		current.Load = current.JA_Load;
 		
@@ -315,6 +406,44 @@ update
 		current.PR3 = current.JA_PR3;
 		current.BO1 = current.JA_BO1;
 		current.BO2 = current.JA_BO2;
+	}
+	else if(current.JGamecode == "SLPM_662.21"){
+		current.GameState = current.J_GameState;
+		current.FloorVal = current.J_FloorVal;
+		current.ScreenVal = current.J_ScreenVal;
+		current.OnElevator = current.J_OnElevator;
+		
+		current.MineAmmo = current.J_MineAmmo;
+		current.ExplAmmo = current.J_ExplAmmo;
+		current.RCAmmo = current.J_RCAmmo;
+		current.HandAmmo = current.J_HandAmmo;
+		current.SubAmmo = current.J_SubAmmo;
+		current.RockAmmo = current.J_RockAmmo;
+		current.GLAmmo = current.J_GLAmmo;
+		current.RationsHeld = current.J_RationsHeld;
+		current.Health = current.J_Health;
+		
+		current.IGT = current.J_IGT;
+		current.Rations = current.J_Ration;
+		current.Kills = current.J_Kills;
+		current.Alerts = current.J_Alert;
+		current.Special = current.J_Special;
+		current.Saves = current.J_Save;
+		current.Continues = current.J_Continue;
+		current.ContPerCheckpoint = current.J_ContPerCheckpoint;
+		current.Diff = current.J_Diff;
+		current.Load = current.J_Load;
+		
+		current.EQ1 = current.J_EQ1;
+		current.EQ2 = current.J_EQ2;
+		current.EQ3 = current.J_EQ3;
+		current.EQ4 = current.J_EQ4;
+		current.EQ5 = current.J_EQ5;
+		current.PR1 = current.J_PR1;
+		current.PR2 = current.J_PR2;
+		current.PR3 = current.J_PR3;
+		current.BO1 = current.J_BO1;
+		current.BO2 = current.J_BO2;
 	}
 
 	// Set Var Viewer Variable for Difficulty
