@@ -55,6 +55,7 @@ startup
 		//Boss Kills
 		emu.Make<byte>("JA_MGBO1", 0x271964);
 		emu.Make<byte>("JA_MGBO2", 0x271968);
+		
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		//These are for the NTSCU (American) Version of the game
 		//Metal Gear Solid 3
@@ -122,6 +123,15 @@ startup
 		emu.Make<byte>("U_MG2EQ4", 0x17A6B85);
 		emu.Make<byte>("U_MG2EQ5", 0x17A6B86);
 		emu.Make<byte>("U_MG2EQ6", 0x17A6B87);
+		//Event Flags for Bosses
+		emu.Make<byte>("U_MG2EV2", 0x26B361);
+		emu.Make<byte>("U_MG2EV3", 0x26B362);
+		emu.Make<byte>("U_MG2EV4", 0x26B363);
+		emu.Make<byte>("U_MG2EV7", 0x26B366);
+		emu.Make<byte>("U_MG2EV8", 0x26B367);
+		emu.Make<byte>("U_MG2EV9", 0x26B368);
+		emu.Make<byte>("U_MG2EV10", 0x26B369);
+		emu.Make<byte>("U_MG2EV11", 0x26B36A);
 		return true;
     });
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -181,6 +191,13 @@ startup
 	vars.mg2ItemSet = new List<string>(){
 	"Binoculars", "Night-Vision Goggles", "Infrared Goggles", "Gas Mask", "Body Armour", "Oxygen Tank", "Mine Detector", 
 	"Hang Glider", "Cardboard Box", "Bucket", "Cold Medicine", "Cassette Tape", "Egg (Snake)", "Egg (Owl)", "Brooch", "Spray", "Cartridge"};
+	
+	vars.mg2BossID = new List<string>(){
+	"MG2BEV2_1", "MG2BEV3_0", "MG2BEV3_5", "MG2BEV4_4", "MG2BEV7_3", "MG2BEV7_7", "MG2BEV8_7", "MG2BEV9_5", "MG2BEV10_4", "MG2BEV10_7", "MG2BEV11_2"};
+	
+	vars.mg2BossSet = new List<string>(){
+	"Black Ninja", "Running Man", "Hind D", "Red Blaster", "Four Horsemen", "Jungle Evil", "Night Fright", "Drago Pettrovich Madnar", "Metal Gear D", "Gray Fox", "Big Boss"};
+	
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//Metal Gear Solid 3 variable we can make settings from
 	vars.mgs3AreaID = new List<string>(){
@@ -300,6 +317,15 @@ startup
     	}
 	settings.CurrentDefaultParent = "MG2Item";
 	settings.CurrentDefaultParent = "mg2";
+	
+	settings.Add("MG2Boss", false, "Splits On Boss Kills");
+		settings.CurrentDefaultParent = "MG2Boss";
+		for(int i = 0; i < 11; i++){
+        	settings.Add("" + vars.mg2BossID[i].ToString(), false, "" + vars.mg2BossSet[i].ToString());
+    	}
+	settings.CurrentDefaultParent = "mg2";
+	
+	settings.Add("End2", true, "Final Split (Alway Active)");
 	settings.CurrentDefaultParent = null;
 	
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -393,6 +419,15 @@ update
 		current.MG2EQ4 = current.U_MG2EQ4;
 		current.MG2EQ5 = current.U_MG2EQ5;
 		current.MG2EQ6 = current.U_MG2EQ6;
+		
+		current.MG2EV2 = current.U_MG2EV2;
+		current.MG2EV3 = current.U_MG2EV3;
+		current.MG2EV4 = current.U_MG2EV4;
+		current.MG2EV7 = current.U_MG2EV7;
+		current.MG2EV8 = current.U_MG2EV8;
+		current.MG2EV9 = current.U_MG2EV9;
+		current.MG2EV10 = current.U_MG2EV10;
+		current.MG2EV11 = current.U_MG2EV11;
 	}
 	
 	//JPN 20th Anniversary Disc 2
@@ -450,7 +485,7 @@ onStart
 {
 	//resets the splits bools when a new run starts
 	vars.mgcompletedSplits = new bool[80];
-	vars.mg2completedSplits = new bool[80];
+	vars.mg2completedSplits = new bool[112];
 	vars.mgs3AreaSplits = new bool[86];
 	vars.mgs3KeroSplits = new bool[71];
 }
@@ -567,7 +602,55 @@ split
 			}
 		}
 		
-		if(current.MG2GameState == 24 && old.MG2GameState != 24 && !vars.mgcompletedSplits[48])		{return vars.mgcompletedSplits[48]  = true;}
+		for(int i = 0; i < 8; i++){
+			if(settings["MG2EV2_" + i] && vars.bitCheck(current.MG2EV2, i) && !vars.mg2completedSplits[48 + i]){
+				return vars.mg2completedSplits[48 + i]  = true;
+			}
+		}
+		
+		for(int i = 0; i < 8; i++){
+			if(settings["MG2EV3_" + i] && vars.bitCheck(current.MG2EV3, i) && !vars.mg2completedSplits[56 + i]){
+				return vars.mg2completedSplits[56 + i]  = true;
+			}
+		}
+		
+		for(int i = 0; i < 8; i++){
+			if(settings["MG2EV4_" + i] && vars.bitCheck(current.MG2EV4, i) && !vars.mg2completedSplits[64 + i]){
+				return vars.mg2completedSplits[64 + i]  = true;
+			}
+		}
+		
+		for(int i = 0; i < 8; i++){
+			if(settings["MG2EV7_" + i] && vars.bitCheck(current.MG2EV7, i) && !vars.mg2completedSplits[72 + i]){
+				return vars.mg2completedSplits[72 + i]  = true;
+			}
+		}
+		
+		for(int i = 0; i < 8; i++){
+			if(settings["MG2EV8_" + i] && vars.bitCheck(current.MG2EV8, i) && !vars.mg2completedSplits[80 + i]){
+				return vars.mg2completedSplits[80 + i]  = true;
+			}
+		}
+		
+		for(int i = 0; i < 8; i++){
+			if(settings["MG2EV9_" + i] && vars.bitCheck(current.MG2EV9, i) && !vars.mg2completedSplits[88 + i]){
+				return vars.mg2completedSplits[88 + i]  = true;
+			}
+		}
+		
+		for(int i = 0; i < 8; i++){
+			if(settings["MG2EV10_" + i] && vars.bitCheck(current.MG2EV10, i) && !vars.mg2completedSplits[96 + i]){
+				return vars.mg2completedSplits[96 + i]  = true;
+			}
+		}
+		
+		for(int i = 0; i < 8; i++){
+			if(settings["MG2EV11_" + i] && vars.bitCheck(current.MG2EV11, i) && !vars.mg2completedSplits[104 + i]){
+				return vars.mg2completedSplits[104 + i]  = true;
+			}
+		}
+		
+		if(current.MG2GameState == 24 && old.MG2GameState != 24 && !vars.mgcompletedSplits[112])		{return vars.mgcompletedSplits[112]  = true;}
 	}
 	
 	//Metal Gear Solid 3 Splits
