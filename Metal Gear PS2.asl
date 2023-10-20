@@ -16,7 +16,7 @@ startup
     {
 		//Address of Gamecode (This can be multiple addresses in some cases but it seems this is all 1 for the Subsistence disks)
 		emu.MakeString("UGamecode", 11, 0x20C0C8);        //SLUS_212.43, SLUS_213.59
-		emu.MakeString("PGamecode", 11, 0x20C0C8);        //SLES_820.43,
+		emu.MakeString("PGamecode", 11, 0x20CC8C);        //SLES_820.43,
 		emu.MakeString("JGamecode", 11, 0x20BE0C);        //SLPM_662.21
 		emu.MakeString("AniGamecode", 11, 0x20BEC8);    //SLPM_667.95
 
@@ -481,7 +481,7 @@ update
 		current.BO1 = current.J_BO1;
 		current.BO2 = current.J_BO2;
 	}
-	/*
+	
 	// Set Var Viewer Variable for Difficulty
 	if(current.Diff == 1) {
 		vars.Difficulty = "Original";
@@ -516,7 +516,6 @@ update
 			vars.Rank = current.Diff==1?"Big Boss":"Fox";
 		}
 	}
-	*/
 }
 
 onStart
