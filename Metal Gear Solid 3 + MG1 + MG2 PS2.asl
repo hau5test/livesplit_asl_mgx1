@@ -15,67 +15,87 @@ startup
 	vars.Helper.Load = (Func<dynamic, bool>)(emu => 
     {
 		//Address of Gamecode (This can be multiple addresses in some cases but it seems this is all 1 for the Subsistence disks)
-		emu.MakeString("Gamecode", 11, 0x20C0C8);		//SLES_820.43, SLUS_212.43, SLUS_213.59
-		emu.MakeString("AniGamecode", 11, 0x20BEC8);	//SLPM_667.95
+		emu.MakeString("UGamecode", 11, 0x20C0C8);		//SLUS_212.43, SLUS_213.59
+		emu.MakeString("PGamecode", 11, 0x20CC8C);		//SLES_820.43,
 		emu.MakeString("JGamecode", 11, 0x20BE0C);		//SLPM_662.21
+		emu.MakeString("JAGamecode", 11, 0x20BEC8);		//SLPM_667.95
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		//These are for the PAL (European Eng, Fr) Version of the game
         emu.Make<byte>("PEF_MGGameState", 0x2759B4);
-		
-		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-		//These are for the JPN (20th Anniversary) Version of the game
-        emu.Make<byte>("JA_MGGameState", 0x2722E4);
-		emu.Make<byte>("JA_MGLoad", 0x2722EC);
+		emu.Make<byte>("PEF_MGLoad", 0x2759BC);
+		emu.Make<byte>("PEF_MGFloorVal", 0x2759C0);
+		emu.Make<byte>("PEF_MGScreenVal", 0x2759C4);
+		emu.Make<byte>("PEF_MGOnElevator", 0x2759C8);
 		//Weapon Ammo
-		emu.Make<uint>("JA_MGMineAmmo", 0x2719D4);
-		emu.Make<uint>("JA_MGExplAmmo", 0x2719D8);
-		emu.Make<uint>("JA_MGRCAmmo", 0x2719DC);
-		emu.Make<uint>("JA_MGHandAmmo", 0x2719E0);
-		emu.Make<uint>("JA_MGSubAmmo", 0x2719E4);
-		emu.Make<uint>("JA_MGRockAmmo", 0x2719E8);
-		emu.Make<uint>("JA_MGGLAmmo", 0x2719EC);
+		emu.Make<uint>("PEF_MGMineAmmo", 0x2750A4);
+		emu.Make<uint>("PEF_MGExplAmmo", 0x2750A8);
+		emu.Make<uint>("PEF_MGRCAmmo", 0x2750AC);
+		emu.Make<uint>("PEF_MGHandAmmo", 0x2750B0);
+		emu.Make<uint>("PEF_MGSubAmmo", 0x2750B4);
+		emu.Make<uint>("PEF_MGRockAmmo", 0x2750B8);
+		emu.Make<uint>("PEF_MGGLAmmo", 0x2750BC);
 		//Playthrough Info
-		emu.Make<uint>("JA_MGIGT", 0x2719F0);
-		emu.Make<uint>("JA_MGRation", 0x2719F4);
-		emu.Make<uint>("JA_MGKills", 0x2719F8);
-		emu.Make<uint>("JA_MGAlert", 0x2719FC);
-		emu.Make<uint>("JA_MGSpecial", 0x271A00);
-		emu.Make<uint>("JA_MGSave", 0x271A04);
-		emu.Make<uint>("JA_MGContinue", 0x271A08);
-		emu.Make<byte>("JA_MGDiff", 0x271AD4);
+		emu.Make<uint>("PEF_MGIGT", 0x2750C0);
+		emu.Make<uint>("PEF_MGRation", 0x2750C4);
+		emu.Make<uint>("PEF_MGKills", 0x2750C8);
+		emu.Make<uint>("PEF_MGAlert", 0x2750CC);
+		emu.Make<uint>("PEF_MGSpecial", 0x2750D0);
+		emu.Make<uint>("PEF_MGSave", 0x2750D4);
+		emu.Make<uint>("PEF_MGContinue", 0x2750D8);
+		emu.Make<uint>("PEF_MGContPerCheckpoint", 0x2752A0);
+		emu.Make<uint>("PEF_MGRationsHeld", 0x274FF0);
+		emu.Make<uint>("PEF_MGHealth", 0x274F54);
+		emu.Make<byte>("PEF_MGDiff", 0x2751A4);
 		//Items In Inventory Bits
-		emu.Make<byte>("JA_MGEQ1", 0x271944);
-		emu.Make<byte>("JA_MGEQ2", 0x271948);
-		emu.Make<byte>("JA_MGEQ3", 0x27194C);
-		emu.Make<byte>("JA_MGEQ4", 0x271950);
-		emu.Make<byte>("JA_MGEQ5", 0x271954);
+		emu.Make<byte>("PEF_MGEQ1", 0x275014);
+		emu.Make<byte>("PEF_MGEQ2", 0x275018);
+		emu.Make<byte>("PEF_MGEQ3", 0x27501C);
+		emu.Make<byte>("PEF_MGEQ4", 0x275020);
+		emu.Make<byte>("PEF_MGEQ5", 0x275024);
 		//Rescued Prisoner Bits
-		emu.Make<byte>("JA_MGPR1", 0x271958);
-		emu.Make<byte>("JA_MGPR2", 0x27195C);
-		emu.Make<byte>("JA_MGPR3", 0x271960);
+		emu.Make<byte>("PEF_MGPR1", 0x275028);
+		emu.Make<byte>("PEF_MGPR2", 0x27502C);
+		emu.Make<byte>("PEF_MGPR3", 0x275030);
 		//Boss Kills
-		emu.Make<byte>("JA_MGBO1", 0x271964);
-		emu.Make<byte>("JA_MGBO2", 0x271968);
+		emu.Make<byte>("PEF_MGBO1", 0x27505C);
+		emu.Make<byte>("PEF_MGBO2", 0x275060);
+		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//Metal Gear 2: Solid Snake
+		emu.Make<byte>("PEF_MG2GameState", 0x26DCCC);
+		//Playthrough Info
+		emu.Make<uint>("PEF_MG2IGT", 0x26DB28);
+		emu.Make<uint>("PEF_MG2Ration", 0x26DB2C);
+		emu.Make<uint>("PEF_MG2Kills", 0x26DB30);
+		emu.Make<uint>("PEF_MG2Alert", 0x26DB34);
+		emu.Make<uint>("PEF_MG2Special", 0x26DB38);
+		emu.Make<uint>("PEF_MG2Save", 0x26DB3C);
+		emu.Make<uint>("PEF_MG2Continue", 0x26DB40);
+		emu.Make<byte>("PEF_MG2Diff", 0x17A9C94);
+		//Items In Inventory Bits
+		emu.Make<byte>("PEF_MG2EQ1", 0x17A9C30);
+		emu.Make<byte>("PEF_MG2EQ2", 0x17A9C31);
+		emu.Make<byte>("PEF_MG2EQ3", 0x17A9C34);
+		emu.Make<byte>("PEF_MG2EQ4", 0x17A9C35);
+		emu.Make<byte>("PEF_MG2EQ5", 0x17A9C36);
+		emu.Make<byte>("PEF_MG2EQ6", 0x17A9C37);
+		//Event Flags for Bosses & Story
+		emu.Make<byte>("PEF_MG2EV2", 0x26E099);
+		emu.Make<byte>("PEF_MG2EV3", 0x26E09A);
+		emu.Make<byte>("PEF_MG2EV4", 0x26E09B);
+		emu.Make<byte>("PEF_MG2EV7", 0x26E09E);
+		emu.Make<byte>("PEF_MG2EV8", 0x26E09F);
+		emu.Make<byte>("PEF_MG2EV9", 0x26B3A0);
+		emu.Make<byte>("PEF_MG2EV10", 0x26B3A1);
+		emu.Make<byte>("PEF_MG2EV11", 0x26B3A2);
 		
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		//These are for the NTSCU (American) Version of the game
-		//Metal Gear Solid 3
-		emu.Make<uint>("U_IGT", 0x1d5b38, 0x4C);
-		emu.MakeString("U_Map", 5, 0x1d5b38, 0x24);
-		emu.Make<byte>("U_Diff", 0x1d5b38, 0x06);
-		emu.Make<uint>("U_KE1", 0x1d5b40, 0x242);
-		emu.Make<uint>("U_KE2", 0x1d5b40, 0x243);
-		emu.Make<uint>("U_KE3", 0x1d5b40, 0x244);
-		emu.Make<uint>("U_KE4", 0x1d5b40, 0x245);
-		emu.Make<uint>("U_KE5", 0x1d5b40, 0x246);
-		emu.Make<uint>("U_KE6", 0x1d5b40, 0x247);
-		emu.Make<uint>("U_KE7", 0x1d5b40, 0x248);
-		emu.Make<uint>("U_KE8", 0x1d5b40, 0x249);
-		emu.Make<uint>("U_KE9", 0x1d5b40, 0x24A);
-		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		//Metal Gear
         emu.Make<byte>("U_MGGameState", 0x272C7C);
 		emu.Make<byte>("U_MGLoad", 0x272C84);
+		emu.Make<byte>("U_MGFloorVal", 0x272C88);
+		emu.Make<byte>("U_MGScreenVal", 0x272C8C);
+		emu.Make<byte>("U_MGOnElevator", 0x272CC4);
 		//Weapon Ammo
 		emu.Make<uint>("U_MGMineAmmo", 0x27236C);
 		emu.Make<uint>("U_MGExplAmmo", 0x272370);
@@ -92,6 +112,9 @@ startup
 		emu.Make<uint>("U_MGSpecial", 0x272398);
 		emu.Make<uint>("U_MGSave", 0x27239C);
 		emu.Make<uint>("U_MGContinue", 0x2723A0);
+		emu.Make<uint>("U_MGContPerCheckpoint", 0x272568);
+		emu.Make<uint>("U_MGRationsHeld", 0x2722B8);
+		emu.Make<uint>("U_MGHealth", 0x27221C);
 		emu.Make<byte>("U_MGDiff", 0x27246C);
 		//Items In Inventory Bits
 		emu.Make<byte>("U_MGEQ1", 0x2722DC);
@@ -134,6 +157,160 @@ startup
 		emu.Make<byte>("U_MG2EV9", 0x26B368);
 		emu.Make<byte>("U_MG2EV10", 0x26B369);
 		emu.Make<byte>("U_MG2EV11", 0x26B36A);
+		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//Metal Gear Solid 3
+		emu.Make<uint>("U_IGT", 0x1d5b38, 0x4C);
+		emu.MakeString("U_Map", 5, 0x1d5b38, 0x24);
+		emu.Make<byte>("U_Diff", 0x1d5b38, 0x06);
+		//Kerotins shot
+		emu.Make<uint>("U_KE1", 0x1d5b40, 0x242);
+		emu.Make<uint>("U_KE2", 0x1d5b40, 0x243);
+		emu.Make<uint>("U_KE3", 0x1d5b40, 0x244);
+		emu.Make<uint>("U_KE4", 0x1d5b40, 0x245);
+		emu.Make<uint>("U_KE5", 0x1d5b40, 0x246);
+		emu.Make<uint>("U_KE6", 0x1d5b40, 0x247);
+		emu.Make<uint>("U_KE7", 0x1d5b40, 0x248);
+		emu.Make<uint>("U_KE8", 0x1d5b40, 0x249);
+		emu.Make<uint>("U_KE9", 0x1d5b40, 0x24A);
+		
+		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//These are for the JPN (Japanese) Version of the game
+		emu.Make<byte>("J_MGGameState", 0x271364);
+		emu.Make<byte>("J_MGLoad", 0x27136C);
+		emu.Make<byte>("J_MGFloorVal", 0x272370);
+		emu.Make<byte>("J_MGScreenVal", 0x272374);
+		emu.Make<byte>("J_MGOnElevator", 0x2723AC);
+		//Weapon Ammo
+		emu.Make<uint>("J_MGMineAmmo", 0x271A54);
+		emu.Make<uint>("J_MGExplAmmo", 0x271A58);
+		emu.Make<uint>("J_MGRCAmmo", 0x271A5C);
+		emu.Make<uint>("J_MGHandAmmo", 0x271A60);
+		emu.Make<uint>("J_MGSubAmmo", 0x271A64);
+		emu.Make<uint>("J_MGRockAmmo", 0x271A68);
+		emu.Make<uint>("J_MGGLAmmo", 0x271A6C);
+		//Playthrough Info
+		emu.Make<uint>("J_MGIGT", 0x271A70);
+		emu.Make<uint>("J_MGRation", 0x271A74);
+		emu.Make<uint>("J_MGKills", 0x271A78);
+		emu.Make<uint>("J_MGAlert", 0x271A7C);
+		emu.Make<uint>("J_MGSpecial", 0x271A80);
+		emu.Make<uint>("J_MGSave", 0x271A84);
+		emu.Make<uint>("J_MGContinue", 0x271A88);
+		emu.Make<uint>("J_MGContPerCheckpoint", 0x271C50);
+		emu.Make<uint>("J_MGRationsHeld", 0x2719A0);
+		emu.Make<uint>("J_MGHealth", 0x271904);
+		emu.Make<byte>("J_MGDiff", 0x271B54); 
+		//Items In Inventory Bits
+		emu.Make<byte>("J_MGEQ1", 0x2719C4);
+		emu.Make<byte>("J_MGEQ2", 0x2719C8);
+		emu.Make<byte>("J_MGEQ3", 0x2719CC);
+		emu.Make<byte>("J_MGEQ4", 0x2719D0);
+		emu.Make<byte>("J_MGEQ5", 0x2719D4);
+		//Rescued Prisoner Bits
+		emu.Make<byte>("J_MGPR1", 0x2719D8);
+		emu.Make<byte>("J_MGPR2", 0x2719DC);
+		emu.Make<byte>("J_MGPR3", 0x2719E0);
+		//Boss Kills
+		emu.Make<byte>("J_MGBO1", 0x271A0C);
+		emu.Make<byte>("J_MGBO2", 0x271A10);
+		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//Metal Gear 2: Solid Snake
+		emu.Make<byte>("J_MG2GameState", 0x26A67C);
+		//Playthrough Info
+		emu.Make<uint>("J_MG2IGT", 0x26A4D8);
+		emu.Make<uint>("J_MG2Ration", 0x26A4DC);
+		emu.Make<uint>("J_MG2Kills", 0x26A4E0);
+		emu.Make<uint>("J_MG2Alert", 0x26A4E4);
+		emu.Make<uint>("J_MG2Special", 0x26A4E8);
+		emu.Make<uint>("J_MG2Save", 0x26A4EC);
+		emu.Make<uint>("J_MG2Continue", 0x26A4F0);
+		emu.Make<byte>("J_MG2Diff", 0x1457B94);
+		//Items In Inventory Bits
+		emu.Make<byte>("J_MG2EQ1", 0x1457B30);
+		emu.Make<byte>("J_MG2EQ2", 0x1457B31);
+		emu.Make<byte>("J_MG2EQ3", 0x1457B34);
+		emu.Make<byte>("J_MG2EQ4", 0x1457B35);
+		emu.Make<byte>("J_MG2EQ5", 0x1457B36);
+		emu.Make<byte>("J_MG2EQ6", 0x1457B37);
+		//Event Flags for Bosses && Story
+		emu.Make<byte>("J_MG2EV2", 0x26AA49);
+		emu.Make<byte>("J_MG2EV3", 0x26AA4A);
+		emu.Make<byte>("J_MG2EV4", 0x26AA4B);
+		emu.Make<byte>("J_MG2EV7", 0x26AA4E);
+		emu.Make<byte>("J_MG2EV8", 0x26AA4F);
+		emu.Make<byte>("J_MG2EV9", 0x26AA50);
+		emu.Make<byte>("J_MG2EV10", 0x26AA51);
+		emu.Make<byte>("J_MG2EV11", 0x26AA52);
+		
+		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//These are for the JPN (Japanese 20th Anniversary) Version of the game
+        emu.Make<byte>("JA_MGGameState", 0x2722E4);
+		emu.Make<byte>("JA_MGLoad", 0x2722EC);
+		emu.Make<byte>("JA_MGFloorVal", 0x2722F0);
+		emu.Make<byte>("JA_MGScreenVal", 0x2722F4);
+		emu.Make<byte>("JA_MGOnElevator", 0x27232C);
+		//Weapon Ammo
+		emu.Make<uint>("JA_MGMineAmmo", 0x2719D4);
+		emu.Make<uint>("JA_MGExplAmmo", 0x2719D8);
+		emu.Make<uint>("JA_MGRCAmmo", 0x2719DC);
+		emu.Make<uint>("JA_MGHandAmmo", 0x2719E0);
+		emu.Make<uint>("JA_MGSubAmmo", 0x2719E4);
+		emu.Make<uint>("JA_MGRockAmmo", 0x2719E8);
+		emu.Make<uint>("JA_MGGLAmmo", 0x2719EC);
+		//Playthrough Info
+		emu.Make<uint>("JA_MGIGT", 0x2719F0);
+		emu.Make<uint>("JA_MGRation", 0x2719F4);
+		emu.Make<uint>("JA_MGKills", 0x2719F8);
+		emu.Make<uint>("JA_MGAlert", 0x2719FC);
+		emu.Make<uint>("JA_MGSpecial", 0x271A00);
+		emu.Make<uint>("JA_MGSave", 0x271A04);
+		emu.Make<uint>("JA_MGContinue", 0x271A08);
+		emu.Make<uint>("JA_MGContPerCheckpoint", 0x272BD0);
+		emu.Make<uint>("JA_MGRationsHeld", 0x271920);
+		emu.Make<uint>("JA_MGHealth", 0x271884);
+		emu.Make<byte>("JA_MGDiff", 0x271AD4);
+		//Items In Inventory Bits
+		emu.Make<byte>("JA_MGEQ1", 0x271944);
+		emu.Make<byte>("JA_MGEQ2", 0x271948);
+		emu.Make<byte>("JA_MGEQ3", 0x27194C);
+		emu.Make<byte>("JA_MGEQ4", 0x271950);
+		emu.Make<byte>("JA_MGEQ5", 0x271954);
+		//Rescued Prisoner Bits
+		emu.Make<byte>("JA_MGPR1", 0x271958);
+		emu.Make<byte>("JA_MGPR2", 0x27195C);
+		emu.Make<byte>("JA_MGPR3", 0x271960);
+		//Boss Kills
+		emu.Make<byte>("JA_MGBO1", 0x271964);
+		emu.Make<byte>("JA_MGBO2", 0x271968);
+		
+		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//Metal Gear 2: Solid Snake
+		emu.Make<byte>("JA_MG2GameState", 0x26A5FC);
+		//Playthrough Info
+		emu.Make<uint>("JA_MG2IGT", 0x26A458);
+		emu.Make<uint>("JA_MG2Ration", 0x26A45C);
+		emu.Make<uint>("JA_MG2Kills", 0x26A460);
+		emu.Make<uint>("JA_MG2Alert", 0x26A464);
+		emu.Make<uint>("JA_MG2Special", 0x26A468);
+		emu.Make<uint>("JA_MG2Save", 0x26A46C);
+		emu.Make<uint>("JA_MG2Continue", 0x26A470);
+		emu.Make<byte>("JA_MG2Diff", 0x1457B94);
+		//Items In Inventory Bits
+		emu.Make<byte>("JA_MG2EQ1", 0x1457B30);
+		emu.Make<byte>("JA_MG2EQ2", 0x1457B31);
+		emu.Make<byte>("JA_MG2EQ3", 0x1457B34);
+		emu.Make<byte>("JA_MG2EQ4", 0x1457B35);
+		emu.Make<byte>("JA_MG2EQ5", 0x1457B36);
+		emu.Make<byte>("JA_MG2EQ6", 0x1457B37);
+		//Event Flags for Bosses && Story
+		emu.Make<byte>("JA_MG2EV2", 0x26A9C9);
+		emu.Make<byte>("JA_MG2EV3", 0x26A9CA);
+		emu.Make<byte>("JA_MG2EV4", 0x26A9CB);
+		emu.Make<byte>("JA_MG2EV7", 0x26A9CE);
+		emu.Make<byte>("JA_MG2EV8", 0x26A9CF);
+		emu.Make<byte>("JA_MG2EV9", 0x26A9D0);
+		emu.Make<byte>("JA_MG2EV10", 0x26A9D1);
+		emu.Make<byte>("JA_MG2EV11", 0x26A9D2);
 		return true;
     });
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -366,13 +543,97 @@ init
 update
 {
 	//Checks what version you are on via the regional gamecode, then casts the correct information for that version
-	if(current.Gamecode == "SLES_820.43"){
-
+	//PAL FE Subsistence Disc 2
+	if(current.PGamecode == "SLES_820.43"){
+		//Metal Gear
+		current.MGGameState = current.PEF_MGGameState;
+		current.MGLoad = current.PEF_MGLoad;
+		current.MGFloorVal = current.PEF_MGFloorVal;
+		current.MGScreenVal = current.PEF_MGScreenVal;
+		current.MGOnElevator = current.PEF_MGOnElevator;
+			
+		current.MGMineAmmo = current.PEF_MGMineAmmo;
+		current.MGExplAmmo = current.PEF_MGExplAmmo;
+		current.MGRCAmmo = current.PEF_MGRCAmmo;
+		current.MGHandAmmo = current.PEF_MGHandAmmo;
+		current.MGSubAmmo = current.PEF_MGSubAmmo;
+		current.MGRockAmmo = current.PEF_MGRockAmmo;
+		current.MGGLAmmo = current.PEF_MGGLAmmo;
+			
+		current.MGIGT = current.PEF_MGIGT;
+		current.MGRation = current.PEF_MGRation;
+		current.MGKills = current.PEF_MGKills;
+		current.MGAlert = current.PEF_MGAlert;
+		current.MGSpecial = current.PEF_MGSpecial;
+		current.MGSave = current.PEF_MGSave;
+		current.MGContinue = current.PEF_MGContinue;
+		current.MGContPerCheckpoint = current.PEF_MGContPerCheckpoint;
+		current.MGRationsHeld = current.PEF_MGRationsHeld;
+		current.MGHealth = current.PEF_MGHealth;
+		current.MGDiff = current.PEF_MGDiff;
+			
+		current.MGEQ1 = current.PEF_MGEQ1;
+		current.MGEQ2 = current.PEF_MGEQ2;
+		current.MGEQ3 = current.PEF_MGEQ3;
+		current.MGEQ4 = current.PEF_MGEQ4;
+		current.MGEQ5 = current.PEF_MGEQ5;
+		current.MGPR1 = current.PEF_MGPR1;
+		current.MGPR2 = current.PEF_MGPR2;
+		current.MGPR3 = current.PEF_MGPR3;
+		current.MGBO1 = current.PEF_MGBO1;
+		current.MGBO2 = current.PEF_MGBO2;
+		
+		//Metal Gear 2
+		current.MG2GameState = current.PEF_MG2GameState;
+	
+		current.MG2IGT = current.PEF_MG2IGT;
+		current.MG2Ration = current.PEF_MG2Ration;
+		current.MG2Kills = current.PEF_MG2Kills;
+		current.MG2Alert = current.PEF_MG2Alert;
+		current.MG2Special = current.PEF_MG2Special;
+		current.MG2Save = current.PEF_MG2Save;
+		current.MG2Continue = current.PEF_MG2Continue;
+		current.MG2Diff = current.PEF_MG2Diff;
+			
+		current.MG2EQ1 = current.PEF_MG2EQ1;
+		current.MG2EQ2 = current.PEF_MG2EQ2;
+		current.MG2EQ3 = current.PEF_MG2EQ3;
+		current.MG2EQ4 = current.PEF_MG2EQ4;
+		current.MG2EQ5 = current.PEF_MG2EQ5;
+		current.MG2EQ6 = current.PEF_MG2EQ6;
+		
+		current.MG2EV2 = current.PEF_MG2EV2;
+		current.MG2EV3 = current.PEF_MG2EV3;
+		current.MG2EV4 = current.PEF_MG2EV4;
+		current.MG2EV7 = current.PEF_MG2EV7;
+		current.MG2EV8 = current.PEF_MG2EV8;
+		current.MG2EV9 = current.PEF_MG2EV9;
+		current.MG2EV10 = current.PEF_MG2EV10;
+		current.MG2EV11 = current.PEF_MG2EV11;
+	}
+	//US Subsistence Disc 1 (MGS3)
+	else if(current.UGamecode == "SLUS_213.59"){
+		current.IGT = current.U_IGT;
+		current.Map = current.U_Map;
+		
+		current.KE1 = current.U_KE1;
+		current.KE2 = current.U_KE2;
+		current.KE3 = current.U_KE3;
+		current.KE4 = current.U_KE4;
+		current.KE5 = current.U_KE5;
+		current.KE6 = current.U_KE6;
+		current.KE7 = current.U_KE7;
+		current.KE8 = current.U_KE8;
+		current.KE9 = current.U_KE9;
 	}
 	//US Subsistence Disc 2
-	else if(current.Gamecode == "SLUS_212.43"){
+	else if(current.UGamecode == "SLUS_212.43"){
 		//Metal Gear
 		current.MGGameState = current.U_MGGameState;
+		current.MGLoad = current.U_MGLoad;
+		current.MGFloorVal = current.U_MGFloorVal;
+		current.MGScreenVal = current.U_MGScreenVal;
+		current.MGOnElevator = current.U_MGOnElevator;
 			
 		current.MGMineAmmo = current.U_MGMineAmmo;
 		current.MGExplAmmo = current.U_MGExplAmmo;
@@ -389,8 +650,10 @@ update
 		current.MGSpecial = current.U_MGSpecial;
 		current.MGSave = current.U_MGSave;
 		current.MGContinue = current.U_MGContinue;
+		current.MGContPerCheckpoint = current.U_MGContPerCheckpoint;
+		current.MGRationsHeld = current.U_MGRationsHeld;
+		current.MGHealth = current.U_MGHealth;
 		current.MGDiff = current.U_MGDiff;
-		current.MGLoad = current.U_MGLoad;
 			
 		current.MGEQ1 = current.U_MGEQ1;
 		current.MGEQ2 = current.U_MGEQ2;
@@ -431,55 +694,141 @@ update
 		current.MG2EV10 = current.U_MG2EV10;
 		current.MG2EV11 = current.U_MG2EV11;
 	}
+	//JPN Subsistence Disc 2
+	if(current.JGamecode == "SLPM_662.21"){
+		//Metal Gear
+		current.MGGameState = current.J_MGGameState;
+		current.MGLoad = current.J_MGLoad;
+		current.MGFloorVal = current.J_MGFloorVal;
+		current.MGScreenVal = current.J_MGScreenVal;
+		current.MGOnElevator = current.J_MGOnElevator;
+			
+		current.MGMineAmmo = current.J_MGMineAmmo;
+		current.MGExplAmmo = current.J_MGExplAmmo;
+		current.MGRCAmmo = current.J_MGRCAmmo;
+		current.MGHandAmmo = current.J_MGHandAmmo;
+		current.MGSubAmmo = current.J_MGSubAmmo;
+		current.MGRockAmmo = current.J_MGRockAmmo;
+		current.MGGLAmmo = current.J_MGGLAmmo;
+			
+		current.MGIGT = current.J_MGIGT;
+		current.MGRation = current.J_MGRation;
+		current.MGKills = current.J_MGKills;
+		current.MGAlert = current.J_MGAlert;
+		current.MGSpecial = current.J_MGSpecial;
+		current.MGSave = current.J_MGSave;
+		current.MGContinue = current.J_MGContinue;
+		current.MGContPerCheckpoint = current.J_MGContPerCheckpoint;
+		current.MGRationsHeld = current.J_MGRationsHeld;
+		current.MGHealth = current.J_MGHealth;
+		current.MGDiff = current.J_MGDiff;
+			
+		current.MGEQ1 = current.J_MGEQ1;
+		current.MGEQ2 = current.J_MGEQ2;
+		current.MGEQ3 = current.J_MGEQ3;
+		current.MGEQ4 = current.J_MGEQ4;
+		current.MGEQ5 = current.J_MGEQ5;
+		current.MGPR1 = current.J_MGPR1;
+		current.MGPR2 = current.J_MGPR2;
+		current.MGPR3 = current.J_MGPR3;
+		current.MGBO1 = current.J_MGBO1;
+		current.MGBO2 = current.J_MGBO2;
+		
+		//Metal Gear 2
+		current.MG2GameState = current.J_MG2GameState;
 	
-	//JPN 20th Anniversary Disc 2
-	else if(current.AniGamecode == "SLPM_667.95"){
-		current.GameState = current.JA_MGGameState;
+		current.MG2IGT = current.J_MG2IGT;
+		current.MG2Ration = current.J_MG2Ration;
+		current.MG2Kills = current.J_MG2Kills;
+		current.MG2Alert = current.J_MG2Alert;
+		current.MG2Special = current.J_MG2Special;
+		current.MG2Save = current.J_MG2Save;
+		current.MG2Continue = current.J_MG2Continue;
+		current.MG2Diff = current.J_MG2Diff;
+			
+		current.MG2EQ1 = current.J_MG2EQ1;
+		current.MG2EQ2 = current.J_MG2EQ2;
+		current.MG2EQ3 = current.J_MG2EQ3;
+		current.MG2EQ4 = current.J_MG2EQ4;
+		current.MG2EQ5 = current.J_MG2EQ5;
+		current.MG2EQ6 = current.J_MG2EQ6;
 		
-		current.MineAmmo = current.JA_MGMineAmmo;
-		current.ExplAmmo = current.JA_MGExplAmmo;
-		current.RCAmmo = current.JA_MGRCAmmo;
-		current.HandAmmo = current.JA_MGHandAmmo;
-		current.SubAmmo = current.JA_MGSubAmmo;
-		current.RockAmmo = current.JA_MGRockAmmo;
-		current.GLAmmo = current.JA_MGGLAmmo;
-		
-		current.IGT = current.JA_MGIGT;
-		current.Ration = current.JA_MGRation;
-		current.Kills = current.JA_MGKills;
-		current.Alert = current.JA_MGAlert;
-		current.Special = current.JA_MGSpecial;
-		current.Save = current.JA_MGSave;
-		current.Continue = current.JA_MGContinue;
-		current.Diff = current.JA_MGDiff;
-		current.Load = current.JA_MGLoad;
-		
-		current.EQ1 = current.JA_MGEQ1;
-		current.EQ2 = current.JA_MGEQ2;
-		current.EQ3 = current.JA_MGEQ3;
-		current.EQ4 = current.JA_MGEQ4;
-		current.EQ5 = current.JA_MGEQ5;
-		current.PR1 = current.JA_MGPR1;
-		current.PR2 = current.JA_MGPR2;
-		current.PR3 = current.JA_MGPR3;
-		current.BO1 = current.JA_MGBO1;
-		current.BO2 = current.JA_MGBO2;
+		current.MG2EV2 = current.J_MG2EV2;
+		current.MG2EV3 = current.J_MG2EV3;
+		current.MG2EV4 = current.J_MG2EV4;
+		current.MG2EV7 = current.J_MG2EV7;
+		current.MG2EV8 = current.J_MG2EV8;
+		current.MG2EV9 = current.J_MG2EV9;
+		current.MG2EV10 = current.J_MG2EV10;
+		current.MG2EV11 = current.J_MG2EV11;
 	}
-	
-	//US Subsistence Disc 2
-	else if(current.Gamecode == "SLUS_213.59"){
-		current.IGT = current.U_IGT;
-		current.Map = current.U_Map;
+	//JPN 20th Anniversary Disc 2
+	else if(current.JAGamecode == "SLPM_667.95"){
+		//Metal Gear
+		current.MGGameState = current.JA_MGGameState;
+		current.MGLoad = current.JA_MGLoad;
+		current.MGFloorVal = current.JA_MGFloorVal;
+		current.MGScreenVal = current.JA_MGScreenVal;
+		current.MGOnElevator = current.JA_MGOnElevator;
+			
+		current.MGMineAmmo = current.JA_MGMineAmmo;
+		current.MGExplAmmo = current.JA_MGExplAmmo;
+		current.MGRCAmmo = current.JA_MGRCAmmo;
+		current.MGHandAmmo = current.JA_MGHandAmmo;
+		current.MGSubAmmo = current.JA_MGSubAmmo;
+		current.MGRockAmmo = current.JA_MGRockAmmo;
+		current.MGGLAmmo = current.JA_MGGLAmmo;
+			
+		current.MGIGT = current.JA_MGIGT;
+		current.MGRation = current.JA_MGRation;
+		current.MGKills = current.JA_MGKills;
+		current.MGAlert = current.JA_MGAlert;
+		current.MGSpecial = current.JA_MGSpecial;
+		current.MGSave = current.JA_MGSave;
+		current.MGContinue = current.JA_MGContinue;
+		current.MGContPerCheckpoint = current.JA_MGContPerCheckpoint;
+		current.MGRationsHeld = current.JA_MGRationsHeld;
+		current.MGHealth = current.JA_MGHealth;
+		current.MGDiff = current.JA_MGDiff;
+			
+		current.MGEQ1 = current.JA_MGEQ1;
+		current.MGEQ2 = current.JA_MGEQ2;
+		current.MGEQ3 = current.JA_MGEQ3;
+		current.MGEQ4 = current.JA_MGEQ4;
+		current.MGEQ5 = current.JA_MGEQ5;
+		current.MGPR1 = current.JA_MGPR1;
+		current.MGPR2 = current.JA_MGPR2;
+		current.MGPR3 = current.JA_MGPR3;
+		current.MGBO1 = current.JA_MGBO1;
+		current.MGBO2 = current.JA_MGBO2;
 		
-		current.KE1 = current.U_KE1;
-		current.KE2 = current.U_KE2;
-		current.KE3 = current.U_KE3;
-		current.KE4 = current.U_KE4;
-		current.KE5 = current.U_KE5;
-		current.KE6 = current.U_KE6;
-		current.KE7 = current.U_KE7;
-		current.KE8 = current.U_KE8;
-		current.KE9 = current.U_KE9;
+		//Metal Gear 2
+		current.MG2GameState = current.J_MG2GameState;
+	
+		current.MG2IGT = current.JA_MG2IGT;
+		current.MG2Ration = current.JA_MG2Ration;
+		current.MG2Kills = current.JA_MG2Kills;
+		current.MG2Alert = current.J_MG2Alert;
+		current.MG2Special = current.JA_MG2Special;
+		current.MG2Save = current.JA_MG2Save;
+		current.MG2Continue = current.JA_MG2Continue;
+		current.MG2Diff = current.JA_MG2Diff;
+			
+		current.MG2EQ1 = current.JA_MG2EQ1;
+		current.MG2EQ2 = current.JA_MG2EQ2;
+		current.MG2EQ3 = current.JA_MG2EQ3;
+		current.MG2EQ4 = current.JA_MG2EQ4;
+		current.MG2EQ5 = current.JA_MG2EQ5;
+		current.MG2EQ6 = current.JA_MG2EQ6;
+		
+		current.MG2EV2 = current.JA_MG2EV2;
+		current.MG2EV3 = current.JA_MG2EV3;
+		current.MG2EV4 = current.JA_MG2EV4;
+		current.MG2EV7 = current.JA_MG2EV7;
+		current.MG2EV8 = current.JA_MG2EV8;
+		current.MG2EV9 = current.JA_MG2EV9;
+		current.MG2EV10 = current.JA_MG2EV10;
+		current.MG2EV11 = current.JA_MG2EV11;
 	}
 }
 
@@ -498,7 +847,7 @@ start
 		return current.MGGameState != 10 && old.MGGameState == 10 && current.MGIGT > old.MGIGT;
 	}
 	
-	if(settings["mg1"]){
+	if(settings["mg2"]){
 		return current.MG2GameState != 8 && old.MG2GameState == 8 && current.MG2IGT > old.MG2IGT;
 	}
 	
