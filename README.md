@@ -1,4 +1,8 @@
-# livesplit_asl_mgx1
+# livesplit_asl_mgx1 (PS2 ASL deprecated)
+Development of the PS2 Emulator support PCXS2 has been succeeded by TheDementedSalad here:
+
+https://github.com/TheDementedSalad/Metal-Gear-PS2-Emu-Autosplitter
+
 A set of Livesplit autosplitters for Metal Gear (MSX) from 1987 the PS2 and PC ports.
 
 Supports the PC version (GOG release) and PCXS2 emulator version 1.6.0.
